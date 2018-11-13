@@ -142,13 +142,22 @@ namespace Graph
             btnTickLineColour.BackColor = GetColorFromiTextColour(_tickColour);
             btnTickFontColour.BackColor = GetColorFromiTextColour(_tickFontColour);
 
-            udXAxisLabelMargin.Value = new decimal(_valueLabelMargin);
-            udXAxisLableFontSize.Value= new decimal(_valueFontSize);
-            btnXAxisLabelFontColour.BackColor = GetColorFromiTextColour(_valueFontColour);
+            udYAxisLabelMargin.Value = new decimal(_valueLabelMargin);
+            udYAxisLableFontSize.Value= new decimal(_valueFontSize);
+            btnYAxisLabelFontColour.BackColor = GetColorFromiTextColour(_valueFontColour);
 
             udColumnLabelMargin.Value = new decimal(_columnLabelMargin);
             udColumnLabelFontSize.Value = new decimal(_columnFontSize);
             btnColumnLableFontColour.BackColor = GetColorFromiTextColour(_columnFontColour);
+
+            cbLegendHorizontal.Checked = _legendIsHorizontal;
+            udLegendMargin.Value = new decimal(_legendMargin);
+            udLegendTextMargin.Value = new decimal(_legendTextMargin);
+            udLegendVerticalSize.Value = new decimal(_legendVerticalSize);
+            udLegendKeySize.Value = new decimal(_legendKeySize);
+            udLegendFontSize.Value = new decimal(_legendFontSize);
+            btnLegendFontColour.BackColor = GetColorFromiTextColour(_legendFontColour);
+
         }
 
         protected static System.Drawing.Color ConvertCmykToRgb(float c, float m, float y, float k)
@@ -326,7 +335,7 @@ namespace Graph
             {
                 text = i.ToString();
                 textWidth = _font.GetWidth(text, _tickFontSize) + _tickLabelMargin;
-                textHeight = _font.GetAscent(text, _tickFontSize) - _font.GetDescent(text, _tickFontSize);
+                textHeight = _font.GetAscent(text, _tickFontSize) + _font.GetDescent(text, _tickFontSize);
 
                 canvas.MoveTo(_originX, _originY + i * _yScale);
                 canvas.LineTo(_originX + _axisWidth, _originY + i * _yScale);
@@ -424,6 +433,8 @@ namespace Graph
             layoutCanvas.SetFontSize(_columnFontSize);
             layoutCanvas.SetFontColor(_columnFontColour);
 
+            IRenderer renderer = layoutCanvas.GetRenderer();
+
             foreach (Column column in _data.Columns)
             {
                 Debug.WriteLine(column.Label);
@@ -440,7 +451,7 @@ namespace Graph
             {
                 float x = 0.0f;
                 float legendWidth = 0.0f;
-                float y = _originY + _axisHeight * _yScale + _legendMargin;
+                float y = _originY * 0.25f;
 
                 foreach (Legend legend in _data.Legends)
                 {
@@ -699,19 +710,19 @@ namespace Graph
             SetButtonColour(ref _tickColour, btnTickLineColour);
         }
 
-        private void udXAxisLabelMargin_ValueChanged(object sender, EventArgs e)
+        private void udYAxisLabelMargin_ValueChanged(object sender, EventArgs e)
         {
-            _valueLabelMargin = (float)udXAxisLabelMargin.Value;
+            _valueLabelMargin = (float)udYAxisLabelMargin.Value;
         }
 
-        private void udXAxisLableFontSize_ValueChanged(object sender, EventArgs e)
+        private void udYAxisLableFontSize_ValueChanged(object sender, EventArgs e)
         {
-            _valueFontSize = (float)udXAxisLableFontSize.Value;
+            _valueFontSize = (float)udYAxisLableFontSize.Value;
         }
 
-        private void btnXAxisLabelFontColour_Click(object sender, EventArgs e)
+        private void btnYAxisLabelFontColour_Click(object sender, EventArgs e)
         {
-            SetButtonColour(ref _valueFontColour, btnXAxisLabelFontColour);
+            SetButtonColour(ref _valueFontColour, btnYAxisLabelFontColour);
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -752,6 +763,17 @@ namespace Graph
             xml.WriteAttributeString(name, currentColor.ToArgb().ToString());
 
         }
+
+        protected virtual void WriteSubTypeSettings(XmlTextWriter xml)
+        {
+
+        }
+
+        protected virtual void ReadSubTypeSettings(XmlTextReader xml)
+        {
+
+        }
+        
 
         protected virtual void WriteSettings(XmlTextWriter xml)
         {
@@ -799,6 +821,8 @@ namespace Graph
             xml.WriteAttributeString("legendKeySize", _legendKeySize.ToString("0.0"));
             xml.WriteAttributeString("legendFontSize", _legendFontSize.ToString("0.0"));
             WriteColourSetting(xml, _legendFontColour, "legendFontColour");
+
+            WriteSubTypeSettings(xml);
 
             xml.WriteEndElement();   
         }
@@ -853,6 +877,8 @@ namespace Graph
             _legendKeySize = float.Parse(xml.GetAttribute("legendKeySize"));
             _legendFontSize = float.Parse(xml.GetAttribute("legendFontSize"));
             _legendFontColour = new DeviceRgb(System.Drawing.Color.FromArgb(Convert.ToInt32(xml.GetAttribute("legendFontColour"))));
+
+            ReadSubTypeSettings(xml);
         }
 
         protected virtual void ReadLegend(XmlTextReader xml)
@@ -935,6 +961,47 @@ namespace Graph
                     MessageBox.Show("Invalid Graph File", "Cannot Open", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void cbLegendHorizontal_CheckedChanged(object sender, EventArgs e)
+        {
+            _legendIsHorizontal = cbLegendHorizontal.Checked;
+
+        }
+
+        private void udLegendMargin_ValueChanged(object sender, EventArgs e)
+        {
+            _legendMargin = (float)udLegendMargin.Value;
+        }
+
+        private void udLegendTextMargin_ValueChanged(object sender, EventArgs e)
+        {
+            _legendTextMargin = (float)udLegendTextMargin.Value;
+        }
+
+        private void udLegendVerticalSize_ValueChanged(object sender, EventArgs e)
+        {
+            _legendVerticalSize = (float)udLegendVerticalSize.Value;
+        }
+
+        private void udKeySize_ValueChanged(object sender, EventArgs e)
+        {
+            _legendKeySize = (float)udLegendKeySize.Value;
+        }
+
+        private void udLegendFontSize_ValueChanged(object sender, EventArgs e)
+        {
+            _legendFontSize = (float)udLegendFontSize.Value;
+        }
+
+        private void btnLegendFontColour_Click(object sender, EventArgs e)
+        {
+            SetButtonColour(ref _legendFontColour, btnLegendFontColour);
+        }
+
+        private void label21_Click(object sender, EventArgs e)
+        {
+
         }
 
     }

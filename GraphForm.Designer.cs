@@ -42,6 +42,18 @@
             this.label1 = new System.Windows.Forms.Label();
             this.udOriginX = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnColumnLableFontColour = new System.Windows.Forms.Button();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.udColumnLabelMargin = new System.Windows.Forms.NumericUpDown();
+            this.label20 = new System.Windows.Forms.Label();
+            this.udColumnLabelFontSize = new System.Windows.Forms.NumericUpDown();
+            this.btnYAxisLabelFontColour = new System.Windows.Forms.Button();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.udYAxisLabelMargin = new System.Windows.Forms.NumericUpDown();
+            this.label16 = new System.Windows.Forms.Label();
+            this.udYAxisLableFontSize = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.udInterval = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
@@ -56,59 +68,67 @@
             this.cbDrawXAxis = new System.Windows.Forms.CheckBox();
             this.cbNoAuto = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.udBarWidth = new System.Windows.Forms.NumericUpDown();
             this.udBarMargin = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
+            this.udBarWidth = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.udTickLineWidth = new System.Windows.Forms.NumericUpDown();
-            this.label11 = new System.Windows.Forms.Label();
-            this.udTickLabelMargin = new System.Windows.Forms.NumericUpDown();
-            this.label12 = new System.Windows.Forms.Label();
-            this.udTickFontSize = new System.Windows.Forms.NumericUpDown();
-            this.label13 = new System.Windows.Forms.Label();
-            this.btnTickFontColour = new System.Windows.Forms.Button();
             this.btnTickLineColour = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.udXAxisLabelMargin = new System.Windows.Forms.NumericUpDown();
-            this.label16 = new System.Windows.Forms.Label();
-            this.udXAxisLableFontSize = new System.Windows.Forms.NumericUpDown();
-            this.btnXAxisLabelFontColour = new System.Windows.Forms.Button();
-            this.label17 = new System.Windows.Forms.Label();
-            this.btnColumnLableFontColour = new System.Windows.Forms.Button();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.udColumnLabelMargin = new System.Windows.Forms.NumericUpDown();
-            this.label20 = new System.Windows.Forms.Label();
-            this.udColumnLabelFontSize = new System.Windows.Forms.NumericUpDown();
+            this.btnTickFontColour = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.udTickFontSize = new System.Windows.Forms.NumericUpDown();
+            this.label11 = new System.Windows.Forms.Label();
+            this.udTickLabelMargin = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
+            this.udTickLineWidth = new System.Windows.Forms.NumericUpDown();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btnLegendFontColour = new System.Windows.Forms.Button();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.udLegendFontSize = new System.Windows.Forms.NumericUpDown();
+            this.label24 = new System.Windows.Forms.Label();
+            this.udLegendKeySize = new System.Windows.Forms.NumericUpDown();
+            this.label23 = new System.Windows.Forms.Label();
+            this.udLegendVerticalSize = new System.Windows.Forms.NumericUpDown();
+            this.label22 = new System.Windows.Forms.Label();
+            this.udLegendTextMargin = new System.Windows.Forms.NumericUpDown();
+            this.label21 = new System.Windows.Forms.Label();
+            this.udLegendMargin = new System.Windows.Forms.NumericUpDown();
+            this.cbLegendHorizontal = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginX)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelMargin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelFontSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udYAxisLabelMargin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udYAxisLableFontSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udMaxValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udYAxisHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udXAxisWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udAxisLineWidth)).BeginInit();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udBarWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBarMargin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udBarWidth)).BeginInit();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udTickLineWidth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udTickLabelMargin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udTickFontSize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udXAxisLabelMargin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udXAxisLableFontSize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelMargin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelFontSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udTickLabelMargin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udTickLineWidth)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udLegendFontSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udLegendKeySize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udLegendVerticalSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udLegendTextMargin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udLegendMargin)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -237,20 +257,20 @@
             this.groupBox2.Controls.Add(this.udColumnLabelMargin);
             this.groupBox2.Controls.Add(this.label20);
             this.groupBox2.Controls.Add(this.udColumnLabelFontSize);
-            this.groupBox2.Controls.Add(this.btnXAxisLabelFontColour);
-            this.groupBox2.Controls.Add(this.label17);
-            this.groupBox2.Controls.Add(this.label15);
-            this.groupBox2.Controls.Add(this.udXAxisLabelMargin);
-            this.groupBox2.Controls.Add(this.label16);
-            this.groupBox2.Controls.Add(this.udXAxisLableFontSize);
+            this.groupBox2.Controls.Add(this.btnYAxisLabelFontColour);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.udInterval);
+            this.groupBox2.Controls.Add(this.label17);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.udMaxValue);
+            this.groupBox2.Controls.Add(this.label15);
             this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.udYAxisLabelMargin);
             this.groupBox2.Controls.Add(this.udYAxisHeight);
+            this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.udXAxisWidth);
+            this.groupBox2.Controls.Add(this.udYAxisLableFontSize);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.udAxisLineWidth);
             this.groupBox2.Controls.Add(this.cbDrawYAxis);
@@ -261,6 +281,156 @@
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Axes";
+            // 
+            // btnColumnLableFontColour
+            // 
+            this.btnColumnLableFontColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnColumnLableFontColour.Location = new System.Drawing.Point(134, 151);
+            this.btnColumnLableFontColour.Name = "btnColumnLableFontColour";
+            this.btnColumnLableFontColour.Size = new System.Drawing.Size(20, 20);
+            this.btnColumnLableFontColour.TabIndex = 34;
+            this.btnColumnLableFontColour.UseVisualStyleBackColor = false;
+            this.btnColumnLableFontColour.Click += new System.EventHandler(this.btnColumnLableFontColour_Click);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(2, 155);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(131, 13);
+            this.label18.TabIndex = 33;
+            this.label18.Text = "Column Label Font Colour:";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(24, 100);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(109, 13);
+            this.label19.TabIndex = 32;
+            this.label19.Text = "Column Label Margin:";
+            // 
+            // udColumnLabelMargin
+            // 
+            this.udColumnLabelMargin.DecimalPlaces = 1;
+            this.udColumnLabelMargin.Location = new System.Drawing.Point(136, 98);
+            this.udColumnLabelMargin.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.udColumnLabelMargin.Name = "udColumnLabelMargin";
+            this.udColumnLabelMargin.Size = new System.Drawing.Size(53, 20);
+            this.udColumnLabelMargin.TabIndex = 31;
+            this.udColumnLabelMargin.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udColumnLabelMargin.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(12, 127);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(121, 13);
+            this.label20.TabIndex = 30;
+            this.label20.Text = "Column Lable Font Size:";
+            // 
+            // udColumnLabelFontSize
+            // 
+            this.udColumnLabelFontSize.DecimalPlaces = 1;
+            this.udColumnLabelFontSize.Location = new System.Drawing.Point(136, 125);
+            this.udColumnLabelFontSize.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.udColumnLabelFontSize.Name = "udColumnLabelFontSize";
+            this.udColumnLabelFontSize.Size = new System.Drawing.Size(53, 20);
+            this.udColumnLabelFontSize.TabIndex = 29;
+            this.udColumnLabelFontSize.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udColumnLabelFontSize.ValueChanged += new System.EventHandler(this.udColumnLabelFontSize_ValueChanged);
+            // 
+            // btnYAxisLabelFontColour
+            // 
+            this.btnYAxisLabelFontColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnYAxisLabelFontColour.Location = new System.Drawing.Point(321, 178);
+            this.btnYAxisLabelFontColour.Name = "btnYAxisLabelFontColour";
+            this.btnYAxisLabelFontColour.Size = new System.Drawing.Size(20, 20);
+            this.btnYAxisLabelFontColour.TabIndex = 28;
+            this.btnYAxisLabelFontColour.UseVisualStyleBackColor = false;
+            this.btnYAxisLabelFontColour.Click += new System.EventHandler(this.btnYAxisLabelFontColour_Click);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(213, 182);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(103, 13);
+            this.label17.TabIndex = 27;
+            this.label17.Text = "Y Label Font Colour:";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(236, 127);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(81, 13);
+            this.label15.TabIndex = 26;
+            this.label15.Text = "Y Label Margin:";
+            // 
+            // udYAxisLabelMargin
+            // 
+            this.udYAxisLabelMargin.DecimalPlaces = 1;
+            this.udYAxisLabelMargin.Location = new System.Drawing.Point(323, 125);
+            this.udYAxisLabelMargin.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.udYAxisLabelMargin.Name = "udYAxisLabelMargin";
+            this.udYAxisLabelMargin.Size = new System.Drawing.Size(53, 20);
+            this.udYAxisLabelMargin.TabIndex = 25;
+            this.udYAxisLabelMargin.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udYAxisLabelMargin.ValueChanged += new System.EventHandler(this.udYAxisLabelMargin_ValueChanged);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(223, 154);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(93, 13);
+            this.label16.TabIndex = 24;
+            this.label16.Text = "Y Lable Font Size:";
+            // 
+            // udYAxisLableFontSize
+            // 
+            this.udYAxisLableFontSize.DecimalPlaces = 1;
+            this.udYAxisLableFontSize.Location = new System.Drawing.Point(323, 152);
+            this.udYAxisLableFontSize.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.udYAxisLableFontSize.Name = "udYAxisLableFontSize";
+            this.udYAxisLableFontSize.Size = new System.Drawing.Size(53, 20);
+            this.udYAxisLableFontSize.TabIndex = 23;
+            this.udYAxisLableFontSize.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udYAxisLableFontSize.ValueChanged += new System.EventHandler(this.udYAxisLableFontSize_ValueChanged);
             // 
             // label7
             // 
@@ -349,11 +519,11 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(60, 48);
+            this.label4.Location = new System.Drawing.Point(81, 48);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(70, 13);
+            this.label4.Size = new System.Drawing.Size(48, 13);
             this.label4.TabIndex = 16;
-            this.label4.Text = "X Axis Width:";
+            this.label4.Text = "X Width:";
             // 
             // udXAxisWidth
             // 
@@ -377,11 +547,11 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(48, 75);
+            this.label3.Location = new System.Drawing.Point(69, 75);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(83, 13);
+            this.label3.Size = new System.Drawing.Size(61, 13);
             this.label3.TabIndex = 14;
-            this.label3.Text = "Axis Line Width:";
+            this.label3.Text = "Line Width:";
             // 
             // udAxisLineWidth
             // 
@@ -451,34 +621,6 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Bars";
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(13, 20);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(38, 13);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "Width:";
-            // 
-            // udBarWidth
-            // 
-            this.udBarWidth.DecimalPlaces = 1;
-            this.udBarWidth.Location = new System.Drawing.Point(57, 18);
-            this.udBarWidth.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.udBarWidth.Name = "udBarWidth";
-            this.udBarWidth.Size = new System.Drawing.Size(53, 20);
-            this.udBarWidth.TabIndex = 16;
-            this.udBarWidth.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.udBarWidth.ValueChanged += new System.EventHandler(this.udBarWidth_ValueChanged);
-            // 
             // udBarMargin
             // 
             this.udBarMargin.DecimalPlaces = 1;
@@ -507,6 +649,34 @@
             this.label9.TabIndex = 17;
             this.label9.Text = "Margin:";
             // 
+            // udBarWidth
+            // 
+            this.udBarWidth.DecimalPlaces = 1;
+            this.udBarWidth.Location = new System.Drawing.Point(57, 18);
+            this.udBarWidth.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.udBarWidth.Name = "udBarWidth";
+            this.udBarWidth.Size = new System.Drawing.Size(53, 20);
+            this.udBarWidth.TabIndex = 16;
+            this.udBarWidth.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udBarWidth.ValueChanged += new System.EventHandler(this.udBarWidth_ValueChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(13, 20);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(38, 13);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Width:";
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.btnTickLineColour);
@@ -526,61 +696,43 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Ticks";
             // 
-            // label10
+            // btnTickLineColour
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(25, 21);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(61, 13);
-            this.label10.TabIndex = 18;
-            this.label10.Text = "Line Width:";
+            this.btnTickLineColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnTickLineColour.Location = new System.Drawing.Point(285, 43);
+            this.btnTickLineColour.Name = "btnTickLineColour";
+            this.btnTickLineColour.Size = new System.Drawing.Size(20, 20);
+            this.btnTickLineColour.TabIndex = 26;
+            this.btnTickLineColour.UseVisualStyleBackColor = false;
+            this.btnTickLineColour.Click += new System.EventHandler(this.button2_Click);
             // 
-            // udTickLineWidth
+            // label14
             // 
-            this.udTickLineWidth.DecimalPlaces = 1;
-            this.udTickLineWidth.Location = new System.Drawing.Point(101, 19);
-            this.udTickLineWidth.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.udTickLineWidth.Name = "udTickLineWidth";
-            this.udTickLineWidth.Size = new System.Drawing.Size(53, 20);
-            this.udTickLineWidth.TabIndex = 17;
-            this.udTickLineWidth.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.udTickLineWidth.ValueChanged += new System.EventHandler(this.udTickLineWidth_ValueChanged);
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(193, 47);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(87, 13);
+            this.label14.TabIndex = 25;
+            this.label14.Text = "Tick Line Colour:";
             // 
-            // label11
+            // btnTickFontColour
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(212, 21);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(71, 13);
-            this.label11.TabIndex = 20;
-            this.label11.Text = "Label Margin:";
+            this.btnTickFontColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnTickFontColour.Location = new System.Drawing.Point(102, 71);
+            this.btnTickFontColour.Name = "btnTickFontColour";
+            this.btnTickFontColour.Size = new System.Drawing.Size(20, 20);
+            this.btnTickFontColour.TabIndex = 24;
+            this.btnTickFontColour.UseVisualStyleBackColor = false;
+            this.btnTickFontColour.Click += new System.EventHandler(this.btnTickFontColour_Click);
             // 
-            // udTickLabelMargin
+            // label13
             // 
-            this.udTickLabelMargin.DecimalPlaces = 1;
-            this.udTickLabelMargin.Location = new System.Drawing.Point(288, 19);
-            this.udTickLabelMargin.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.udTickLabelMargin.Name = "udTickLabelMargin";
-            this.udTickLabelMargin.Size = new System.Drawing.Size(53, 20);
-            this.udTickLabelMargin.TabIndex = 19;
-            this.udTickLabelMargin.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.udTickLabelMargin.ValueChanged += new System.EventHandler(this.udTickLabelMargin_ValueChanged);
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(22, 75);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(64, 13);
+            this.label13.TabIndex = 23;
+            this.label13.Text = "Font Colour:";
             // 
             // label12
             // 
@@ -610,193 +762,61 @@
             0});
             this.udTickFontSize.ValueChanged += new System.EventHandler(this.udTickFontSize_ValueChanged);
             // 
-            // label13
+            // label11
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(22, 75);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(64, 13);
-            this.label13.TabIndex = 23;
-            this.label13.Text = "Font Colour:";
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(212, 21);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(71, 13);
+            this.label11.TabIndex = 20;
+            this.label11.Text = "Label Margin:";
             // 
-            // btnTickFontColour
+            // udTickLabelMargin
             // 
-            this.btnTickFontColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnTickFontColour.Location = new System.Drawing.Point(102, 71);
-            this.btnTickFontColour.Name = "btnTickFontColour";
-            this.btnTickFontColour.Size = new System.Drawing.Size(20, 20);
-            this.btnTickFontColour.TabIndex = 24;
-            this.btnTickFontColour.UseVisualStyleBackColor = false;
-            this.btnTickFontColour.Click += new System.EventHandler(this.btnTickFontColour_Click);
-            // 
-            // btnTickLineColour
-            // 
-            this.btnTickLineColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnTickLineColour.Location = new System.Drawing.Point(285, 43);
-            this.btnTickLineColour.Name = "btnTickLineColour";
-            this.btnTickLineColour.Size = new System.Drawing.Size(20, 20);
-            this.btnTickLineColour.TabIndex = 26;
-            this.btnTickLineColour.UseVisualStyleBackColor = false;
-            this.btnTickLineColour.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(193, 47);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(87, 13);
-            this.label14.TabIndex = 25;
-            this.label14.Text = "Tick Line Colour:";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(28, 102);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(103, 13);
-            this.label15.TabIndex = 26;
-            this.label15.Text = "X Axis Label Margin:";
-            // 
-            // udXAxisLabelMargin
-            // 
-            this.udXAxisLabelMargin.DecimalPlaces = 1;
-            this.udXAxisLabelMargin.Location = new System.Drawing.Point(136, 100);
-            this.udXAxisLabelMargin.Maximum = new decimal(new int[] {
+            this.udTickLabelMargin.DecimalPlaces = 1;
+            this.udTickLabelMargin.Location = new System.Drawing.Point(288, 19);
+            this.udTickLabelMargin.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.udXAxisLabelMargin.Name = "udXAxisLabelMargin";
-            this.udXAxisLabelMargin.Size = new System.Drawing.Size(53, 20);
-            this.udXAxisLabelMargin.TabIndex = 25;
-            this.udXAxisLabelMargin.Value = new decimal(new int[] {
+            this.udTickLabelMargin.Name = "udTickLabelMargin";
+            this.udTickLabelMargin.Size = new System.Drawing.Size(53, 20);
+            this.udTickLabelMargin.TabIndex = 19;
+            this.udTickLabelMargin.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.udXAxisLabelMargin.ValueChanged += new System.EventHandler(this.udXAxisLabelMargin_ValueChanged);
+            this.udTickLabelMargin.ValueChanged += new System.EventHandler(this.udTickLabelMargin_ValueChanged);
             // 
-            // label16
+            // label10
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(15, 129);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(115, 13);
-            this.label16.TabIndex = 24;
-            this.label16.Text = "X Axis Lable Font Size:";
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(25, 21);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(61, 13);
+            this.label10.TabIndex = 18;
+            this.label10.Text = "Line Width:";
             // 
-            // udXAxisLableFontSize
+            // udTickLineWidth
             // 
-            this.udXAxisLableFontSize.DecimalPlaces = 1;
-            this.udXAxisLableFontSize.Location = new System.Drawing.Point(136, 127);
-            this.udXAxisLableFontSize.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.udXAxisLableFontSize.Name = "udXAxisLableFontSize";
-            this.udXAxisLableFontSize.Size = new System.Drawing.Size(53, 20);
-            this.udXAxisLableFontSize.TabIndex = 23;
-            this.udXAxisLableFontSize.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.udXAxisLableFontSize.ValueChanged += new System.EventHandler(this.udXAxisLableFontSize_ValueChanged);
-            // 
-            // btnXAxisLabelFontColour
-            // 
-            this.btnXAxisLabelFontColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnXAxisLabelFontColour.Location = new System.Drawing.Point(134, 153);
-            this.btnXAxisLabelFontColour.Name = "btnXAxisLabelFontColour";
-            this.btnXAxisLabelFontColour.Size = new System.Drawing.Size(20, 20);
-            this.btnXAxisLabelFontColour.TabIndex = 28;
-            this.btnXAxisLabelFontColour.UseVisualStyleBackColor = false;
-            this.btnXAxisLabelFontColour.Click += new System.EventHandler(this.btnXAxisLabelFontColour_Click);
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(5, 157);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(125, 13);
-            this.label17.TabIndex = 27;
-            this.label17.Text = "X Axis Label Font Colour:";
-            // 
-            // btnColumnLableFontColour
-            // 
-            this.btnColumnLableFontColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnColumnLableFontColour.Location = new System.Drawing.Point(321, 177);
-            this.btnColumnLableFontColour.Name = "btnColumnLableFontColour";
-            this.btnColumnLableFontColour.Size = new System.Drawing.Size(20, 20);
-            this.btnColumnLableFontColour.TabIndex = 34;
-            this.btnColumnLableFontColour.UseVisualStyleBackColor = false;
-            this.btnColumnLableFontColour.Click += new System.EventHandler(this.btnColumnLableFontColour_Click);
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(189, 181);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(131, 13);
-            this.label18.TabIndex = 33;
-            this.label18.Text = "Column Label Font Colour:";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(211, 126);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(109, 13);
-            this.label19.TabIndex = 32;
-            this.label19.Text = "Column Label Margin:";
-            // 
-            // udColumnLabelMargin
-            // 
-            this.udColumnLabelMargin.DecimalPlaces = 1;
-            this.udColumnLabelMargin.Location = new System.Drawing.Point(323, 124);
-            this.udColumnLabelMargin.Maximum = new decimal(new int[] {
+            this.udTickLineWidth.DecimalPlaces = 1;
+            this.udTickLineWidth.Location = new System.Drawing.Point(101, 19);
+            this.udTickLineWidth.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.udColumnLabelMargin.Name = "udColumnLabelMargin";
-            this.udColumnLabelMargin.Size = new System.Drawing.Size(53, 20);
-            this.udColumnLabelMargin.TabIndex = 31;
-            this.udColumnLabelMargin.Value = new decimal(new int[] {
+            this.udTickLineWidth.Name = "udTickLineWidth";
+            this.udTickLineWidth.Size = new System.Drawing.Size(53, 20);
+            this.udTickLineWidth.TabIndex = 17;
+            this.udTickLineWidth.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.udColumnLabelMargin.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(199, 153);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(121, 13);
-            this.label20.TabIndex = 30;
-            this.label20.Text = "Column Lable Font Size:";
-            // 
-            // udColumnLabelFontSize
-            // 
-            this.udColumnLabelFontSize.DecimalPlaces = 1;
-            this.udColumnLabelFontSize.Location = new System.Drawing.Point(323, 151);
-            this.udColumnLabelFontSize.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.udColumnLabelFontSize.Name = "udColumnLabelFontSize";
-            this.udColumnLabelFontSize.Size = new System.Drawing.Size(53, 20);
-            this.udColumnLabelFontSize.TabIndex = 29;
-            this.udColumnLabelFontSize.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.udColumnLabelFontSize.ValueChanged += new System.EventHandler(this.udColumnLabelFontSize_ValueChanged);
+            this.udTickLineWidth.ValueChanged += new System.EventHandler(this.udTickLineWidth_ValueChanged);
             // 
             // menuStrip1
             // 
@@ -820,22 +840,218 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.btnLegendFontColour);
+            this.groupBox5.Controls.Add(this.label26);
+            this.groupBox5.Controls.Add(this.label25);
+            this.groupBox5.Controls.Add(this.udLegendFontSize);
+            this.groupBox5.Controls.Add(this.label24);
+            this.groupBox5.Controls.Add(this.udLegendKeySize);
+            this.groupBox5.Controls.Add(this.label23);
+            this.groupBox5.Controls.Add(this.udLegendVerticalSize);
+            this.groupBox5.Controls.Add(this.label22);
+            this.groupBox5.Controls.Add(this.udLegendTextMargin);
+            this.groupBox5.Controls.Add(this.label21);
+            this.groupBox5.Controls.Add(this.udLegendMargin);
+            this.groupBox5.Controls.Add(this.cbLegendHorizontal);
+            this.groupBox5.Location = new System.Drawing.Point(668, 244);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(351, 96);
+            this.groupBox5.TabIndex = 15;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Legend";
+            // 
+            // btnLegendFontColour
+            // 
+            this.btnLegendFontColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnLegendFontColour.Location = new System.Drawing.Point(146, 68);
+            this.btnLegendFontColour.Name = "btnLegendFontColour";
+            this.btnLegendFontColour.Size = new System.Drawing.Size(20, 20);
+            this.btnLegendFontColour.TabIndex = 44;
+            this.btnLegendFontColour.UseVisualStyleBackColor = false;
+            this.btnLegendFontColour.Click += new System.EventHandler(this.btnLegendFontColour_Click);
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(76, 72);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(64, 13);
+            this.label26.TabIndex = 43;
+            this.label26.Text = "Font Colour:";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(226, 72);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(54, 13);
+            this.label25.TabIndex = 42;
+            this.label25.Text = "Font Size:";
+            // 
+            // udLegendFontSize
+            // 
+            this.udLegendFontSize.DecimalPlaces = 1;
+            this.udLegendFontSize.Location = new System.Drawing.Point(288, 70);
+            this.udLegendFontSize.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.udLegendFontSize.Name = "udLegendFontSize";
+            this.udLegendFontSize.Size = new System.Drawing.Size(53, 20);
+            this.udLegendFontSize.TabIndex = 41;
+            this.udLegendFontSize.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udLegendFontSize.ValueChanged += new System.EventHandler(this.udLegendFontSize_ValueChanged);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(229, 47);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(51, 13);
+            this.label24.TabIndex = 40;
+            this.label24.Text = "Key Size:";
+            // 
+            // udLegendKeySize
+            // 
+            this.udLegendKeySize.DecimalPlaces = 1;
+            this.udLegendKeySize.Location = new System.Drawing.Point(287, 45);
+            this.udLegendKeySize.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.udLegendKeySize.Name = "udLegendKeySize";
+            this.udLegendKeySize.Size = new System.Drawing.Size(53, 20);
+            this.udLegendKeySize.TabIndex = 39;
+            this.udLegendKeySize.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udLegendKeySize.ValueChanged += new System.EventHandler(this.udKeySize_ValueChanged);
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(74, 46);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(66, 13);
+            this.label23.TabIndex = 38;
+            this.label23.Text = "Row Height:";
+            // 
+            // udLegendVerticalSize
+            // 
+            this.udLegendVerticalSize.DecimalPlaces = 1;
+            this.udLegendVerticalSize.Location = new System.Drawing.Point(146, 45);
+            this.udLegendVerticalSize.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.udLegendVerticalSize.Name = "udLegendVerticalSize";
+            this.udLegendVerticalSize.Size = new System.Drawing.Size(53, 20);
+            this.udLegendVerticalSize.TabIndex = 37;
+            this.udLegendVerticalSize.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udLegendVerticalSize.ValueChanged += new System.EventHandler(this.udLegendVerticalSize_ValueChanged);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(215, 20);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(66, 13);
+            this.label22.TabIndex = 36;
+            this.label22.Text = "Text Margin:";
+            // 
+            // udLegendTextMargin
+            // 
+            this.udLegendTextMargin.DecimalPlaces = 1;
+            this.udLegendTextMargin.Location = new System.Drawing.Point(287, 18);
+            this.udLegendTextMargin.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.udLegendTextMargin.Name = "udLegendTextMargin";
+            this.udLegendTextMargin.Size = new System.Drawing.Size(53, 20);
+            this.udLegendTextMargin.TabIndex = 35;
+            this.udLegendTextMargin.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udLegendTextMargin.ValueChanged += new System.EventHandler(this.udLegendTextMargin_ValueChanged);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(98, 20);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(42, 13);
+            this.label21.TabIndex = 34;
+            this.label21.Text = "Margin:";
+            this.label21.Click += new System.EventHandler(this.label21_Click);
+            // 
+            // udLegendMargin
+            // 
+            this.udLegendMargin.DecimalPlaces = 1;
+            this.udLegendMargin.Location = new System.Drawing.Point(146, 18);
+            this.udLegendMargin.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.udLegendMargin.Name = "udLegendMargin";
+            this.udLegendMargin.Size = new System.Drawing.Size(53, 20);
+            this.udLegendMargin.TabIndex = 33;
+            this.udLegendMargin.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udLegendMargin.ValueChanged += new System.EventHandler(this.udLegendMargin_ValueChanged);
+            // 
+            // cbLegendHorizontal
+            // 
+            this.cbLegendHorizontal.AutoSize = true;
+            this.cbLegendHorizontal.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbLegendHorizontal.Location = new System.Drawing.Point(11, 19);
+            this.cbLegendHorizontal.Name = "cbLegendHorizontal";
+            this.cbLegendHorizontal.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.cbLegendHorizontal.Size = new System.Drawing.Size(76, 17);
+            this.cbLegendHorizontal.TabIndex = 1;
+            this.cbLegendHorizontal.Text = "Horizontal:";
+            this.cbLegendHorizontal.UseVisualStyleBackColor = true;
+            this.cbLegendHorizontal.CheckedChanged += new System.EventHandler(this.cbLegendHorizontal_CheckedChanged);
             // 
             // GraphForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 427);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.cbNoAuto);
@@ -857,6 +1073,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.udOriginX)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelMargin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelFontSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udYAxisLabelMargin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udYAxisLableFontSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udMaxValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udYAxisHeight)).EndInit();
@@ -864,19 +1084,22 @@
             ((System.ComponentModel.ISupportInitialize)(this.udAxisLineWidth)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udBarWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBarMargin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udBarWidth)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udTickLineWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udTickLabelMargin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udTickFontSize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udXAxisLabelMargin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udXAxisLableFontSize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelMargin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelFontSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udTickLabelMargin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udTickLineWidth)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udLegendFontSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udLegendKeySize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udLegendVerticalSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udLegendTextMargin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udLegendMargin)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -928,12 +1151,12 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.NumericUpDown udTickFontSize;
-        private System.Windows.Forms.Button btnXAxisLabelFontColour;
+        private System.Windows.Forms.Button btnYAxisLabelFontColour;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.NumericUpDown udXAxisLabelMargin;
+        private System.Windows.Forms.NumericUpDown udYAxisLabelMargin;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.NumericUpDown udXAxisLableFontSize;
+        private System.Windows.Forms.NumericUpDown udYAxisLableFontSize;
         private System.Windows.Forms.Button btnColumnLableFontColour;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
@@ -944,6 +1167,20 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.CheckBox cbLegendHorizontal;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.NumericUpDown udLegendTextMargin;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.NumericUpDown udLegendMargin;
+        private System.Windows.Forms.Button btnLegendFontColour;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.NumericUpDown udLegendFontSize;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.NumericUpDown udLegendKeySize;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.NumericUpDown udLegendVerticalSize;
     }
 }
 

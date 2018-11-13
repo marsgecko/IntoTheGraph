@@ -131,6 +131,12 @@
     <Compile Include="BarForm.Designer.cs">
       <DependentUpon>BarForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PieForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PieForm.Designer.cs">
+      <DependentUpon>PieForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="VerticalStackedForm.cs">
       <SubType>Form</SubType>
     </Compile>

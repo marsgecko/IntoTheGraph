@@ -29,9 +29,11 @@ namespace Graph
 {
     public partial class BarForm : Graph.GraphForm
     {
-        bool _barDrawValueAbove = false;
-        bool _barDrawValueOn = true;
-        float _barValueMargin = 1;
+        bool _barDrawValueAboveTop = false;
+        bool _barDrawValueBelowTop = true;
+        bool _barDrawValueCenter = false;
+        float _barValueMargin = 2.0f;
+        float _barValueFontSize = 8.0f;
 
 
         public BarForm()
@@ -40,7 +42,7 @@ namespace Graph
 
             // Override defaults
             _originX = 75.0f;
-            _originY = 120.0f;
+            _originY = 75.0f;
             _valueAxisInterval = 10.0f;
             _barWidth = 40.0f;
 
@@ -48,6 +50,20 @@ namespace Graph
 
         }
 
+        protected override void UpdateOnScreenSettings()
+        {
+            base.UpdateOnScreenSettings();
+
+            if (cbValueAboveTop != null)
+            {
+                cbValueAboveTop.Checked = _barDrawValueAboveTop;
+                cbValueBelowTop.Checked = _barDrawValueBelowTop;
+                cbValueCentered.Checked = _barDrawValueCenter;
+
+                udValueMargin.Value = new decimal(_barValueMargin);
+                udValueFontSize.Value = new decimal(_barValueFontSize);
+            }
+        }
 
         protected override void SetDimensions()
         {
@@ -97,28 +113,41 @@ namespace Graph
                 {
                     text = text + "%";
                 }
-                float textWidth = _font.GetWidth(text, _valueFontSize);
+                float textWidth = _font.GetWidth(text, _barValueFontSize);
+                float textHeight = _font.GetAscent(text, _barValueFontSize) + _font.GetDescent(text, _barValueFontSize);
 
-                float textX = x + _barWidth / 2 - textWidth / 2;
+                float textX = x + (_barWidth / 2) - (textWidth / 2);
                     
-                if( _barDrawValueAbove )
+                if( _barDrawValueAboveTop )
                 {
                     float textY = _originY + value.Data * _yScale + _barValueMargin;
 
                     canvas.BeginText()
-                        .SetFontAndSize(_font, _valueFontSize)
+                        .SetFontAndSize(_font, _barValueFontSize)
                         .MoveText(textX, textY)
                         .SetColor(_valueFontColour, true)
                         .ShowText(text)
                         .EndText();
 
                 }
-                if( _barDrawValueOn )
+                if (_barDrawValueBelowTop)
                 {
-                    float textY = _originY + (value.Data * _yScale)/2;
+                    float textY = _originY + value.Data * _yScale - _barValueMargin - textHeight;
 
                     canvas.BeginText()
-                        .SetFontAndSize(_font, _valueFontSize)
+                        .SetFontAndSize(_font, _barValueFontSize)
+                        .MoveText(textX, textY)
+                        .SetColor(_valueFontColour, true)
+                        .ShowText(text)
+                        .EndText();
+
+                }
+                if (_barDrawValueCenter)
+                {
+                    float textY = _originY + (value.Data * _yScale) / 2 - textHeight/2;
+
+                    canvas.BeginText()
+                        .SetFontAndSize(_font, _barValueFontSize)
                         .MoveText(textX, textY)
                         .SetColor(_valueFontColour, true)
                         .ShowText(text)
@@ -142,16 +171,50 @@ namespace Graph
             return ("BarGraph");
         }
 
-        protected override void WriteSettings(XmlTextWriter xml)
-        {
-            base.WriteSettings(xml);
 
+        protected override void WriteSubTypeSettings(XmlTextWriter xml)
+        {
+            xml.WriteAttributeString("barValueAboveTop", _barDrawValueAboveTop.ToString());
+            xml.WriteAttributeString("barValueBelowTop", _barDrawValueBelowTop.ToString());
+            xml.WriteAttributeString("barValueCenter", _barDrawValueCenter.ToString());
+            
+            xml.WriteAttributeString("barValueMargin", _barValueMargin.ToString("0.0"));
+            xml.WriteAttributeString("barValueFontSize", _barValueFontSize.ToString("0.0"));
         }
 
-        protected override void ReadSettings(XmlTextReader xml)
+        protected override void ReadSubTypeSettings(XmlTextReader xml)
         {
-            base.ReadSettings(xml);
+            _barDrawValueAboveTop = Convert.ToBoolean(xml.GetAttribute("barValueAboveTop"));
+            _barDrawValueBelowTop = Convert.ToBoolean(xml.GetAttribute("barValueBelowTop"));
+            _barDrawValueCenter = Convert.ToBoolean(xml.GetAttribute("barValueCenter"));
+            _barValueMargin = float.Parse(xml.GetAttribute("barValueMargin"));
+            _barValueFontSize = float.Parse(xml.GetAttribute("barValueFontSize"));
+        }
 
+        private void cbValueAboveTop_CheckedChanged(object sender, EventArgs e)
+        {
+            _barDrawValueAboveTop = cbValueAboveTop.Checked;
+        }
+
+        private void cbValueCentered_CheckedChanged(object sender, EventArgs e)
+        {
+
+            _barDrawValueCenter = cbValueCentered.Checked;
+        }
+
+        private void cbValueBelowTop_CheckedChanged(object sender, EventArgs e)
+        {
+            _barDrawValueBelowTop = cbValueBelowTop.Checked;
+        }
+
+        private void udValueMargin_ValueChanged(object sender, EventArgs e)
+        {
+            _barValueMargin = (float)udValueMargin.Value;
+        }
+
+        private void udValueFontSize_ValueChanged(object sender, EventArgs e)
+        {
+            _barValueFontSize = (float)udValueFontSize.Value;
         }
     }
 }

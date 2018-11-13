@@ -36,7 +36,7 @@ namespace Graph
             InitializeComponent();
 
             _originX = 75.0f;
-            _originY = 120.0f;
+            _originY = 100.0f;
 
             SetDimensions();
 
@@ -61,7 +61,7 @@ namespace Graph
                 _yScale = newHeight/_axisHeight;
             }
 
-            _canvasHeight = _originY + _axisHeight * _yScale + 300;
+            _canvasHeight = _originY + _axisHeight * _yScale + 50;
             _canvasWidth = _originX + _axisWidth + 75;
 
             UpdateOnScreenSettings();
@@ -96,15 +96,13 @@ namespace Graph
             return ("AdjacentStackedGraph");
         }
 
-        protected override void WriteSettings(XmlTextWriter xml)
+        protected override void WriteSubTypeSettings(XmlTextWriter xml)
         {
-            base.WriteSettings(xml);
 
         }
 
-        protected override void ReadSettings(XmlTextReader xml)
+        protected override void ReadSubTypeSettings(XmlTextReader xml)
         {
-            base.ReadSettings(xml);
 
         }
     }

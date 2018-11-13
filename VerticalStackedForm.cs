@@ -119,15 +119,13 @@ namespace Graph
             return ("VerticalStackedGraph");
         }
 
-        protected override void WriteSettings(XmlTextWriter xml)
+        protected override void WriteSubTypeSettings(XmlTextWriter xml)
         {
-            base.WriteSettings(xml);
 
         }
 
-        protected override void ReadSettings(XmlTextReader xml)
+        protected override void ReadSubTypeSettings(XmlTextReader xml)
         {
-            base.ReadSettings(xml);
 
         }
 
