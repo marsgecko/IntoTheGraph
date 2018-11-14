@@ -32,9 +32,9 @@
             this.cbValueAboveTop = new System.Windows.Forms.CheckBox();
             this.cbValueBelowTop = new System.Windows.Forms.CheckBox();
             this.cbValueCentered = new System.Windows.Forms.CheckBox();
-            this.label27 = new System.Windows.Forms.Label();
+            this.label127 = new System.Windows.Forms.Label();
             this.udValueMargin = new System.Windows.Forms.NumericUpDown();
-            this.label28 = new System.Windows.Forms.Label();
+            this.label128 = new System.Windows.Forms.Label();
             this.udValueFontSize = new System.Windows.Forms.NumericUpDown();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udValueMargin)).BeginInit();
@@ -43,9 +43,9 @@
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.label28);
+            this.groupBox6.Controls.Add(this.label128);
             this.groupBox6.Controls.Add(this.udValueFontSize);
-            this.groupBox6.Controls.Add(this.label27);
+            this.groupBox6.Controls.Add(this.label127);
             this.groupBox6.Controls.Add(this.udValueMargin);
             this.groupBox6.Controls.Add(this.cbValueCentered);
             this.groupBox6.Controls.Add(this.cbValueBelowTop);
@@ -96,14 +96,14 @@
             this.cbValueCentered.UseVisualStyleBackColor = true;
             this.cbValueCentered.CheckedChanged += new System.EventHandler(this.cbValueCentered_CheckedChanged);
             // 
-            // label27
+            // label127
             // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(237, 20);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(72, 13);
-            this.label27.TabIndex = 36;
-            this.label27.Text = "Value Margin:";
+            this.label127.AutoSize = true;
+            this.label127.Location = new System.Drawing.Point(237, 20);
+            this.label127.Name = "label127";
+            this.label127.Size = new System.Drawing.Size(72, 13);
+            this.label127.TabIndex = 36;
+            this.label127.Text = "Value Margin:";
             // 
             // udValueMargin
             // 
@@ -124,14 +124,14 @@
             0});
             this.udValueMargin.ValueChanged += new System.EventHandler(this.udValueMargin_ValueChanged);
             // 
-            // label28
+            // label128
             // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(237, 43);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(84, 13);
-            this.label28.TabIndex = 38;
-            this.label28.Text = "Value Font Size:";
+            this.label128.AutoSize = true;
+            this.label128.Location = new System.Drawing.Point(237, 43);
+            this.label128.Name = "label128";
+            this.label128.Size = new System.Drawing.Size(84, 13);
+            this.label128.TabIndex = 38;
+            this.label128.Text = "Value Font Size:";
             // 
             // udValueFontSize
             // 
@@ -176,9 +176,9 @@
         private System.Windows.Forms.CheckBox cbValueCentered;
         private System.Windows.Forms.CheckBox cbValueBelowTop;
         private System.Windows.Forms.CheckBox cbValueAboveTop;
-        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label128;
         private System.Windows.Forms.NumericUpDown udValueFontSize;
-        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label127;
         private System.Windows.Forms.NumericUpDown udValueMargin;
 
     }

@@ -110,11 +110,11 @@ namespace Graph
             mLegends.Clear();
             mColumns.Clear();
 
-            AddLegend("Age 0 - 5", iText.Kernel.Colors.ColorConstants.PINK);
-            AddLegend("Age 6 - 15", iText.Kernel.Colors.ColorConstants.GREEN);
-            AddLegend("Age 16 - 30", iText.Kernel.Colors.ColorConstants.BLUE);
-            AddLegend("Age 31 - 50", iText.Kernel.Colors.ColorConstants.ORANGE);
-            AddLegend("Age 51 - 100", iText.Kernel.Colors.ColorConstants.YELLOW);
+            AddLegend("Age 0 - 5", mColours[0]);
+            AddLegend("Age 6 - 15", mColours[1]);
+            AddLegend("Age 16 - 30", mColours[2]);
+            AddLegend("Age 31 - 50", mColours[3]);
+            AddLegend("Age 51 - 100", mColours[4]);
 
             AddColumn("Skirts");
             AddColumn("Trousers");

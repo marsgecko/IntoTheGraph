@@ -163,6 +163,9 @@
     <EmbeddedResource Include="BarForm.resx">
       <DependentUpon>BarForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PieForm.resx">
+      <DependentUpon>PieForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VerticalStackedForm.resx">
       <DependentUpon>VerticalStackedForm.cs</DependentUpon>
     </EmbeddedResource>

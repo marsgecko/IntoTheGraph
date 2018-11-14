@@ -107,6 +107,16 @@ namespace Graph
                     canvas.SetFillColor(value.Legend.Colour);
                     canvas.Rectangle(rectangle);
                     canvas.Fill();
+
+                    if (_barDrawBorder)
+                    {
+                        rectangle = new iText.Kernel.Geom.Rectangle(x, y + _barBorderWidth / 2, _barWidth, value.Data * _yScale - _barBorderWidth / 2);
+                        canvas.SetStrokeColor(_barBorderColour);
+                        canvas.SetLineWidth(_barBorderWidth);
+                        canvas.Rectangle(rectangle);
+                        canvas.Stroke();
+                    }
+
                     y += value.Data * _yScale;
                 }
                 x += totalColumnWidth;

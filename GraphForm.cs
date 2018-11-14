@@ -62,6 +62,9 @@ namespace Graph
 
         protected float _barWidth = 10;
         protected float _barMargin = 10;
+        protected bool _barDrawBorder = false;
+        protected float _barBorderWidth = 1;
+        protected iText.Kernel.Colors.Color _barBorderColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.0f);
 
         protected float _columnLabelMargin = 5.0f;
         protected float _columnFontSize = 12.0f;
@@ -128,12 +131,19 @@ namespace Graph
 
             udXAxisWidth.Value = new decimal(_axisWidth);
             udYAxisHeight.Value = new decimal(_axisHeight);
+            udXAxisWidth.Enabled = cbDrawXAxis.Checked;
+            udYAxisHeight.Enabled = cbDrawYAxis.Checked;
 
             udMaxValue.Value = new decimal(_valueAxisMax);
             udInterval.Value = new decimal(_valueAxisInterval);
 
             udBarWidth.Value = new decimal(_barWidth);
             udBarMargin.Value = new decimal(_barMargin);
+            cbDrawBorder.Checked = _barDrawBorder;
+            udBorderWidth.Value = new decimal(_barBorderWidth);
+            btnBorderColour.BackColor = GetColorFromiTextColour(_barBorderColour);
+            btnBorderColour.Enabled = cbDrawBorder.Checked;
+            udBorderWidth.Enabled = cbDrawBorder.Checked;
 
             udTickLineWidth.Value = new decimal(_tickLineWidth);
             udTickLabelMargin.Value = new decimal(_tickLabelMargin);
@@ -559,7 +569,7 @@ namespace Graph
             DialogResult result = openFileDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                _data.LoadExcelFile(openFileDialog.FileName, cbNoAuto.Checked);
+                _data.LoadExcelFile(openFileDialog.FileName, true);
 
                 if (!cbNoAuto.Checked)
                 {
@@ -809,6 +819,9 @@ namespace Graph
 
             xml.WriteAttributeString("barWidth", _barWidth.ToString("0.0"));
             xml.WriteAttributeString("barMargin", _barMargin.ToString("0.0"));
+            xml.WriteAttributeString("barDrawBorder", _barDrawBorder.ToString());
+            xml.WriteAttributeString("barBorderWidth", _barBorderWidth.ToString("0.0"));
+            WriteColourSetting(xml, _barBorderColour, "barBorderColour");
 
             xml.WriteAttributeString("columnLabelMargin", _columnLabelMargin.ToString("0.0"));
             xml.WriteAttributeString("columnFontSize", _columnFontSize.ToString("0.0"));
@@ -867,6 +880,9 @@ namespace Graph
             _tickLabelMargin = float.Parse(xml.GetAttribute("tickLabelMargin"));
             _barWidth = float.Parse(xml.GetAttribute("barWidth"));
             _barMargin = float.Parse(xml.GetAttribute("barMargin"));
+            _barDrawBorder = Convert.ToBoolean(xml.GetAttribute("barDrawBorder"));
+            _barBorderWidth = float.Parse(xml.GetAttribute("barBorderWidth"));
+            _barBorderColour = new DeviceRgb(System.Drawing.Color.FromArgb(Convert.ToInt32(xml.GetAttribute("barBorderColour"))));
             _columnLabelMargin = float.Parse(xml.GetAttribute("columnLabelMargin"));
             _columnFontSize = float.Parse(xml.GetAttribute("columnFontSize"));
             _columnFontColour = new DeviceRgb(System.Drawing.Color.FromArgb(Convert.ToInt32(xml.GetAttribute("columnFontColour"))));
@@ -952,7 +968,7 @@ namespace Graph
                             }
                         }
                     }
-                    UpdateYAxisHeight();
+                    SetDimensions();
                     UpdateOnScreenSettings();
                     ShowLegend();
                 }
@@ -999,9 +1015,21 @@ namespace Graph
             SetButtonColour(ref _legendFontColour, btnLegendFontColour);
         }
 
-        private void label21_Click(object sender, EventArgs e)
+        private void cbDrawBorder_CheckedChanged(object sender, EventArgs e)
         {
+            _barDrawBorder = cbDrawBorder.Checked;
+            btnBorderColour.Enabled = cbDrawBorder.Checked;
+            udBorderWidth.Enabled = cbDrawBorder.Checked;
+        }
 
+        private void btnBorderColour_Click(object sender, EventArgs e)
+        {
+            SetButtonColour(ref _barBorderColour, btnBorderColour);
+        }
+
+        private void udBorderWidth_ValueChanged(object sender, EventArgs e)
+        {
+            _barBorderWidth = (float)udBorderWidth.Value;
         }
 
     }

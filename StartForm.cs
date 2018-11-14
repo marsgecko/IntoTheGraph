@@ -34,5 +34,11 @@ namespace Graph
             BarForm form = new BarForm();
             form.ShowDialog();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            PieForm form = new PieForm();
+            form.ShowDialog();
+        }
     }
 }

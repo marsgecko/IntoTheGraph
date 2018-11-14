@@ -41,7 +41,7 @@
             this.udOriginY = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.udOriginX = new System.Windows.Forms.NumericUpDown();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupAxes = new System.Windows.Forms.GroupBox();
             this.btnColumnLableFontColour = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
@@ -49,31 +49,36 @@
             this.label20 = new System.Windows.Forms.Label();
             this.udColumnLabelFontSize = new System.Windows.Forms.NumericUpDown();
             this.btnYAxisLabelFontColour = new System.Windows.Forms.Button();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.udYAxisLabelMargin = new System.Windows.Forms.NumericUpDown();
-            this.label16 = new System.Windows.Forms.Label();
-            this.udYAxisLableFontSize = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.udInterval = new System.Windows.Forms.NumericUpDown();
+            this.label17 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.udMaxValue = new System.Windows.Forms.NumericUpDown();
+            this.label15 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.udYAxisLabelMargin = new System.Windows.Forms.NumericUpDown();
             this.udYAxisHeight = new System.Windows.Forms.NumericUpDown();
+            this.label16 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.udXAxisWidth = new System.Windows.Forms.NumericUpDown();
+            this.udYAxisLableFontSize = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.udAxisLineWidth = new System.Windows.Forms.NumericUpDown();
             this.cbDrawYAxis = new System.Windows.Forms.CheckBox();
             this.cbDrawXAxis = new System.Windows.Forms.CheckBox();
             this.cbNoAuto = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.udBorderWidth = new System.Windows.Forms.NumericUpDown();
+            this.labelBorderWidth = new System.Windows.Forms.Label();
+            this.btnBorderColour = new System.Windows.Forms.Button();
+            this.labelBorderColour = new System.Windows.Forms.Label();
+            this.cbDrawBorder = new System.Windows.Forms.CheckBox();
             this.udBarMargin = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
             this.udBarWidth = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.groupTicks = new System.Windows.Forms.GroupBox();
             this.btnTickLineColour = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.btnTickFontColour = new System.Windows.Forms.Button();
@@ -105,20 +110,21 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginX)).BeginInit();
-            this.groupBox2.SuspendLayout();
+            this.groupAxes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelMargin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelFontSize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udYAxisLabelMargin)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udYAxisLableFontSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udMaxValue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udYAxisLabelMargin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udYAxisHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udXAxisWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udYAxisLableFontSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udAxisLineWidth)).BeginInit();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udBorderWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBarMargin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBarWidth)).BeginInit();
-            this.groupBox4.SuspendLayout();
+            this.groupTicks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udTickFontSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udTickLabelMargin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udTickLineWidth)).BeginInit();
@@ -249,38 +255,38 @@
             this.udOriginX.TabIndex = 9;
             this.udOriginX.ValueChanged += new System.EventHandler(this.udOriginX_ValueChanged);
             // 
-            // groupBox2
+            // groupAxes
             // 
-            this.groupBox2.Controls.Add(this.btnColumnLableFontColour);
-            this.groupBox2.Controls.Add(this.label18);
-            this.groupBox2.Controls.Add(this.label19);
-            this.groupBox2.Controls.Add(this.udColumnLabelMargin);
-            this.groupBox2.Controls.Add(this.label20);
-            this.groupBox2.Controls.Add(this.udColumnLabelFontSize);
-            this.groupBox2.Controls.Add(this.btnYAxisLabelFontColour);
-            this.groupBox2.Controls.Add(this.label7);
-            this.groupBox2.Controls.Add(this.udInterval);
-            this.groupBox2.Controls.Add(this.label17);
-            this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.udMaxValue);
-            this.groupBox2.Controls.Add(this.label15);
-            this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.udYAxisLabelMargin);
-            this.groupBox2.Controls.Add(this.udYAxisHeight);
-            this.groupBox2.Controls.Add(this.label16);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.udXAxisWidth);
-            this.groupBox2.Controls.Add(this.udYAxisLableFontSize);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.udAxisLineWidth);
-            this.groupBox2.Controls.Add(this.cbDrawYAxis);
-            this.groupBox2.Controls.Add(this.cbDrawXAxis);
-            this.groupBox2.Location = new System.Drawing.Point(261, 132);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(396, 208);
-            this.groupBox2.TabIndex = 10;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Axes";
+            this.groupAxes.Controls.Add(this.btnColumnLableFontColour);
+            this.groupAxes.Controls.Add(this.label18);
+            this.groupAxes.Controls.Add(this.label19);
+            this.groupAxes.Controls.Add(this.udColumnLabelMargin);
+            this.groupAxes.Controls.Add(this.label20);
+            this.groupAxes.Controls.Add(this.udColumnLabelFontSize);
+            this.groupAxes.Controls.Add(this.btnYAxisLabelFontColour);
+            this.groupAxes.Controls.Add(this.label7);
+            this.groupAxes.Controls.Add(this.udInterval);
+            this.groupAxes.Controls.Add(this.label17);
+            this.groupAxes.Controls.Add(this.label6);
+            this.groupAxes.Controls.Add(this.udMaxValue);
+            this.groupAxes.Controls.Add(this.label15);
+            this.groupAxes.Controls.Add(this.label5);
+            this.groupAxes.Controls.Add(this.udYAxisLabelMargin);
+            this.groupAxes.Controls.Add(this.udYAxisHeight);
+            this.groupAxes.Controls.Add(this.label16);
+            this.groupAxes.Controls.Add(this.label4);
+            this.groupAxes.Controls.Add(this.udXAxisWidth);
+            this.groupAxes.Controls.Add(this.udYAxisLableFontSize);
+            this.groupAxes.Controls.Add(this.label3);
+            this.groupAxes.Controls.Add(this.udAxisLineWidth);
+            this.groupAxes.Controls.Add(this.cbDrawYAxis);
+            this.groupAxes.Controls.Add(this.cbDrawXAxis);
+            this.groupAxes.Location = new System.Drawing.Point(261, 132);
+            this.groupAxes.Name = "groupAxes";
+            this.groupAxes.Size = new System.Drawing.Size(396, 208);
+            this.groupAxes.TabIndex = 10;
+            this.groupAxes.TabStop = false;
+            this.groupAxes.Text = "Axes";
             // 
             // btnColumnLableFontColour
             // 
@@ -367,71 +373,6 @@
             this.btnYAxisLabelFontColour.UseVisualStyleBackColor = false;
             this.btnYAxisLabelFontColour.Click += new System.EventHandler(this.btnYAxisLabelFontColour_Click);
             // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(213, 182);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(103, 13);
-            this.label17.TabIndex = 27;
-            this.label17.Text = "Y Label Font Colour:";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(236, 127);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(81, 13);
-            this.label15.TabIndex = 26;
-            this.label15.Text = "Y Label Margin:";
-            // 
-            // udYAxisLabelMargin
-            // 
-            this.udYAxisLabelMargin.DecimalPlaces = 1;
-            this.udYAxisLabelMargin.Location = new System.Drawing.Point(323, 125);
-            this.udYAxisLabelMargin.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.udYAxisLabelMargin.Name = "udYAxisLabelMargin";
-            this.udYAxisLabelMargin.Size = new System.Drawing.Size(53, 20);
-            this.udYAxisLabelMargin.TabIndex = 25;
-            this.udYAxisLabelMargin.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.udYAxisLabelMargin.ValueChanged += new System.EventHandler(this.udYAxisLabelMargin_ValueChanged);
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(223, 154);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(93, 13);
-            this.label16.TabIndex = 24;
-            this.label16.Text = "Y Lable Font Size:";
-            // 
-            // udYAxisLableFontSize
-            // 
-            this.udYAxisLableFontSize.DecimalPlaces = 1;
-            this.udYAxisLableFontSize.Location = new System.Drawing.Point(323, 152);
-            this.udYAxisLableFontSize.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.udYAxisLableFontSize.Name = "udYAxisLableFontSize";
-            this.udYAxisLableFontSize.Size = new System.Drawing.Size(53, 20);
-            this.udYAxisLableFontSize.TabIndex = 23;
-            this.udYAxisLableFontSize.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.udYAxisLableFontSize.ValueChanged += new System.EventHandler(this.udYAxisLableFontSize_ValueChanged);
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -459,6 +400,15 @@
             0,
             0});
             this.udInterval.ValueChanged += new System.EventHandler(this.udInterval_ValueChanged);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(213, 182);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(103, 13);
+            this.label17.TabIndex = 27;
+            this.label17.Text = "Y Label Font Colour:";
             // 
             // label6
             // 
@@ -488,6 +438,15 @@
             0});
             this.udMaxValue.ValueChanged += new System.EventHandler(this.udMaxValue_ValueChanged);
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(236, 127);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(81, 13);
+            this.label15.TabIndex = 26;
+            this.label15.Text = "Y Label Margin:";
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -496,6 +455,25 @@
             this.label5.Size = new System.Drawing.Size(73, 13);
             this.label5.TabIndex = 18;
             this.label5.Text = "Y Axis Height:";
+            // 
+            // udYAxisLabelMargin
+            // 
+            this.udYAxisLabelMargin.DecimalPlaces = 1;
+            this.udYAxisLabelMargin.Location = new System.Drawing.Point(323, 125);
+            this.udYAxisLabelMargin.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.udYAxisLabelMargin.Name = "udYAxisLabelMargin";
+            this.udYAxisLabelMargin.Size = new System.Drawing.Size(53, 20);
+            this.udYAxisLabelMargin.TabIndex = 25;
+            this.udYAxisLabelMargin.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udYAxisLabelMargin.ValueChanged += new System.EventHandler(this.udYAxisLabelMargin_ValueChanged);
             // 
             // udYAxisHeight
             // 
@@ -515,6 +493,15 @@
             0,
             0});
             this.udYAxisHeight.ValueChanged += new System.EventHandler(this.udYAxisHeight_ValueChanged);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(223, 154);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(93, 13);
+            this.label16.TabIndex = 24;
+            this.label16.Text = "Y Lable Font Size:";
             // 
             // label4
             // 
@@ -543,6 +530,25 @@
             0,
             0});
             this.udXAxisWidth.ValueChanged += new System.EventHandler(this.udXAxisWidth_ValueChanged);
+            // 
+            // udYAxisLableFontSize
+            // 
+            this.udYAxisLableFontSize.DecimalPlaces = 1;
+            this.udYAxisLableFontSize.Location = new System.Drawing.Point(323, 152);
+            this.udYAxisLableFontSize.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.udYAxisLableFontSize.Name = "udYAxisLableFontSize";
+            this.udYAxisLableFontSize.Size = new System.Drawing.Size(53, 20);
+            this.udYAxisLableFontSize.TabIndex = 23;
+            this.udYAxisLableFontSize.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udYAxisLableFontSize.ValueChanged += new System.EventHandler(this.udYAxisLableFontSize_ValueChanged);
             // 
             // label3
             // 
@@ -610,16 +616,81 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.udBorderWidth);
+            this.groupBox3.Controls.Add(this.labelBorderWidth);
+            this.groupBox3.Controls.Add(this.btnBorderColour);
+            this.groupBox3.Controls.Add(this.labelBorderColour);
+            this.groupBox3.Controls.Add(this.cbDrawBorder);
             this.groupBox3.Controls.Add(this.udBarMargin);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.udBarWidth);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Location = new System.Drawing.Point(668, 72);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(351, 54);
+            this.groupBox3.Size = new System.Drawing.Size(351, 93);
             this.groupBox3.TabIndex = 12;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Bars";
+            // 
+            // udBorderWidth
+            // 
+            this.udBorderWidth.DecimalPlaces = 1;
+            this.udBorderWidth.Location = new System.Drawing.Point(287, 46);
+            this.udBorderWidth.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.udBorderWidth.Name = "udBorderWidth";
+            this.udBorderWidth.Size = new System.Drawing.Size(53, 20);
+            this.udBorderWidth.TabIndex = 28;
+            this.udBorderWidth.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udBorderWidth.ValueChanged += new System.EventHandler(this.udBorderWidth_ValueChanged);
+            // 
+            // labelBorderWidth
+            // 
+            this.labelBorderWidth.AutoSize = true;
+            this.labelBorderWidth.Location = new System.Drawing.Point(208, 48);
+            this.labelBorderWidth.Name = "labelBorderWidth";
+            this.labelBorderWidth.Size = new System.Drawing.Size(72, 13);
+            this.labelBorderWidth.TabIndex = 27;
+            this.labelBorderWidth.Text = "Border Width:";
+            // 
+            // btnBorderColour
+            // 
+            this.btnBorderColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnBorderColour.Location = new System.Drawing.Point(90, 44);
+            this.btnBorderColour.Name = "btnBorderColour";
+            this.btnBorderColour.Size = new System.Drawing.Size(20, 20);
+            this.btnBorderColour.TabIndex = 26;
+            this.btnBorderColour.UseVisualStyleBackColor = false;
+            this.btnBorderColour.Click += new System.EventHandler(this.btnBorderColour_Click);
+            // 
+            // labelBorderColour
+            // 
+            this.labelBorderColour.AutoSize = true;
+            this.labelBorderColour.Location = new System.Drawing.Point(10, 48);
+            this.labelBorderColour.Name = "labelBorderColour";
+            this.labelBorderColour.Size = new System.Drawing.Size(74, 13);
+            this.labelBorderColour.TabIndex = 25;
+            this.labelBorderColour.Text = "Border Colour:";
+            // 
+            // cbDrawBorder
+            // 
+            this.cbDrawBorder.AutoSize = true;
+            this.cbDrawBorder.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbDrawBorder.Location = new System.Drawing.Point(129, 19);
+            this.cbDrawBorder.Name = "cbDrawBorder";
+            this.cbDrawBorder.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.cbDrawBorder.Size = new System.Drawing.Size(88, 17);
+            this.cbDrawBorder.TabIndex = 19;
+            this.cbDrawBorder.Text = "Draw Border:";
+            this.cbDrawBorder.UseVisualStyleBackColor = true;
+            this.cbDrawBorder.CheckedChanged += new System.EventHandler(this.cbDrawBorder_CheckedChanged);
             // 
             // udBarMargin
             // 
@@ -643,7 +714,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(244, 25);
+            this.label9.Location = new System.Drawing.Point(241, 20);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(42, 13);
             this.label9.TabIndex = 17;
@@ -677,24 +748,24 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "Width:";
             // 
-            // groupBox4
+            // groupTicks
             // 
-            this.groupBox4.Controls.Add(this.btnTickLineColour);
-            this.groupBox4.Controls.Add(this.label14);
-            this.groupBox4.Controls.Add(this.btnTickFontColour);
-            this.groupBox4.Controls.Add(this.label13);
-            this.groupBox4.Controls.Add(this.label12);
-            this.groupBox4.Controls.Add(this.udTickFontSize);
-            this.groupBox4.Controls.Add(this.label11);
-            this.groupBox4.Controls.Add(this.udTickLabelMargin);
-            this.groupBox4.Controls.Add(this.label10);
-            this.groupBox4.Controls.Add(this.udTickLineWidth);
-            this.groupBox4.Location = new System.Drawing.Point(668, 132);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(351, 106);
-            this.groupBox4.TabIndex = 13;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Ticks";
+            this.groupTicks.Controls.Add(this.btnTickLineColour);
+            this.groupTicks.Controls.Add(this.label14);
+            this.groupTicks.Controls.Add(this.btnTickFontColour);
+            this.groupTicks.Controls.Add(this.label13);
+            this.groupTicks.Controls.Add(this.label12);
+            this.groupTicks.Controls.Add(this.udTickFontSize);
+            this.groupTicks.Controls.Add(this.label11);
+            this.groupTicks.Controls.Add(this.udTickLabelMargin);
+            this.groupTicks.Controls.Add(this.label10);
+            this.groupTicks.Controls.Add(this.udTickLineWidth);
+            this.groupTicks.Location = new System.Drawing.Point(668, 171);
+            this.groupTicks.Name = "groupTicks";
+            this.groupTicks.Size = new System.Drawing.Size(351, 106);
+            this.groupTicks.TabIndex = 13;
+            this.groupTicks.TabStop = false;
+            this.groupTicks.Text = "Ticks";
             // 
             // btnTickLineColour
             // 
@@ -709,7 +780,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(193, 47);
+            this.label14.Location = new System.Drawing.Point(196, 47);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(87, 13);
             this.label14.TabIndex = 25;
@@ -866,7 +937,7 @@
             this.groupBox5.Controls.Add(this.label21);
             this.groupBox5.Controls.Add(this.udLegendMargin);
             this.groupBox5.Controls.Add(this.cbLegendHorizontal);
-            this.groupBox5.Location = new System.Drawing.Point(668, 244);
+            this.groupBox5.Location = new System.Drawing.Point(668, 283);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(351, 96);
             this.groupBox5.TabIndex = 15;
@@ -1012,7 +1083,6 @@
             this.label21.Size = new System.Drawing.Size(42, 13);
             this.label21.TabIndex = 34;
             this.label21.Text = "Margin:";
-            this.label21.Click += new System.EventHandler(this.label21_Click);
             // 
             // udLegendMargin
             // 
@@ -1052,10 +1122,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 427);
             this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.groupTicks);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.cbNoAuto);
-            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupAxes);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnImport);
             this.Controls.Add(this.lblLegend);
@@ -1071,23 +1141,24 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginX)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.groupAxes.ResumeLayout(false);
+            this.groupAxes.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelMargin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelFontSize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udYAxisLabelMargin)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udYAxisLableFontSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udMaxValue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udYAxisLabelMargin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udYAxisHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udXAxisWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udYAxisLableFontSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udAxisLineWidth)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udBorderWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBarMargin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBarWidth)).EndInit();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
+            this.groupTicks.ResumeLayout(false);
+            this.groupTicks.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udTickFontSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udTickLabelMargin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udTickLineWidth)).EndInit();
@@ -1107,80 +1178,85 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog;
-        private System.Windows.Forms.FontDialog fontDialog;
-        private System.Windows.Forms.Button btnFont;
-        private System.Windows.Forms.Label lblFont;
-        private System.Windows.Forms.Label lblLegend;
-        private System.Windows.Forms.Button btnImport;
-        private System.Windows.Forms.OpenFileDialog openFileDialog;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown udOriginY;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.NumericUpDown udOriginX;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.CheckBox cbDrawXAxis;
-        private System.Windows.Forms.CheckBox cbDrawYAxis;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.NumericUpDown udAxisLineWidth;
-        private System.Windows.Forms.CheckBox cbNoAuto;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.NumericUpDown udYAxisHeight;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.NumericUpDown udXAxisWidth;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.NumericUpDown udInterval;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.NumericUpDown udMaxValue;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.NumericUpDown udBarMargin;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.NumericUpDown udBarWidth;
-        private System.Windows.Forms.ColorDialog colorDialog;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.NumericUpDown udTickLineWidth;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.NumericUpDown udTickLabelMargin;
-        private System.Windows.Forms.Button btnTickLineColour;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Button btnTickFontColour;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.NumericUpDown udTickFontSize;
-        private System.Windows.Forms.Button btnYAxisLabelFontColour;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.NumericUpDown udYAxisLabelMargin;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.NumericUpDown udYAxisLableFontSize;
-        private System.Windows.Forms.Button btnColumnLableFontColour;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.NumericUpDown udColumnLabelMargin;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.NumericUpDown udColumnLabelFontSize;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.CheckBox cbLegendHorizontal;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.NumericUpDown udLegendTextMargin;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.NumericUpDown udLegendMargin;
-        private System.Windows.Forms.Button btnLegendFontColour;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.NumericUpDown udLegendFontSize;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.NumericUpDown udLegendKeySize;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.NumericUpDown udLegendVerticalSize;
+        protected System.Windows.Forms.Button button1;
+        protected System.Windows.Forms.SaveFileDialog saveFileDialog;
+        protected System.Windows.Forms.FontDialog fontDialog;
+        protected System.Windows.Forms.Button btnFont;
+        protected System.Windows.Forms.Label lblFont;
+        protected System.Windows.Forms.Label lblLegend;
+        protected System.Windows.Forms.Button btnImport;
+        protected System.Windows.Forms.OpenFileDialog openFileDialog;
+        protected System.Windows.Forms.GroupBox groupBox1;
+        protected System.Windows.Forms.Label label2;
+        protected System.Windows.Forms.NumericUpDown udOriginY;
+        protected System.Windows.Forms.Label label1;
+        protected System.Windows.Forms.NumericUpDown udOriginX;
+        protected System.Windows.Forms.GroupBox groupAxes;
+        protected System.Windows.Forms.CheckBox cbDrawXAxis;
+        protected System.Windows.Forms.CheckBox cbDrawYAxis;
+        protected System.Windows.Forms.Label label3;
+        protected System.Windows.Forms.NumericUpDown udAxisLineWidth;
+        protected System.Windows.Forms.CheckBox cbNoAuto;
+        protected System.Windows.Forms.Label label5;
+        protected System.Windows.Forms.NumericUpDown udYAxisHeight;
+        protected System.Windows.Forms.Label label4;
+        protected System.Windows.Forms.NumericUpDown udXAxisWidth;
+        protected System.Windows.Forms.Label label7;
+        protected System.Windows.Forms.NumericUpDown udInterval;
+        protected System.Windows.Forms.Label label6;
+        protected System.Windows.Forms.NumericUpDown udMaxValue;
+        protected System.Windows.Forms.GroupBox groupBox3;
+        protected System.Windows.Forms.Label label8;
+        protected System.Windows.Forms.NumericUpDown udBarMargin;
+        protected System.Windows.Forms.Label label9;
+        protected System.Windows.Forms.NumericUpDown udBarWidth;
+        protected System.Windows.Forms.ColorDialog colorDialog;
+        protected System.Windows.Forms.GroupBox groupTicks;
+        protected System.Windows.Forms.Label label10;
+        protected System.Windows.Forms.NumericUpDown udTickLineWidth;
+        protected System.Windows.Forms.Label label11;
+        protected System.Windows.Forms.NumericUpDown udTickLabelMargin;
+        protected System.Windows.Forms.Button btnTickLineColour;
+        protected System.Windows.Forms.Label label14;
+        protected System.Windows.Forms.Button btnTickFontColour;
+        protected System.Windows.Forms.Label label13;
+        protected System.Windows.Forms.Label label12;
+        protected System.Windows.Forms.NumericUpDown udTickFontSize;
+        protected System.Windows.Forms.Button btnYAxisLabelFontColour;
+        protected System.Windows.Forms.Label label17;
+        protected System.Windows.Forms.Label label15;
+        protected System.Windows.Forms.NumericUpDown udYAxisLabelMargin;
+        protected System.Windows.Forms.Label label16;
+        protected System.Windows.Forms.NumericUpDown udYAxisLableFontSize;
+        protected System.Windows.Forms.Button btnColumnLableFontColour;
+        protected System.Windows.Forms.Label label18;
+        protected System.Windows.Forms.Label label19;
+        protected System.Windows.Forms.NumericUpDown udColumnLabelMargin;
+        protected System.Windows.Forms.Label label20;
+        protected System.Windows.Forms.NumericUpDown udColumnLabelFontSize;
+        protected System.Windows.Forms.MenuStrip menuStrip1;
+        protected System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        protected System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        protected System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        protected System.Windows.Forms.GroupBox groupBox5;
+        protected System.Windows.Forms.CheckBox cbLegendHorizontal;
+        protected System.Windows.Forms.Label label22;
+        protected System.Windows.Forms.NumericUpDown udLegendTextMargin;
+        protected System.Windows.Forms.Label label21;
+        protected System.Windows.Forms.NumericUpDown udLegendMargin;
+        protected System.Windows.Forms.Button btnLegendFontColour;
+        protected System.Windows.Forms.Label label26;
+        protected System.Windows.Forms.Label label25;
+        protected System.Windows.Forms.NumericUpDown udLegendFontSize;
+        protected System.Windows.Forms.Label label24;
+        protected System.Windows.Forms.NumericUpDown udLegendKeySize;
+        protected System.Windows.Forms.Label label23;
+        protected System.Windows.Forms.NumericUpDown udLegendVerticalSize;
+        protected System.Windows.Forms.NumericUpDown udBorderWidth;
+        protected System.Windows.Forms.Label labelBorderWidth;
+        protected System.Windows.Forms.Button btnBorderColour;
+        protected System.Windows.Forms.Label labelBorderColour;
+        protected System.Windows.Forms.CheckBox cbDrawBorder;
     }
 }
 
