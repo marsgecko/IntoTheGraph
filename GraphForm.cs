@@ -81,9 +81,15 @@ namespace Graph
         protected List<Button> mLegendButtons;
         protected List<Label> mLegendLabels;
 
+        protected bool _svgRender = false;
+        protected svgWriter _svgWriter;
+
         public GraphForm()
         {
             InitializeComponent();
+
+            String fontFileName = GetSystemFontFileName(fontDialog.Font);
+            _font = PdfFontFactory.CreateFont(fontFileName, iText.IO.Font.PdfEncodings.IDENTITY_H);
 
             mLegendButtons = new List<Button>();
             mLegendLabels = new List<Label>();
@@ -95,10 +101,10 @@ namespace Graph
             _originX = 75.0f;
             _originY = 120.0f;
 
+            SetFont();
             SetDimensions();
             ShowLegend();
 
-            SetFont();
         }
 
         protected System.Drawing.Color GetColorFromiTextColour(iText.Kernel.Colors.Color iTextColour)
@@ -307,29 +313,26 @@ namespace Graph
                 _yScale = newHeight/_axisHeight;
             }
 
-            _canvasHeight = _originY + _axisHeight * _yScale + 300;
-            _canvasWidth = _originX + _axisWidth + 75;
+            if(_legendIsHorizontal)
+            {
+                float legendWidth = GetLegendWidth();
+                _canvasHeight = _originY + _axisHeight * _yScale + _originY;
+                if (_axisWidth < legendWidth)
+                {
+                    _canvasWidth = _originX + _axisWidth / 2 + legendWidth / 2 + _originX;
+                }
+                else
+                {
+                    _canvasWidth = _originX + _axisWidth + _originX;
+                }
+            }
+            else
+            {
+                _canvasHeight = _originY + _axisHeight * _yScale + _originY;
+                _canvasWidth = _originX + _axisWidth + GetLegendWidth() + 10;
+            }
 
             UpdateOnScreenSettings();
-        }
-
-        protected virtual void UpdateYAxisHeight()
-        {
-            float maxValue = _data.GetMaxValue();
-
-            for (_valueAxisMax = 0; _valueAxisMax < maxValue; _valueAxisMax += _valueAxisInterval)
-            {
-
-            }
-            _axisHeight = _valueAxisMax;
-
-            _yScale = 1.0f;
-            if (_axisHeight < _axisWidth * 0.25f)
-            {
-                float newHeight = _axisWidth * 0.25f;
-                _yScale = newHeight / _axisHeight;
-            }
-            _canvasHeight = _originY + _axisHeight + 300;
         }
 
         protected virtual void DrawTicks(PdfCanvas canvas, PdfPage page)
@@ -339,129 +342,179 @@ namespace Graph
             float textWidth;
             float textHeight;
 
-            canvas.SetLineWidth(_tickLineWidth).SetStrokeColor(_tickColour);
-            // DrawTicks
-            for (i = _valueAxisInterval; i <= _valueAxisMax; i += _valueAxisInterval)
+            if (_svgRender)
             {
-                text = i.ToString();
-                textWidth = _font.GetWidth(text, _tickFontSize) + _tickLabelMargin;
-                textHeight = _font.GetAscent(text, _tickFontSize) + _font.GetDescent(text, _tickFontSize);
+                for (i = _valueAxisInterval; i <= _valueAxisMax; i += _valueAxisInterval)
+                {
+                    //Line(float x1, float y1, float x2, float y2, System.Drawing.Color colour, float lineWidth)
+                    _svgWriter.Line(_originX,
+                                    _originY + i * _yScale,
+                                    _originX + _axisWidth,
+                                    _originY + i * _yScale,
+                                    GetColorFromiTextColour(_tickColour),
+                                    _tickLineWidth);
 
-                canvas.MoveTo(_originX, _originY + i * _yScale);
-                canvas.LineTo(_originX + _axisWidth, _originY + i * _yScale);
-
-                canvas.BeginText()
-                  .SetFontAndSize(_font, _tickFontSize)
-                  .MoveText(_originX - textWidth, _originY + i * _yScale - textHeight / 2)
-                  .SetColor(_tickFontColour, true)
-                  .ShowText(text)
-                  .EndText();
+                    // Text(float x, float y, String text, System.Drawing.Color fillColour, String anchor, float rotation)
+                    _svgWriter.Text(_originX - _tickLabelMargin,
+                                    _originY + i * _yScale,
+                                    i.ToString(),
+                                    GetColorFromiTextColour(_tickFontColour),
+                                    "end",
+                                    0.0f,
+                                    _tickFontSize);
+                }
             }
+            else
+            {
+                canvas.SetLineWidth(_tickLineWidth).SetStrokeColor(_tickColour);
+                // DrawTicks
+                for (i = _valueAxisInterval; i <= _valueAxisMax; i += _valueAxisInterval)
+                {
+                    text = i.ToString();
+                    textWidth = _font.GetWidth(text, _tickFontSize) + _tickLabelMargin;
+                    textHeight = _font.GetAscent(text, _tickFontSize) + _font.GetDescent(text, _tickFontSize);
 
-            // Top tick has a label but no line
-            /*ext = i.ToString();
-            textWidth = _font.GetWidth(text, _tickFontSize) + _tickLabelMargin;
-            textHeight = _font.GetAscent(text, _tickFontSize) - _font.GetDescent(text, _tickFontSize);
+                    canvas.MoveTo(_originX, _originY + i * _yScale);
+                    canvas.LineTo(_originX + _axisWidth, _originY + i * _yScale);
 
-            canvas.BeginText()
-              .SetFontAndSize(_font, _tickFontSize)
-              .MoveText(_originX - textWidth, _originY + i - textHeight / 2)
-              .SetColor(_tickFontColour, true)
-              .ShowText(text)
-              .EndText();
-            */
-            canvas.Stroke();
+                    canvas.BeginText()
+                      .SetFontAndSize(_font, _tickFontSize)
+                      .MoveText(_originX - textWidth, _originY + i * _yScale - textHeight / 2)
+                      .SetColor(_tickFontColour, true)
+                      .ShowText(text)
+                      .EndText();
+                }
+                canvas.Stroke();
+            }
         }
 
         protected virtual void DrawAxes(PdfCanvas canvas, PdfPage page)
         {
-            canvas.SetLineWidth(_axisLineWidth).SetStrokeColor(_axisColour);
-
-            if (_drawXAxis)
+            if (_svgRender)
             {
-                // Draw X Axis
-                canvas.MoveTo(_originX, _originY);
-                canvas.LineTo(_originX + _axisWidth, _originY);
+                //Line(float x1, float y1, float x2, float y2, System.Drawing.Color colour, float lineWidth)
+                if (_drawXAxis)
+                {
+                    _svgWriter.Line(_originX,
+                                    _originY,
+                                    _originX + _axisWidth,
+                                    _originY,
+                                    GetColorFromiTextColour(_axisColour),
+                                    _axisLineWidth);
+                }
+                if (_drawYAxis)
+                {
+                    _svgWriter.Line(_originX,
+                                    _originY,
+                                    _originX,
+                                    _originY + _axisHeight * _yScale,
+                                    GetColorFromiTextColour(_axisColour),
+                                    _axisLineWidth);
+                }
             }
-
-            if (_drawYAxis)
+            else
             {
-                // Draw Y Axis
-                canvas.MoveTo(_originX, _originY);
-                canvas.LineTo(_originX, _originY + _axisHeight * _yScale);
-            }
+                canvas.SetLineWidth(_axisLineWidth).SetStrokeColor(_axisColour);
 
-            canvas.Stroke();
+                if (_drawXAxis)
+                {
+                    // Draw X Axis
+                    canvas.MoveTo(_originX, _originY);
+                    canvas.LineTo(_originX + _axisWidth, _originY);
+                }
+
+                if (_drawYAxis)
+                {
+                    // Draw Y Axis
+                    canvas.MoveTo(_originX, _originY);
+                    canvas.LineTo(_originX, _originY + _axisHeight * _yScale);
+                }
+
+                canvas.Stroke();
+            }
         }
 
         protected virtual void DrawBars(PdfCanvas canvas, PdfPage page)
         {
-/*            int columnCount = _data.Columns.Count;
-            int barCount = _data.Legends.Count;
-
-            float x = _originX + _barMargin;
-            float y = _originY;
-
-            foreach (Column column in _data.Columns)
-            {
-                foreach (Value value in column.Values)
-                {
-                    iText.Kernel.Geom.Rectangle rectangle = new iText.Kernel.Geom.Rectangle(x, y, _barWidth, value.Data * _yScale);
-                    canvas.SetFillColor(value.Legend.Colour);
-                    canvas.Rectangle(rectangle);
-                    canvas.Fill();
-                    x += _barWidth;
-                }
-                x += _barMargin;
-            }*/
 
         }
 
         protected virtual void DrawLabels(PdfCanvas canvas, PdfPage page)
         {
-
-            //canvas.BeginText();
-            //canvas.SetFontAndSize(_font, _valueFontSize);
-            //canvas.SetFillColor(_valueFontColour);
-            //canvas.EndText();
-
-            iText.Layout.Canvas layoutCanvas = new iText.Layout.Canvas(canvas, _pdf, new iText.Kernel.Geom.Rectangle(_canvasWidth, _canvasHeight));
-            layoutCanvas.SetFont(_font);
-            layoutCanvas.SetFontSize(_valueFontSize);
-            layoutCanvas.SetFontColor(_valueFontColour);
-
-            float x = _originX - _valueLabelMargin;
-            layoutCanvas.ShowTextAligned(_data.ValueLabel, x, _originY + _axisHeight * _yScale / 2, TextAlignment.CENTER, VerticalAlignment.MIDDLE, 0.5f * (float)Math.PI);
-            
-
-            int columnCount = _data.Columns.Count;
-            float totalColumnWidth = (_axisWidth / columnCount);
-            float barMargin = (totalColumnWidth - _barWidth) / 2;
-            x = _originX + barMargin + _barWidth/2;
-            float y = _originY - _columnLabelMargin;
-
-            layoutCanvas.SetFontSize(_columnFontSize);
-            layoutCanvas.SetFontColor(_columnFontColour);
-
-            IRenderer renderer = layoutCanvas.GetRenderer();
-
-            foreach (Column column in _data.Columns)
+            if (_svgRender)
             {
-                Debug.WriteLine(column.Label);
-                layoutCanvas.ShowTextAligned(column.Label, x, y, TextAlignment.RIGHT, VerticalAlignment.TOP, 0.25f * (float)Math.PI);
-                x += totalColumnWidth;
-            }
+                float x = _originX - _valueLabelMargin;
+                //Text(float x, float y, String text, System.Drawing.Color fillColour, String anchor, float rotation)
+                _svgWriter.Text(x,
+                                _originY + _axisHeight * _yScale / 2,
+                                _data.ValueLabel,
+                                GetColorFromiTextColour(_valueFontColour),
+                                "middle",
+                                -90.0f,
+                                _valueFontSize);
+                //layoutCanvas.ShowTextAligned(_data.ValueLabel, x, _originY + _axisHeight * _yScale / 2, TextAlignment.CENTER, VerticalAlignment.MIDDLE, 0.5f * (float)Math.PI);
 
-            layoutCanvas.Close();
+
+                int columnCount = _data.Columns.Count;
+                float totalColumnWidth = (_axisWidth / columnCount);
+                float barMargin = (totalColumnWidth - _barWidth) / 2;
+                x = _originX + barMargin + _barWidth / 2;
+                float y = _originY - _columnLabelMargin;
+                foreach (Column column in _data.Columns)
+                {
+                    //layoutCanvas.ShowTextAligned(column.Label, x, y, TextAlignment.RIGHT, VerticalAlignment.TOP, 0.25f * (float)Math.PI);
+                    _svgWriter.Text(x,
+                                y,
+                                column.Label,
+                                GetColorFromiTextColour(_columnFontColour),
+                                "end",
+                                -45.0f,
+                                _columnFontSize);
+                    x += totalColumnWidth;
+                }
+            }
+            else
+            {
+                iText.Layout.Canvas layoutCanvas = new iText.Layout.Canvas(canvas, _pdf, new iText.Kernel.Geom.Rectangle(_canvasWidth, _canvasHeight));
+                layoutCanvas.SetFont(_font);
+                layoutCanvas.SetFontSize(_valueFontSize);
+                layoutCanvas.SetFontColor(_valueFontColour);
+
+                float x = _originX - _valueLabelMargin;
+                layoutCanvas.ShowTextAligned(_data.ValueLabel, x, _originY + _axisHeight * _yScale / 2, TextAlignment.CENTER, VerticalAlignment.MIDDLE, 0.5f * (float)Math.PI);
+
+
+                int columnCount = _data.Columns.Count;
+                float totalColumnWidth = (_axisWidth / columnCount);
+                float barMargin = (totalColumnWidth - _barWidth) / 2;
+                x = _originX + barMargin + _barWidth / 2;
+                float y = _originY - _columnLabelMargin;
+
+                layoutCanvas.SetFontSize(_columnFontSize);
+                layoutCanvas.SetFontColor(_columnFontColour);
+
+                IRenderer renderer = layoutCanvas.GetRenderer();
+
+                foreach (Column column in _data.Columns)
+                {
+                    layoutCanvas.ShowTextAligned(column.Label, x, y, TextAlignment.RIGHT, VerticalAlignment.TOP, 0.25f * (float)Math.PI);
+                    x += totalColumnWidth;
+                }
+
+                layoutCanvas.Close();
+            }
         }
 
-        protected virtual void DrawLegend(PdfCanvas canvas, PdfPage page)
+        protected virtual float GetLegendWidth()
         {
+            float result = 0.0f;
+            if (_font == null)
+            {
+                return result;
+            }
             if (_legendIsHorizontal)
             {
-                float x = 0.0f;
                 float legendWidth = 0.0f;
-                float y = _originY * 0.25f;
 
                 foreach (Legend legend in _data.Legends)
                 {
@@ -470,56 +523,159 @@ namespace Graph
                 }
                 legendWidth -= _legendMargin;
 
-                x = _originX + _axisWidth / 2 - legendWidth / 2;
-
-                foreach (Legend legend in _data.Legends)
-                {
-                    canvas.SetFillColor(legend.Colour);
-                    canvas.Circle(x, y, _legendKeySize);
-                    canvas.Fill();
-
-                    float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
-
-                    canvas.BeginText()
-                          .SetFontAndSize(_font, _legendFontSize)
-                          .MoveText(x + _legendTextMargin, y - textHeight / 2)
-                          .SetColor(_legendFontColour, true)
-                          .ShowText(legend.Label)
-                          .EndText();
-
-                    x += _font.GetWidth(legend.Label, _legendFontSize) + _legendTextMargin + _legendKeySize * 2 + _legendMargin;
-                }
+                result = legendWidth;
             }
             else
             {
                 float x = _originX + _axisWidth + _legendMargin;
-                float legendHeight = _data.Legends.Count * _legendVerticalSize;
-                float y = _originY + _axisHeight / 2 - legendHeight / 2;
+                float legendWidth = 0.0f;
 
                 foreach (Legend legend in _data.Legends)
                 {
+                    float width = _font.GetWidth(legend.Label, _legendFontSize) + _legendTextMargin + _legendKeySize * 2 + _legendMargin;
+                    if( width > legendWidth )
+                    {
+                        legendWidth = width;
+                    }
+                }
+                result = legendWidth;
+            }
 
-                    canvas.SetFillColor(legend.Colour);
-                    canvas.Circle(x, y, _legendKeySize);
-                    canvas.Fill();
-                    //float textHeight = _font.GetAscent(legend.Label, _legendFontSize) - _font.GetDescent(legend.Label, _legendFontSize);
-                    float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
+            Debug.WriteLine("Legend Width:" + result.ToString());
+            return result;
+        }
 
-                    canvas.BeginText()
-                          .SetFontAndSize(_font, _legendFontSize)
-                          .MoveText(x + _legendTextMargin, y - textHeight / 2)
-                          .SetColor(_legendFontColour, true)
-                          .ShowText(legend.Label)
-                          .EndText();
+        protected virtual void DrawLegend(PdfCanvas canvas, PdfPage page)
+        {
+            if (_svgRender)
+            {
+                if (_legendIsHorizontal)
+                {
+                    float x = 0.0f;
+                    float legendWidth = 0.0f;
+                    float y = _originY * 0.25f;
 
-                    y += _legendVerticalSize;
+                    foreach (Legend legend in _data.Legends)
+                    {
+                        float width = _font.GetWidth(legend.Label, _legendFontSize) + _legendTextMargin + _legendKeySize * 2 + _legendMargin;
+                        legendWidth += width;
+                    }
+                    legendWidth -= _legendMargin;
+
+                    x = _originX + _axisWidth / 2 - legendWidth / 2;
+
+                    foreach (Legend legend in _data.Legends)
+                    {
+                        _svgWriter.Circle(x, y, _legendKeySize, GetColorFromiTextColour(legend.Colour), GetColorFromiTextColour(legend.Colour), 0.0f);
+
+                        float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
+
+                        _svgWriter.Text(x + _legendTextMargin,
+                                y - textHeight / 2,
+                                legend.Label,
+                                GetColorFromiTextColour(_legendFontColour),
+                                "start",
+                                -0.0f,
+                                _legendFontSize);
+
+                        x += _font.GetWidth(legend.Label, _legendFontSize) + _legendTextMargin + _legendKeySize * 2 + _legendMargin;
+                    }
+                }
+                else
+                {
+                    float x = _originX + _axisWidth + _legendMargin;
+                    float legendHeight = _data.Legends.Count * _legendVerticalSize;
+                    float y = _originY + (_axisHeight * _yScale / 2) + (legendHeight / 2);
+
+                    Debug.WriteLine("originY:" + _originY.ToString() + " axisHeight:" + _axisHeight.ToString() + " legendHeight:" + legendHeight.ToString() + " y:" + y.ToString());
+
+                    foreach (Legend legend in _data.Legends)
+                    {
+                        _svgWriter.Circle(x, y, _legendKeySize, GetColorFromiTextColour(legend.Colour), GetColorFromiTextColour(legend.Colour), 0.0f);
+
+                        float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
+
+                        _svgWriter.Text(x + _legendTextMargin,
+                                y - textHeight / 2,
+                                legend.Label,
+                                GetColorFromiTextColour(_legendFontColour),
+                                "start",
+                                -0.0f,
+                                _legendFontSize);
+
+                        y -= _legendVerticalSize;
+                    }
                 }
             }
+            else
+            {
+                if (_legendIsHorizontal)
+                {
+                    float x = 0.0f;
+                    float legendWidth = 0.0f;
+                    float y = _originY * 0.25f;
+
+                    foreach (Legend legend in _data.Legends)
+                    {
+                        float width = _font.GetWidth(legend.Label, _legendFontSize) + _legendTextMargin + _legendKeySize * 2 + _legendMargin;
+                        legendWidth += width;
+                    }
+                    legendWidth -= _legendMargin;
+
+                    x = _originX + _axisWidth / 2 - legendWidth / 2;
+
+                    foreach (Legend legend in _data.Legends)
+                    {
+                        canvas.SetFillColor(legend.Colour);
+                        canvas.Circle(x, y, _legendKeySize);
+                        canvas.Fill();
+
+                        float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
+
+                        canvas.BeginText()
+                              .SetFontAndSize(_font, _legendFontSize)
+                              .MoveText(x + _legendTextMargin, y - textHeight / 2)
+                              .SetColor(_legendFontColour, true)
+                              .ShowText(legend.Label)
+                              .EndText();
+
+                        x += _font.GetWidth(legend.Label, _legendFontSize) + _legendTextMargin + _legendKeySize * 2 + _legendMargin;
+                    }
+                }
+                else
+                {
+                    float x = _originX + _axisWidth + _legendMargin;
+                    float legendHeight = _data.Legends.Count * _legendVerticalSize;
+                    float y = _originY + (_axisHeight * _yScale / 2) + (legendHeight / 2);
+
+                    Debug.WriteLine("originY:" + _originY.ToString() + " axisHeight:" + _axisHeight.ToString() + " legendHeight:" + legendHeight.ToString() + " y:" + y.ToString());
+
+                    foreach (Legend legend in _data.Legends)
+                    {
+
+                        canvas.SetFillColor(legend.Colour);
+                        canvas.Circle(x, y, _legendKeySize);
+                        canvas.Fill();
+                        //float textHeight = _font.GetAscent(legend.Label, _legendFontSize) - _font.GetDescent(legend.Label, _legendFontSize);
+                        float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
+
+                        canvas.BeginText()
+                              .SetFontAndSize(_font, _legendFontSize)
+                              .MoveText(x + _legendTextMargin, y - textHeight / 2)
+                              .SetColor(_legendFontColour, true)
+                              .ShowText(legend.Label)
+                              .EndText();
+
+                        y -= _legendVerticalSize;
+                    }
+                }
+            } // render svg
         }
 
         protected virtual void button1_Click(object sender, EventArgs e)
         {
             saveFileDialog.FileName = "graph.pdf";
+            saveFileDialog.Filter = "PDF files (*.pdf)|*.pdf|All files (*.*)|*.*";
             DialogResult result = saveFileDialog.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK)
             {
@@ -530,7 +686,9 @@ namespace Graph
                 _pdf = new PdfDocument(writer);
 
                 String fontFileName = GetSystemFontFileName(fontDialog.Font);
-                _font = PdfFontFactory.CreateFont(fontFileName, iText.IO.Font.PdfEncodings.IDENTITY_H); 
+                _font = PdfFontFactory.CreateFont(fontFileName, iText.IO.Font.PdfEncodings.IDENTITY_H);
+
+                SetDimensions();
 
                 iText.Kernel.Geom.Rectangle pageRect = new iText.Kernel.Geom.Rectangle(_canvasWidth, _canvasHeight);
 
@@ -662,11 +820,12 @@ namespace Graph
                 currentColor = System.Drawing.Color.FromArgb(Convert.ToInt32(rgb[0] * 255), Convert.ToInt32(rgb[1] * 255), Convert.ToInt32(rgb[2] * 255));
             }
 
-            colorDialog.CustomColors = new int[] { ColorTranslator.ToOle(currentColor) };
-            DialogResult result = colorDialog.ShowDialog();
+            OpenPainter.ColorPicker.frmColorPicker colorDialog = new OpenPainter.ColorPicker.frmColorPicker(currentColor);
+
+            System.Windows.Forms.DialogResult result = colorDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                legend.Colour = new DeviceRgb(colorDialog.Color);
+                legend.Colour = RGBToCMYK(colorDialog.PrimaryColor);
                 ShowLegend();
             }
         }
@@ -686,7 +845,20 @@ namespace Graph
             _tickFontSize = (float)udTickFontSize.Value;
         }
 
-        private void SetButtonColour(ref iText.Kernel.Colors.Color iTextColour, Button button)
+        public static DeviceCmyk RGBToCMYK(System.Drawing.Color rgb)
+        {
+            double dr = (double)rgb.R / 255;
+            double dg = (double)rgb.G / 255;
+            double db = (double)rgb.B / 255;
+            float k = (float)(1 - Math.Max(Math.Max(dr, dg), db));
+            float c = (float)((1 - dr - k) / (1 - k));
+            float m = (float)((1 - dg - k) / (1 - k));
+            float y = (float)((1 - db - k) / (1 - k));
+
+            return new DeviceCmyk(c, m, y, k);
+        }
+
+        protected void SetButtonColour(ref iText.Kernel.Colors.Color iTextColour, Button button)
         {
             System.Drawing.Color currentColor;
 
@@ -701,13 +873,33 @@ namespace Graph
                 currentColor = System.Drawing.Color.FromArgb(Convert.ToInt32(rgb[0] * 255), Convert.ToInt32(rgb[1] * 255), Convert.ToInt32(rgb[2] * 255));
             }
 
+            OpenPainter.ColorPicker.frmColorPicker colourDialog = new OpenPainter.ColorPicker.frmColorPicker(currentColor);
+
+            if (colourDialog.ShowDialog() == DialogResult.OK)
+            {
+                //iTextColour = RGBToCMYK(colourDialog.PrimaryColor);
+
+                Debug.WriteLine("c:" + colourDialog.CMYK.C.ToString() +
+                    " m:" + colourDialog.CMYK.M.ToString() +
+                    " y:" + colourDialog.CMYK.Y.ToString() +
+                    " k:" + colourDialog.CMYK.K.ToString());
+
+                iTextColour = new DeviceCmyk((float)colourDialog.CMYK.C,
+                    (float)colourDialog.CMYK.M,
+                    (float)colourDialog.CMYK.Y,
+                (float)colourDialog.CMYK.K);
+
+                button.BackColor = colourDialog.PrimaryColor;
+            }
+
+            /*
             colorDialog.CustomColors = new int[] { ColorTranslator.ToOle(currentColor) };
             DialogResult result = colorDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                iTextColour = new DeviceRgb(colorDialog.Color);
+                iTextColour = RGBToCMYK(colorDialog.Color);
                 button.BackColor = colorDialog.Color;
-            }
+            }*/
         }
 
         private void btnTickFontColour_Click(object sender, EventArgs e)
@@ -757,20 +949,23 @@ namespace Graph
 
         protected void WriteColourSetting(XmlTextWriter xml, iText.Kernel.Colors.Color iTextColour, String name)
         {
-            System.Drawing.Color currentColor;
+            //System.Drawing.Color currentColor;
 
             if (iTextColour.GetColorSpace().ToString() == "iText.Kernel.Pdf.Colorspace.PdfDeviceCs+Cmyk")
             {
                 float[] cmyk = iTextColour.GetColorValue();
-                currentColor = ConvertCmykToRgb(cmyk[0], cmyk[1], cmyk[2], cmyk[3]);
+                String attribute = cmyk[0].ToString() + "," +  cmyk[1].ToString() + "," + cmyk[2].ToString() + "," + cmyk[3].ToString();
+                //currentColor = ConvertCmykToRgb(cmyk[0], cmyk[1], cmyk[2], cmyk[3]);
+
+                xml.WriteAttributeString(name, attribute);
             }
             else
             {
-                float[] rgb = iTextColour.GetColorValue();
-                currentColor = System.Drawing.Color.FromArgb(Convert.ToInt32(rgb[0] * 255), Convert.ToInt32(rgb[1] * 255), Convert.ToInt32(rgb[2] * 255));
+                //float[] rgb = iTextColour.GetColorValue();
+                //currentColor = System.Drawing.Color.FromArgb(Convert.ToInt32(rgb[0] * 255), Convert.ToInt32(rgb[1] * 255), Convert.ToInt32(rgb[2] * 255));
+                MessageBox.Show("Wrong Colour Space", "Not SUpported", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            xml.WriteAttributeString(name, currentColor.ToArgb().ToString());
 
         }
 
@@ -848,6 +1043,18 @@ namespace Graph
                 xml.WriteStartElement("legend");
 
                 xml.WriteAttributeString("index", i.ToString());
+
+                Debug.WriteLine("Write " + _data.Legends.Count.ToString() + " Legends");
+                Debug.WriteLine("Write legend:" + legend.Label + " colour space:" + legend.Colour.GetColorSpace().ToString());
+                float[] colour = legend.Colour.GetColorValue();
+                Debug.WriteLine(colour.Length.ToString() + " colours");
+                foreach (float channel in colour)
+                {
+                    Debug.WriteLine(channel.ToString("0.0000"));
+                }
+
+                //Debug.WriteLine("Write legend:" + legend.Label + " " + legend.Colour.GetColorValue().ToString());
+
                 WriteColourSetting(xml, legend.Colour, "colour");
 
                 xml.WriteEndElement();
@@ -863,7 +1070,8 @@ namespace Graph
             _originX = float.Parse(xml.GetAttribute("originX") );
             _originY = float.Parse(xml.GetAttribute("originY") );
             _axisLineWidth = float.Parse(xml.GetAttribute("axisLineWidth") );
-            _axisColour = new DeviceRgb(System.Drawing.Color.FromArgb(Convert.ToInt32(xml.GetAttribute("axisColour"))));
+            ReadColour(xml, ref _axisColour, "axisColour");
+
             _axisWidth = float.Parse(xml.GetAttribute("axisWidth"));
             _axisHeight = float.Parse(xml.GetAttribute("axisHeight"));
             _drawXAxis = Convert.ToBoolean(xml.GetAttribute("drawXAxis"));
@@ -872,39 +1080,73 @@ namespace Graph
             _valueAxisInterval = float.Parse(xml.GetAttribute("valueAxisInterval"));
             _valueLabelMargin = float.Parse(xml.GetAttribute("valueLabelMargin"));
             _valueFontSize = float.Parse(xml.GetAttribute("valueFontSize"));
-            _valueFontColour = new DeviceRgb(System.Drawing.Color.FromArgb(Convert.ToInt32(xml.GetAttribute("valueFontColour"))));
+            ReadColour(xml, ref _valueFontColour, "valueFontColour");
+
             _tickLineWidth = float.Parse(xml.GetAttribute("tickLineWidth"));
-            _tickColour = new DeviceRgb(System.Drawing.Color.FromArgb(Convert.ToInt32(xml.GetAttribute("tickColour"))));
+            ReadColour(xml, ref _tickColour, "tickColour");
+
             _tickFontSize = float.Parse(xml.GetAttribute("tickFontSize"));
-            _tickFontColour = new DeviceRgb(System.Drawing.Color.FromArgb(Convert.ToInt32(xml.GetAttribute("tickFontColour"))));
+            ReadColour(xml, ref _tickFontColour, "tickFontColour");
+
             _tickLabelMargin = float.Parse(xml.GetAttribute("tickLabelMargin"));
             _barWidth = float.Parse(xml.GetAttribute("barWidth"));
             _barMargin = float.Parse(xml.GetAttribute("barMargin"));
             _barDrawBorder = Convert.ToBoolean(xml.GetAttribute("barDrawBorder"));
             _barBorderWidth = float.Parse(xml.GetAttribute("barBorderWidth"));
-            _barBorderColour = new DeviceRgb(System.Drawing.Color.FromArgb(Convert.ToInt32(xml.GetAttribute("barBorderColour"))));
+            ReadColour(xml, ref _barBorderColour, "barBorderColour");
+
             _columnLabelMargin = float.Parse(xml.GetAttribute("columnLabelMargin"));
             _columnFontSize = float.Parse(xml.GetAttribute("columnFontSize"));
-            _columnFontColour = new DeviceRgb(System.Drawing.Color.FromArgb(Convert.ToInt32(xml.GetAttribute("columnFontColour"))));
+            ReadColour(xml, ref _columnFontColour, "columnFontColour");
+
             _legendIsHorizontal = Convert.ToBoolean(xml.GetAttribute("legendIsHorizontal"));
             _legendMargin = float.Parse(xml.GetAttribute("legendMargin"));
             _legendTextMargin = float.Parse(xml.GetAttribute("legendTextMargin"));
             _legendVerticalSize = float.Parse(xml.GetAttribute("legendVerticalSize"));
             _legendKeySize = float.Parse(xml.GetAttribute("legendKeySize"));
             _legendFontSize = float.Parse(xml.GetAttribute("legendFontSize"));
-            _legendFontColour = new DeviceRgb(System.Drawing.Color.FromArgb(Convert.ToInt32(xml.GetAttribute("legendFontColour"))));
+            ReadColour(xml, ref _legendFontColour, "legendFontColour");
 
             ReadSubTypeSettings(xml);
+        }
+
+        protected virtual void ReadColour(XmlTextReader xml, ref iText.Kernel.Colors.Color iTextColour, String attributeName)
+        {
+            String colourString = xml.GetAttribute(attributeName);
+            String[] values = colourString.Split(',');
+            if (values.Length == 4)
+            {
+                float c = float.Parse(values[0]);
+                float m = float.Parse(values[1]);
+                float y = float.Parse(values[2]);
+                float k = float.Parse(values[3]);
+                iTextColour = new DeviceCmyk(c, m, y, k);
+            }
         }
 
         protected virtual void ReadLegend(XmlTextReader xml)
         {
             Int32 index = Convert.ToInt32(xml.GetAttribute("index"));
-            String colourString = xml.GetAttribute("colour");
-            if(index < _data.Legends.Count)
+/*
+            Debug.WriteLine("[" + index.ToString() + "] " + "Read legend:" + _data.Legends[index].Label + " colour space:" + _data.Legends[index].Colour.GetColorSpace().ToString());
+            float[] colour = _data.Legends[index].Colour.GetColorValue();
+            Debug.WriteLine(colour.Length.ToString() + " colours");
+            foreach (float channel in colour)
             {
-                _data.Legends[index].Colour = new DeviceRgb(System.Drawing.Color.FromArgb(Convert.ToInt32(colourString)));
+                Debug.WriteLine(channel.ToString("0.0000"));
             }
+            */
+            iText.Kernel.Colors.Color iTextColour = new DeviceCmyk();
+            ReadColour(xml, ref iTextColour, "colour");
+            _data.Legends[index].Colour = iTextColour;
+            /*
+            Debug.WriteLine("[" + index.ToString() + "] " + "After Read legend:" + _data.Legends[index].Label + " colour space:" + _data.Legends[index].Colour.GetColorSpace().ToString());
+            colour = _data.Legends[index].Colour.GetColorValue();
+            Debug.WriteLine(colour.Length.ToString() + " colours");
+            foreach (float channel in colour)
+            {
+                Debug.WriteLine(channel.ToString("0.0000"));
+            }*/
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -957,7 +1199,7 @@ namespace Graph
                                     }
                                     else if (reader.Name == "graph")
                                     {
-                                        ReadLegend(reader);
+
                                     }
                                     else
                                     {
@@ -1030,6 +1272,38 @@ namespace Graph
         private void udBorderWidth_ValueChanged(object sender, EventArgs e)
         {
             _barBorderWidth = (float)udBorderWidth.Value;
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            saveFileDialog.FileName = "graph.svg";
+            saveFileDialog.Filter = "SVG files (*.svg)|*.svg|All files (*.*)|*.*";
+            DialogResult result = saveFileDialog.ShowDialog(); // Show the dialog.
+            if (result == DialogResult.OK)
+            {
+
+                FileStream fos = new FileStream(saveFileDialog.FileName, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
+                _svgRender = true;
+                _svgWriter = new svgWriter(fos);
+                String fontFileName = GetSystemFontFileName(fontDialog.Font);
+                _font = PdfFontFactory.CreateFont(fontFileName, iText.IO.Font.PdfEncodings.IDENTITY_H);
+
+                SetDimensions();
+                _svgWriter.StartRootElement(_canvasWidth, _canvasHeight);
+
+                SetFont();
+
+                DrawTicks(null, null);
+                DrawBars(null, null);
+                DrawAxes(null, null);
+                DrawLabels(null, null);
+                DrawLegend(null, null);
+
+                _svgRender = false;
+
+                _svgWriter.EndRootElement();
+                fos.Close();
+            }
         }
 
     }

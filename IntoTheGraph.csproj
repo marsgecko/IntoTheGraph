@@ -28,7 +28,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -36,6 +36,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -112,6 +113,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdobeColors.cs" />
+    <Compile Include="ColorComponent.cs" />
+    <Compile Include="ctrl2DColorBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrlVerticalColorSlider.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="frmColorPicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="GraphForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,12 +143,14 @@
     <Compile Include="BarForm.Designer.cs">
       <DependentUpon>BarForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MathExtensions.cs" />
     <Compile Include="PieForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PieForm.Designer.cs">
       <DependentUpon>PieForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="svgWriter.cs" />
     <Compile Include="VerticalStackedForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +168,9 @@
       <DependentUpon>StartForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Value.cs" />
+    <EmbeddedResource Include="ctrl2DColorBox.resx" />
+    <EmbeddedResource Include="ctrlVerticalColorSlider.resx" />
+    <EmbeddedResource Include="frmColorPicker.resx" />
     <EmbeddedResource Include="GraphForm.resx">
       <DependentUpon>GraphForm.cs</DependentUpon>
     </EmbeddedResource>

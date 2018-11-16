@@ -64,12 +64,35 @@ namespace Graph
             {
                 // Set axis values so the legend will draw
                 _valueAxisMax = _barWidth;
-                _axisHeight = _valueAxisMax/2;
-                _axisWidth = _barWidth;
+                _axisHeight = 0.0f; //_valueAxisMax/2;
                 _yScale = 1.0f;
 
                 _canvasHeight = _originY + _barWidth + 75;
                 _canvasWidth = _originX + _barWidth + 150;
+
+                if (_legendIsHorizontal)
+                {
+                    float legendWidth = GetLegendWidth();
+
+                    _axisWidth = 0.0f; // To center the legend
+
+                    _canvasHeight = _originY * 2;
+                    if (_barWidth*2 < legendWidth)
+                    {
+                        _originX = _legendMargin + legendWidth / 2;
+                        _canvasWidth = _originX + legendWidth / 2 + 10.0f;
+                    }
+                    else
+                    {
+                        _canvasWidth = _originX + _barWidth;
+                    }
+                }
+                else
+                {
+                    _axisWidth = _barWidth;
+                    _canvasHeight = _originY * 2;
+                    _canvasWidth = _originX + _barWidth + GetLegendWidth() + 10;
+                }
 
                 UpdateOnScreenSettings();
             }
@@ -87,78 +110,88 @@ namespace Graph
 
         protected override void DrawBars(PdfCanvas canvas, PdfPage page)
         {
-            if (_data.Columns.Count > 0)
+            if (_svgRender)
             {
-                // Convert to Percentages
-                float totalValue = 0.0f;
-                float startAngle = 0.0f;
-                List<float> percentages = new List<float>();
-                List<float> angles = new List<float>();
-                Column column = _data.Columns[0];
-                foreach (Value value in column.Values)
+
+            }
+            else
+            {
+                if (_data.Columns.Count > 0)
                 {
-                    totalValue += value.Data;
-                }
-
-                foreach (Value value in column.Values)
-                {
-                    percentages.Add(value.Data / totalValue);
-                }
-
-                foreach (float percentage in percentages)
-                {
-                    angles.Add(360.0f * percentage);
-                }
-
-                // Start at Angle 0, Todo add Start Angle
-                int i;
-
-                for (i = 0; i < angles.Count; i++ )
-                {
-                    float segmentAngle = angles[i];
-                    float cosX = (float)Math.Cos(startAngle * (Math.PI / 180));
-                    float sinY = (float)Math.Sin(startAngle * (Math.PI / 180));
-                    float cosX1 = (float)Math.Cos((startAngle + segmentAngle) * (Math.PI / 180));
-                    float sinY1 = (float)Math.Sin((startAngle + segmentAngle) * (Math.PI / 180));
-
-                    float X = _barWidth * cosX;
-                    float Y = _barWidth * sinY;
-                    float X1 = _barWidth * cosX1;
-                    float Y1 = _barWidth * sinY1;
-
-                    //Debug.WriteLine("Angle: " + startAngle.ToString("0.00") + " X:" + X.ToString() + " Y:" + Y.ToString() + " cos:" + cosX.ToString("0.0000") + " sin:" + sinY.ToString("0.0000"));
-                    Debug.WriteLine("Angle: " + segmentAngle.ToString("0.00") + " X:" + X1.ToString() + " Y:" + Y1.ToString() + " cos:" + cosX1.ToString("0.0000") + " sin:" + sinY1.ToString("0.0000"));
-
-                    canvas.NewPath();
-                    canvas.MoveTo(_originX, _originY);
-                    canvas.LineTo(_originX + X, _originY + Y);
-                    
-                    //canvas.LineTo(_originX + X1, _originY + Y1);
-                    canvas.Arc(_originX - _barWidth, _originY - _barWidth, _originX + _barWidth, _originY + _barWidth, startAngle, segmentAngle);
-
-                    canvas.LineTo(_originX, _originY);
-                    canvas.SetFillColor(column.Values[i].Legend.Colour);
-                    
-
-                    if (_barDrawBorder)
+                    // Convert to Percentages
+                    float totalValue = 0.0f;
+                    float startAngle = 0.0f;
+                    List<float> percentages = new List<float>();
+                    List<float> angles = new List<float>();
+                    Column column = _data.Columns[0];
+                    foreach (Value value in column.Values)
                     {
-                        canvas.SetStrokeColor(_barBorderColour);
-                        canvas.SetLineWidth(_barBorderWidth);
-                        canvas.FillStroke();
+                        totalValue += value.Data;
                     }
-                    else
+
+                    foreach (Value value in column.Values)
                     {
+                        percentages.Add(value.Data / totalValue);
+                    }
+
+                    foreach (float percentage in percentages)
+                    {
+                        angles.Add(360.0f * percentage);
+                    }
+
+                    // Start at Angle 0, Todo add Start Angle
+                    int i;
+
+                    for (i = 0; i < angles.Count; i++)
+                    {
+                        float segmentAngle = angles[i];
+                        float cosX = (float)Math.Cos(startAngle * (Math.PI / 180));
+                        float sinY = (float)Math.Sin(startAngle * (Math.PI / 180));
+                        float cosX1 = (float)Math.Cos((startAngle + segmentAngle) * (Math.PI / 180));
+                        float sinY1 = (float)Math.Sin((startAngle + segmentAngle) * (Math.PI / 180));
+
+                        float X = _barWidth * cosX;
+                        float Y = _barWidth * sinY;
+                        float X1 = _barWidth * cosX1;
+                        float Y1 = _barWidth * sinY1;
+
+                        //Debug.WriteLine("Angle: " + startAngle.ToString("0.00") + " X:" + X.ToString() + " Y:" + Y.ToString() + " cos:" + cosX.ToString("0.0000") + " sin:" + sinY.ToString("0.0000"));
+                        Debug.WriteLine("Angle: " + segmentAngle.ToString("0.00") + " X:" + X1.ToString() + " Y:" + Y1.ToString() + " cos:" + cosX1.ToString("0.0000") + " sin:" + sinY1.ToString("0.0000"));
+
+                        if (segmentAngle > 0.0f)
+                        {
+                            canvas.NewPath();
+                            canvas.MoveTo(_originX, _originY);
+                            canvas.LineTo(_originX + X, _originY + Y);
+
+                            //canvas.LineTo(_originX + X1, _originY + Y1);
+                            canvas.Arc(_originX - _barWidth, _originY - _barWidth, _originX + _barWidth, _originY + _barWidth, startAngle, segmentAngle);
+
+                            canvas.LineTo(_originX, _originY);
+                            canvas.SetFillColor(column.Values[i].Legend.Colour);
+
+
+                            if (_barDrawBorder)
+                            {
+                                canvas.SetStrokeColor(_barBorderColour);
+                                canvas.SetLineWidth(_barBorderWidth);
+                                canvas.FillStroke();
+                            }
+                            else
+                            {
+                                canvas.Fill();
+                            }
+                        }
+                        startAngle += angles[i];
+                    }
+
+                    if (_doughnut)
+                    {
+                        canvas.NewPath();
+                        canvas.SetFillColor(_barBorderColour);
+                        canvas.Circle(_originX, _originY, _doughnutSize);
                         canvas.Fill();
                     }
-                    startAngle += angles[i];
-                }
-
-                if(_doughnut)
-                {
-                    canvas.NewPath();
-                    canvas.SetFillColor(_barBorderColour);
-                    canvas.Circle(_originX, _originY, _doughnutSize);
-                    canvas.Fill();
                 }
             }
         }

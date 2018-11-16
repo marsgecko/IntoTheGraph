@@ -34,6 +34,7 @@ namespace Graph
         bool _barDrawValueCenter = false;
         float _barValueMargin = 2.0f;
         float _barValueFontSize = 8.0f;
+        protected iText.Kernel.Colors.Color _barValueFontColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.0f);
 
 
         public BarForm()
@@ -62,6 +63,7 @@ namespace Graph
 
                 udValueMargin.Value = new decimal(_barValueMargin);
                 udValueFontSize.Value = new decimal(_barValueFontSize);
+                btnBarValueFontColour.BackColor = GetColorFromiTextColour(_barValueFontColour);
             }
         }
 
@@ -85,8 +87,24 @@ namespace Graph
                 _yScale = newHeight / _axisHeight;
             }
 
-            _canvasHeight = _originY + _axisHeight * _yScale + 75;
-            _canvasWidth = _originX + _axisWidth + 75;
+            if (_legendIsHorizontal)
+            {
+                float legendWidth = GetLegendWidth();
+                _canvasHeight = _originY + _axisHeight * _yScale + _originY;
+                if (_axisWidth < legendWidth)
+                {
+                    _canvasWidth = _originX + _axisWidth / 2 + legendWidth / 2 + _originX;
+                }
+                else
+                {
+                    _canvasWidth = _originX + _axisWidth + _originX;
+                }
+            }
+            else
+            {
+                _canvasHeight = _originY + _axisHeight * _yScale + _originY;
+                _canvasWidth = _originX + _axisWidth + GetLegendWidth() + 10;
+            }
 
             UpdateOnScreenSettings();
         }
@@ -97,75 +115,148 @@ namespace Graph
             float totalColumnWidth = (_axisWidth / columnCount);
             float barMargin = (totalColumnWidth - _barWidth) / 2;
 
-            float x = _originX + barMargin;
-            foreach(Column column in _data.Columns)
+            if (_svgRender)
             {
-                float y = _originY;
-                Value value = column.Values[0];
-
-                iText.Kernel.Geom.Rectangle rectangle = new iText.Kernel.Geom.Rectangle(x, y, _barWidth, value.Data * _yScale);
-                canvas.SetFillColor(value.Legend.Colour);
-                canvas.Rectangle(rectangle);
-                canvas.Fill();
-
-                if(_barDrawBorder)
+                float x = _originX + barMargin;
+                foreach (Column column in _data.Columns)
                 {
-                    rectangle = new iText.Kernel.Geom.Rectangle(x, y + _barBorderWidth/2, _barWidth, value.Data * _yScale - _barBorderWidth/2);
-                    canvas.SetStrokeColor(_barBorderColour);
-                    canvas.SetLineWidth(_barBorderWidth);
-                    canvas.Rectangle(rectangle);
-                    canvas.Stroke();
+                    float y = _originY;
+                    Value value = column.Values[0];
+
+                    if (_barDrawBorder)
+                    {
+                        _svgWriter.Rectangle(x, y, _barWidth, value.Data * _yScale, GetColorFromiTextColour(value.Legend.Colour), GetColorFromiTextColour(_barBorderColour), _barBorderWidth);
+                    }
+                    else
+                    {
+                        System.Drawing.Color temp = new System.Drawing.Color();
+                        _svgWriter.Rectangle(x, y, _barWidth, value.Data * _yScale, GetColorFromiTextColour(value.Legend.Colour), temp, 0.0f);
+                    }
+
+                    String text = value.Data.ToString("0.0");
+                    if (_data.FormatPercent)
+                    {
+                        text = text + "%";
+                    }
+                    float textWidth = _font.GetWidth(text, _barValueFontSize);
+                    float textHeight = _font.GetAscent(text, _barValueFontSize) + _font.GetDescent(text, _barValueFontSize);
+
+                    float textX = x + (_barWidth / 2);
+
+                    if (_barDrawValueAboveTop)
+                    {
+                        float textY = _originY + value.Data * _yScale + _barValueMargin;
+
+                        _svgWriter.Text(textX,
+                                textY,
+                                text,
+                                GetColorFromiTextColour(_barValueFontColour),
+                                "middle",
+                                -0.0f,
+                                _barValueFontSize);
+
+                    }
+                    if (_barDrawValueBelowTop)
+                    {
+                        float textY = _originY + value.Data * _yScale - _barValueMargin - textHeight;
+
+                        _svgWriter.Text(textX,
+                                textY,
+                                text,
+                                GetColorFromiTextColour(_barValueFontColour),
+                                "middle",
+                                -0.0f,
+                                _barValueFontSize);
+
+                    }
+                    if (_barDrawValueCenter)
+                    {
+                        float textY = _originY + (value.Data * _yScale) / 2 - textHeight / 2;
+
+                        _svgWriter.Text(textX,
+                                textY,
+                                text,
+                                GetColorFromiTextColour(_barValueFontColour),
+                                "middle",
+                                -0.0f,
+                                _barValueFontSize);
+                    }
+
+                    x += totalColumnWidth;
                 }
-
-                String text = value.Data.ToString("0.0");
-                if (_data.FormatPercent)
-                {
-                    text = text + "%";
-                }
-                float textWidth = _font.GetWidth(text, _barValueFontSize);
-                float textHeight = _font.GetAscent(text, _barValueFontSize) + _font.GetDescent(text, _barValueFontSize);
-
-                float textX = x + (_barWidth / 2) - (textWidth / 2);
-                    
-                if( _barDrawValueAboveTop )
-                {
-                    float textY = _originY + value.Data * _yScale + _barValueMargin;
-
-                    canvas.BeginText()
-                        .SetFontAndSize(_font, _barValueFontSize)
-                        .MoveText(textX, textY)
-                        .SetColor(_valueFontColour, true)
-                        .ShowText(text)
-                        .EndText();
-
-                }
-                if (_barDrawValueBelowTop)
-                {
-                    float textY = _originY + value.Data * _yScale - _barValueMargin - textHeight;
-
-                    canvas.BeginText()
-                        .SetFontAndSize(_font, _barValueFontSize)
-                        .MoveText(textX, textY)
-                        .SetColor(_valueFontColour, true)
-                        .ShowText(text)
-                        .EndText();
-
-                }
-                if (_barDrawValueCenter)
-                {
-                    float textY = _originY + (value.Data * _yScale) / 2 - textHeight/2;
-
-                    canvas.BeginText()
-                        .SetFontAndSize(_font, _barValueFontSize)
-                        .MoveText(textX, textY)
-                        .SetColor(_valueFontColour, true)
-                        .ShowText(text)
-                        .EndText();
-                }
-                
-                x += totalColumnWidth;
             }
+            else
+            {
 
+                float x = _originX + barMargin;
+                foreach (Column column in _data.Columns)
+                {
+                    float y = _originY;
+                    Value value = column.Values[0];
+
+                    iText.Kernel.Geom.Rectangle rectangle = new iText.Kernel.Geom.Rectangle(x, y, _barWidth, value.Data * _yScale);
+                    canvas.SetFillColor(value.Legend.Colour);
+                    canvas.Rectangle(rectangle);
+                    canvas.Fill();
+
+                    if (_barDrawBorder)
+                    {
+                        rectangle = new iText.Kernel.Geom.Rectangle(x, y + _barBorderWidth / 2, _barWidth, value.Data * _yScale - _barBorderWidth / 2);
+                        canvas.SetStrokeColor(_barBorderColour);
+                        canvas.SetLineWidth(_barBorderWidth);
+                        canvas.Rectangle(rectangle);
+                        canvas.Stroke();
+                    }
+
+                    String text = value.Data.ToString("0.0");
+                    if (_data.FormatPercent)
+                    {
+                        text = text + "%";
+                    }
+                    float textWidth = _font.GetWidth(text, _barValueFontSize);
+                    float textHeight = _font.GetAscent(text, _barValueFontSize) + _font.GetDescent(text, _barValueFontSize);
+
+                    float textX = x + (_barWidth / 2) - (textWidth / 2);
+
+                    if (_barDrawValueAboveTop)
+                    {
+                        float textY = _originY + value.Data * _yScale + _barValueMargin;
+
+                        canvas.BeginText()
+                            .SetFontAndSize(_font, _barValueFontSize)
+                            .MoveText(textX, textY)
+                            .SetColor(_barValueFontColour, true)
+                            .ShowText(text)
+                            .EndText();
+
+                    }
+                    if (_barDrawValueBelowTop)
+                    {
+                        float textY = _originY + value.Data * _yScale - _barValueMargin - textHeight;
+
+                        canvas.BeginText()
+                            .SetFontAndSize(_font, _barValueFontSize)
+                            .MoveText(textX, textY)
+                            .SetColor(_barValueFontColour, true)
+                            .ShowText(text)
+                            .EndText();
+
+                    }
+                    if (_barDrawValueCenter)
+                    {
+                        float textY = _originY + (value.Data * _yScale) / 2 - textHeight / 2;
+
+                        canvas.BeginText()
+                            .SetFontAndSize(_font, _barValueFontSize)
+                            .MoveText(textX, textY)
+                            .SetColor(_barValueFontColour, true)
+                            .ShowText(text)
+                            .EndText();
+                    }
+
+                    x += totalColumnWidth;
+                }
+            } // SVG Render
         }
 
 
@@ -189,6 +280,7 @@ namespace Graph
             
             xml.WriteAttributeString("barValueMargin", _barValueMargin.ToString("0.0"));
             xml.WriteAttributeString("barValueFontSize", _barValueFontSize.ToString("0.0"));
+            WriteColourSetting(xml, _barValueFontColour, "barValueFontColour");
         }
 
         protected override void ReadSubTypeSettings(XmlTextReader xml)
@@ -198,6 +290,7 @@ namespace Graph
             _barDrawValueCenter = Convert.ToBoolean(xml.GetAttribute("barValueCenter"));
             _barValueMargin = float.Parse(xml.GetAttribute("barValueMargin"));
             _barValueFontSize = float.Parse(xml.GetAttribute("barValueFontSize"));
+            ReadColour(xml, ref _barValueFontColour, "barValueFontColour");
         }
 
         private void cbValueAboveTop_CheckedChanged(object sender, EventArgs e)
@@ -224,6 +317,11 @@ namespace Graph
         private void udValueFontSize_ValueChanged(object sender, EventArgs e)
         {
             _barValueFontSize = (float)udValueFontSize.Value;
+        }
+
+        private void btnBarValueFontColour_Click(object sender, EventArgs e)
+        {
+            SetButtonColour(ref _barValueFontColour, btnBarValueFontColour);
         }
     }
 }

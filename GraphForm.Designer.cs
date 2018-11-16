@@ -77,7 +77,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.udBarWidth = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
-            this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.groupTicks = new System.Windows.Forms.GroupBox();
             this.btnTickLineColour = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
@@ -107,6 +106,7 @@
             this.label21 = new System.Windows.Forms.Label();
             this.udLegendMargin = new System.Windows.Forms.NumericUpDown();
             this.cbLegendHorizontal = new System.Windows.Forms.CheckBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginX)).BeginInit();
@@ -1116,11 +1116,22 @@
             this.cbLegendHorizontal.UseVisualStyleBackColor = true;
             this.cbLegendHorizontal.CheckedChanged += new System.EventHandler(this.cbLegendHorizontal_CheckedChanged);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(858, 390);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 16;
+            this.button2.Text = "Create SVG";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
+            // 
             // GraphForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 427);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupTicks);
             this.Controls.Add(this.groupBox3);
@@ -1210,7 +1221,6 @@
         protected System.Windows.Forms.NumericUpDown udBarMargin;
         protected System.Windows.Forms.Label label9;
         protected System.Windows.Forms.NumericUpDown udBarWidth;
-        protected System.Windows.Forms.ColorDialog colorDialog;
         protected System.Windows.Forms.GroupBox groupTicks;
         protected System.Windows.Forms.Label label10;
         protected System.Windows.Forms.NumericUpDown udTickLineWidth;
@@ -1257,6 +1267,7 @@
         protected System.Windows.Forms.Button btnBorderColour;
         protected System.Windows.Forms.Label labelBorderColour;
         protected System.Windows.Forms.CheckBox cbDrawBorder;
+        private System.Windows.Forms.Button button2;
     }
 }
 

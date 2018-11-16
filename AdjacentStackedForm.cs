@@ -61,8 +61,24 @@ namespace Graph
                 _yScale = newHeight/_axisHeight;
             }
 
-            _canvasHeight = _originY + _axisHeight * _yScale + 50;
-            _canvasWidth = _originX + _axisWidth + 75;
+            if (_legendIsHorizontal)
+            {
+                float legendWidth = GetLegendWidth();
+                _canvasHeight = _originY + _axisHeight * _yScale + _originY;
+                if (_axisWidth < legendWidth)
+                {
+                    _canvasWidth = _originX + _axisWidth / 2 + legendWidth / 2 + _originX;
+                }
+                else
+                {
+                    _canvasWidth = _originX + _axisWidth + _originX;
+                }
+            }
+            else
+            {
+                _canvasHeight = _originY + _axisHeight * _yScale + _originY;
+                _canvasWidth = _originX + _axisWidth + GetLegendWidth() + 10;
+            }
 
             UpdateOnScreenSettings();
         }
@@ -76,29 +92,53 @@ namespace Graph
             float x = _originX + _barMargin;
             float y = _originY;
 
-            foreach (Column column in _data.Columns)
+            if (_svgRender)
             {
-                foreach (Value value in column.Values)
+                foreach (Column column in _data.Columns)
                 {
-                    iText.Kernel.Geom.Rectangle rectangle = new iText.Kernel.Geom.Rectangle(x, y, _barWidth, value.Data * _yScale);
-                    canvas.SetFillColor(value.Legend.Colour);
-                    canvas.Rectangle(rectangle);
-                    canvas.Fill();
-
-                    if (_barDrawBorder)
+                    foreach (Value value in column.Values)
                     {
-                        rectangle = new iText.Kernel.Geom.Rectangle(x, y + _barBorderWidth / 2, _barWidth, value.Data * _yScale - _barBorderWidth / 2);
-                        canvas.SetStrokeColor(_barBorderColour);
-                        canvas.SetLineWidth(_barBorderWidth);
-                        canvas.Rectangle(rectangle);
-                        canvas.Stroke();
+                        if (_barDrawBorder)
+                        {
+                            _svgWriter.Rectangle(x, y, _barWidth, value.Data * _yScale, GetColorFromiTextColour(value.Legend.Colour), GetColorFromiTextColour(_barBorderColour), _barBorderWidth);
+                        }
+                        else
+                        {
+                            System.Drawing.Color temp = new System.Drawing.Color();
+                            _svgWriter.Rectangle(x, y, _barWidth, value.Data * _yScale, GetColorFromiTextColour(value.Legend.Colour), temp, 0.0f);
+                        }
+
+                        x += _barWidth;
                     }
-
-                    x += _barWidth;
+                    x += _barMargin;
                 }
-                x += _barMargin;
             }
+            else
+            {
 
+                foreach (Column column in _data.Columns)
+                {
+                    foreach (Value value in column.Values)
+                    {
+                        iText.Kernel.Geom.Rectangle rectangle = new iText.Kernel.Geom.Rectangle(x, y, _barWidth, value.Data * _yScale);
+                        canvas.SetFillColor(value.Legend.Colour);
+                        canvas.Rectangle(rectangle);
+                        canvas.Fill();
+
+                        if (_barDrawBorder)
+                        {
+                            rectangle = new iText.Kernel.Geom.Rectangle(x, y + _barBorderWidth / 2, _barWidth, value.Data * _yScale - _barBorderWidth / 2);
+                            canvas.SetStrokeColor(_barBorderColour);
+                            canvas.SetLineWidth(_barBorderWidth);
+                            canvas.Rectangle(rectangle);
+                            canvas.Stroke();
+                        }
+
+                        x += _barWidth;
+                    }
+                    x += _barMargin;
+                }
+            }
         }
 
         protected override String GetGraphType()

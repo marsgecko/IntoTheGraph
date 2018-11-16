@@ -54,9 +54,6 @@ namespace Graph
 
             }
 
-            //_valueAxisInterval = _valueAxisMax * 0.1f;
-
-
             _axisWidth = _barWidth * _data.Columns.Count + _barMargin * (_data.Columns.Count + 1);
             _axisHeight = _valueAxisMax;
             _yScale = 1.0f;
@@ -66,29 +63,27 @@ namespace Graph
                 _yScale = newHeight / _axisHeight;
             }
 
-            _canvasHeight = _originY + _axisHeight * _yScale + 100;
-            _canvasWidth = _originX + _axisWidth + 150;
+            if (_legendIsHorizontal)
+            {
+                float legendWidth = GetLegendWidth();
+                _canvasHeight = _originY + _axisHeight * _yScale + _originY;
+                if (_axisWidth < legendWidth)
+                {
+                    _canvasWidth = _originX + _axisWidth / 2 + legendWidth / 2 + _originX;
+                }
+                else
+                {
+                    _canvasWidth = _originX + _axisWidth + _originX;
+                }
+            }
+            else
+            {
+                _canvasHeight = _originY + _axisHeight * _yScale + _originY;
+                _canvasWidth = _originX + _axisWidth + GetLegendWidth() + 10;
+            }
+            Debug.WriteLine("Canvas width:" + _canvasWidth.ToString() + " OriginX:" + _originX.ToString() + " AxisX:" + _axisWidth);
 
             UpdateOnScreenSettings();
-        }
-
-        protected override void UpdateYAxisHeight()
-        {
-            float maxValue = _data.GetMaxStackValue();
-
-            for (_valueAxisMax = 0; _valueAxisMax < maxValue; _valueAxisMax += _valueAxisInterval)
-            {
-
-            }
-            _axisHeight = _valueAxisMax;
-
-            _yScale = 1.0f;
-            if (_axisHeight < _axisWidth * 0.25f)
-            {
-                float newHeight = _axisWidth * 0.25f;
-                _yScale = newHeight / _axisHeight;
-            }
-            _canvasHeight = _originY + _axisHeight + 100;
         }
 
         protected override void DrawBars(PdfCanvas canvas, PdfPage page)
@@ -98,30 +93,55 @@ namespace Graph
             float barMargin = (totalColumnWidth - _barWidth) / 2;
 
             float x = _originX + barMargin;
-            foreach(Column column in _data.Columns)
+            if (_svgRender)
             {
-                float y = _originY;
-                foreach (Value value in column.Values)
+                foreach (Column column in _data.Columns)
                 {
-                    iText.Kernel.Geom.Rectangle rectangle = new iText.Kernel.Geom.Rectangle(x, y, _barWidth, value.Data * _yScale);
-                    canvas.SetFillColor(value.Legend.Colour);
-                    canvas.Rectangle(rectangle);
-                    canvas.Fill();
-
-                    if (_barDrawBorder)
+                    float y = _originY;
+                    foreach (Value value in column.Values)
                     {
-                        rectangle = new iText.Kernel.Geom.Rectangle(x, y + _barBorderWidth / 2, _barWidth, value.Data * _yScale - _barBorderWidth / 2);
-                        canvas.SetStrokeColor(_barBorderColour);
-                        canvas.SetLineWidth(_barBorderWidth);
-                        canvas.Rectangle(rectangle);
-                        canvas.Stroke();
+
+                        if (_barDrawBorder)
+                        {
+                            _svgWriter.Rectangle(x, y, _barWidth, value.Data * _yScale, GetColorFromiTextColour(value.Legend.Colour), GetColorFromiTextColour(_barBorderColour), _barBorderWidth);
+                        }
+                        else
+                        {
+                            System.Drawing.Color temp = new System.Drawing.Color();
+                            _svgWriter.Rectangle(x, y, _barWidth, value.Data * _yScale, GetColorFromiTextColour(value.Legend.Colour), temp, 0.0f);
+                        }
+
+                        y += value.Data * _yScale;
                     }
-
-                    y += value.Data * _yScale;
+                    x += totalColumnWidth;
                 }
-                x += totalColumnWidth;
             }
+            else
+            {
+                foreach (Column column in _data.Columns)
+                {
+                    float y = _originY;
+                    foreach (Value value in column.Values)
+                    {
+                        iText.Kernel.Geom.Rectangle rectangle = new iText.Kernel.Geom.Rectangle(x, y, _barWidth, value.Data * _yScale);
+                        canvas.SetFillColor(value.Legend.Colour);
+                        canvas.Rectangle(rectangle);
+                        canvas.Fill();
 
+                        if (_barDrawBorder)
+                        {
+                            rectangle = new iText.Kernel.Geom.Rectangle(x, y + _barBorderWidth / 2, _barWidth, value.Data * _yScale - _barBorderWidth / 2);
+                            canvas.SetStrokeColor(_barBorderColour);
+                            canvas.SetLineWidth(_barBorderWidth);
+                            canvas.Rectangle(rectangle);
+                            canvas.Stroke();
+                        }
+
+                        y += value.Data * _yScale;
+                    }
+                    x += totalColumnWidth;
+                }
+            }
         }
 
         protected override String GetGraphType()
