@@ -107,6 +107,34 @@ namespace Graph
 
         }
 
+        protected virtual void SetLayout()
+        {
+            Int32 startY = 72;
+            Int32 y = startY;
+            Int32 x = 260;
+            gbOrigin.Location = new System.Drawing.Point(x, y);
+            preview.Location = new System.Drawing.Point(x + gbOrigin.Size.Width + 10, y);
+            y += gbOrigin.Size.Height + 10;
+
+
+            gbAxes.Location = new System.Drawing.Point(x, y);
+            y += gbAxes.Size.Height + 10;
+
+            gbBars.Location = new System.Drawing.Point(x, y);
+            y += gbBars.Size.Height + 10;
+
+            gbTicks.Location = new System.Drawing.Point(x, y);
+            y += gbTicks.Size.Height + 10;
+
+            gbLegend.Location = new System.Drawing.Point(x, y);
+            y += gbLegend.Size.Height;
+
+            preview.Size = new System.Drawing.Size(640, y - startY);
+            this.Size = new System.Drawing.Size(preview.Location.X + preview.Size.Width + 40, preview.Location.Y + preview.Size.Height + 60);
+            this.MinimumSize = this.Size;
+            preview.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        }
+
         protected System.Drawing.Color GetColorFromiTextColour(iText.Kernel.Colors.Color iTextColour)
         {
             System.Drawing.Color result;
@@ -672,6 +700,37 @@ namespace Graph
             } // render svg
         }
 
+        protected void CreatePdfStream(Stream stream)
+        {
+            PdfWriter writer = new PdfWriter(stream);
+
+            _pdf = new PdfDocument(writer);
+
+            String fontFileName = GetSystemFontFileName(fontDialog.Font);
+            _font = PdfFontFactory.CreateFont(fontFileName, iText.IO.Font.PdfEncodings.IDENTITY_H);
+
+            SetDimensions();
+
+            iText.Kernel.Geom.Rectangle pageRect = new iText.Kernel.Geom.Rectangle(_canvasWidth, _canvasHeight);
+
+            PdfPage page = _pdf.AddNewPage(new PageSize(pageRect));
+            PdfCanvas canvas = new PdfCanvas(page);
+
+            Debug.WriteLine("Page Size: " + page.GetPageSize().ToString());
+
+
+            SetFont();
+
+            DrawTicks(canvas, page);
+            DrawBars(canvas, page);
+            DrawAxes(canvas, page);
+            DrawLabels(canvas, page);
+            DrawLegend(canvas, page);
+
+            _pdf.Close();
+            writer.Close();
+        }
+
         protected virtual void button1_Click(object sender, EventArgs e)
         {
             saveFileDialog.FileName = "graph.pdf";
@@ -681,33 +740,9 @@ namespace Graph
             {
 
                 FileStream fos = new FileStream(saveFileDialog.FileName, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
-                PdfWriter writer = new PdfWriter(fos);
 
-                _pdf = new PdfDocument(writer);
+                CreatePdfStream(fos);
 
-                String fontFileName = GetSystemFontFileName(fontDialog.Font);
-                _font = PdfFontFactory.CreateFont(fontFileName, iText.IO.Font.PdfEncodings.IDENTITY_H);
-
-                SetDimensions();
-
-                iText.Kernel.Geom.Rectangle pageRect = new iText.Kernel.Geom.Rectangle(_canvasWidth, _canvasHeight);
-
-                PdfPage page = _pdf.AddNewPage(new PageSize(pageRect));
-                PdfCanvas canvas = new PdfCanvas(page);
-
-                Debug.WriteLine("Page Size: " + page.GetPageSize().ToString());
-
-
-                SetFont();
-
-                DrawTicks(canvas, page);
-                DrawBars(canvas, page);
-                DrawAxes(canvas, page);
-                DrawLabels(canvas, page);
-                DrawLegend(canvas, page);
-
-                _pdf.Close();
-                writer.Close();
                 fos.Close();
             }
         }
@@ -1304,6 +1339,33 @@ namespace Graph
                 _svgWriter.EndRootElement();
                 fos.Close();
             }
+        }
+
+        protected void Preview()
+        {
+            String filename = System.IO.Path.GetTempFileName();
+
+            FileStream fos = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
+
+            CreatePdfStream(fos);
+
+            fos.Close();
+
+            preview.LoadFile(filename);
+            preview.setView("Fit");
+            preview.setShowScrollbars(false);
+
+            File.Delete(filename);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Preview();
+        }
+
+        private void labelBorderWidth_Click(object sender, EventArgs e)
+        {
+
         }
 
     }

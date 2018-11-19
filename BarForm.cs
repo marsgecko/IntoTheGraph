@@ -41,6 +41,8 @@ namespace Graph
         {
             InitializeComponent();
 
+            SetLayout();
+
             // Override defaults
             _originX = 75.0f;
             _originY = 75.0f;

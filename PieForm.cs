@@ -26,6 +26,8 @@ namespace Graph
         {
             InitializeComponent();
 
+            SetLayout();
+
             _drawXAxis = false;
             _drawYAxis = false;
             _legendIsHorizontal = false;
@@ -36,12 +38,27 @@ namespace Graph
             _originX = 150.0f;
             _originY = 150.0f;
 
-            groupAxes.Enabled = false;
-            groupTicks.Enabled = false;
+            gbAxes.Enabled = false;
+            gbTicks.Enabled = false;
             udBarMargin.Enabled = false;
 
             _initialised = true;
             SetDimensions();
+        }
+
+        protected override void SetLayout()
+        {
+            base.SetLayout();
+            Int32 y = gbLegend.Location.Y + gbLegend.Size.Height + 10;
+            Int32 x = 260;
+
+            gbPieChart.Location = new System.Drawing.Point(x, y);
+            y += gbPieChart.Size.Height;
+
+            //preview.Size = new System.Drawing.Size(640, y - gbOrigin.Location.Y);
+
+            this.Size = new System.Drawing.Size(this.Size.Width, this.Size.Height + gbPieChart.Size.Height);
+            this.MinimumSize = this.Size;
         }
 
         protected override void UpdateOnScreenSettings()
@@ -237,5 +254,6 @@ namespace Graph
         {
             _doughnutSize = (float)udDoughnutSize.Value;
         }
+
     }
 }

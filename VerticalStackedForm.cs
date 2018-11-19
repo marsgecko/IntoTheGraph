@@ -34,6 +34,8 @@ namespace Graph
         {
             InitializeComponent();
 
+            SetLayout();
+
             // Different Bar width defaults
             _legendIsHorizontal = false;
             _originX = 120;

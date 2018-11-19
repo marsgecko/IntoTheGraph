@@ -35,6 +35,8 @@ namespace Graph
         {
             InitializeComponent();
 
+            SetLayout();
+
             _originX = 75.0f;
             _originY = 100.0f;
 

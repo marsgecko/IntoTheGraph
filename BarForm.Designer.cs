@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnBarValueFontColour = new System.Windows.Forms.Button();
+            this.label27 = new System.Windows.Forms.Label();
             this.label128 = new System.Windows.Forms.Label();
             this.udValueFontSize = new System.Windows.Forms.NumericUpDown();
             this.label127 = new System.Windows.Forms.Label();
@@ -36,21 +38,19 @@
             this.cbValueCentered = new System.Windows.Forms.CheckBox();
             this.cbValueBelowTop = new System.Windows.Forms.CheckBox();
             this.cbValueAboveTop = new System.Windows.Forms.CheckBox();
-            this.btnBarValueFontColour = new System.Windows.Forms.Button();
-            this.label27 = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
+            this.gbOrigin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginX)).BeginInit();
-            this.groupAxes.SuspendLayout();
+            this.gbAxes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udAxisLineWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udYAxisHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udXAxisWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udMaxValue)).BeginInit();
-            this.groupBox3.SuspendLayout();
+            this.gbBars.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udBarMargin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBarWidth)).BeginInit();
-            this.groupTicks.SuspendLayout();
+            this.gbTicks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udTickLineWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udTickLabelMargin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udTickFontSize)).BeginInit();
@@ -58,7 +58,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.udYAxisLableFontSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelMargin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelFontSize)).BeginInit();
-            this.groupBox5.SuspendLayout();
+            this.gbLegend.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udLegendTextMargin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udLegendMargin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udLegendFontSize)).BeginInit();
@@ -87,6 +87,25 @@
             this.groupBox6.TabIndex = 26;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Bar Value";
+            // 
+            // btnBarValueFontColour
+            // 
+            this.btnBarValueFontColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnBarValueFontColour.Location = new System.Drawing.Point(180, 39);
+            this.btnBarValueFontColour.Name = "btnBarValueFontColour";
+            this.btnBarValueFontColour.Size = new System.Drawing.Size(20, 20);
+            this.btnBarValueFontColour.TabIndex = 40;
+            this.btnBarValueFontColour.UseVisualStyleBackColor = false;
+            this.btnBarValueFontColour.Click += new System.EventHandler(this.btnBarValueFontColour_Click);
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(110, 43);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(64, 13);
+            this.label27.TabIndex = 39;
+            this.label27.Text = "Font Colour:";
             // 
             // label128
             // 
@@ -183,31 +202,13 @@
             this.cbValueAboveTop.UseVisualStyleBackColor = true;
             this.cbValueAboveTop.CheckedChanged += new System.EventHandler(this.cbValueAboveTop_CheckedChanged);
             // 
-            // btnBarValueFontColour
-            // 
-            this.btnBarValueFontColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnBarValueFontColour.Location = new System.Drawing.Point(180, 39);
-            this.btnBarValueFontColour.Name = "btnBarValueFontColour";
-            this.btnBarValueFontColour.Size = new System.Drawing.Size(20, 20);
-            this.btnBarValueFontColour.TabIndex = 40;
-            this.btnBarValueFontColour.UseVisualStyleBackColor = false;
-            this.btnBarValueFontColour.Click += new System.EventHandler(this.btnBarValueFontColour_Click);
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(110, 43);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(64, 13);
-            this.label27.TabIndex = 39;
-            this.label27.Text = "Font Colour:";
-            // 
             // BarForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1028, 427);
+            this.ClientSize = new System.Drawing.Size(1483, 426);
             this.Controls.Add(this.groupBox6);
+            this.Location = new System.Drawing.Point(0, 0);
             this.Name = "BarForm";
             this.Text = "Bar Graph";
             this.Controls.SetChildIndex(this.button1, 0);
@@ -215,30 +216,30 @@
             this.Controls.SetChildIndex(this.lblFont, 0);
             this.Controls.SetChildIndex(this.lblLegend, 0);
             this.Controls.SetChildIndex(this.btnImport, 0);
-            this.Controls.SetChildIndex(this.groupBox1, 0);
-            this.Controls.SetChildIndex(this.groupAxes, 0);
+            this.Controls.SetChildIndex(this.gbOrigin, 0);
+            this.Controls.SetChildIndex(this.gbAxes, 0);
             this.Controls.SetChildIndex(this.cbNoAuto, 0);
-            this.Controls.SetChildIndex(this.groupBox3, 0);
-            this.Controls.SetChildIndex(this.groupTicks, 0);
-            this.Controls.SetChildIndex(this.groupBox5, 0);
+            this.Controls.SetChildIndex(this.gbBars, 0);
+            this.Controls.SetChildIndex(this.gbTicks, 0);
+            this.Controls.SetChildIndex(this.gbLegend, 0);
             this.Controls.SetChildIndex(this.groupBox6, 0);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gbOrigin.ResumeLayout(false);
+            this.gbOrigin.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginX)).EndInit();
-            this.groupAxes.ResumeLayout(false);
-            this.groupAxes.PerformLayout();
+            this.gbAxes.ResumeLayout(false);
+            this.gbAxes.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udAxisLineWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udYAxisHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udXAxisWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udMaxValue)).EndInit();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.gbBars.ResumeLayout(false);
+            this.gbBars.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udBarMargin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBarWidth)).EndInit();
-            this.groupTicks.ResumeLayout(false);
-            this.groupTicks.PerformLayout();
+            this.gbTicks.ResumeLayout(false);
+            this.gbTicks.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udTickLineWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udTickLabelMargin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udTickFontSize)).EndInit();
@@ -246,8 +247,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.udYAxisLableFontSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelMargin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelFontSize)).EndInit();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
+            this.gbLegend.ResumeLayout(false);
+            this.gbLegend.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udLegendTextMargin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udLegendMargin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udLegendFontSize)).EndInit();
