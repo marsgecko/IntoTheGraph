@@ -37,38 +37,45 @@ namespace Graph
         protected float _canvasHeight = 400;
 
         protected float _yScale = 1.0f;
+        protected float _userYScale = 1.0f;
 
         protected float _originX;
         protected float _originY;
 
-        protected float _axisLineWidth = 1.0f;
-        protected iText.Kernel.Colors.Color _axisColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.575f);
+        protected float _axisLineWidth = 0.5f;
+       // protected iText.Kernel.Colors.Color _axisColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.575f);
+        protected iText.Kernel.Colors.Color _axisColour = new DeviceRgb(110,110,110);
         protected float _axisWidth;
         protected float _axisHeight;
         protected bool _drawXAxis = true;
-        protected bool _drawYAxis = true;
+        protected bool _drawYAxis = false;
 
         protected float _valueAxisMax = 250;
-        protected float _valueAxisInterval = 5;
+        protected float _valueAxisInterval = 10;
         protected float _valueLabelMargin = 30;
-        protected float _valueFontSize = 12.0f;
-        protected iText.Kernel.Colors.Color _valueFontColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.875f);
+        protected float _valueFontSize = 8.0f;
+        //protected iText.Kernel.Colors.Color _valueFontColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.875f);
+        protected iText.Kernel.Colors.Color _valueFontColour = new DeviceRgb(33,33,33);
 
         protected float _tickLineWidth = 0.5f;
-        protected iText.Kernel.Colors.Color _tickColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.275f);
+        //protected iText.Kernel.Colors.Color _tickColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.275f);
+        protected iText.Kernel.Colors.Color _tickColour = new DeviceRgb(192,192,192);
         protected float _tickFontSize = 8.0f;
-        protected iText.Kernel.Colors.Color _tickFontColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.575f);
+        //protected iText.Kernel.Colors.Color _tickFontColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.575f);
+        protected iText.Kernel.Colors.Color _tickFontColour = new DeviceRgb(110,110,110);
         protected float _tickLabelMargin = 8.0f;
 
         protected float _barWidth = 10;
         protected float _barMargin = 10;
         protected bool _barDrawBorder = false;
         protected float _barBorderWidth = 1;
-        protected iText.Kernel.Colors.Color _barBorderColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.0f);
+        //protected iText.Kernel.Colors.Color _barBorderColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.0f);
+        protected iText.Kernel.Colors.Color _barBorderColour = new DeviceRgb(255, 255, 255);
 
         protected float _columnLabelMargin = 5.0f;
-        protected float _columnFontSize = 12.0f;
-        protected iText.Kernel.Colors.Color _columnFontColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.875f);
+        protected float _columnFontSize = 10.0f;
+        //protected iText.Kernel.Colors.Color _columnFontColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.875f);
+        protected iText.Kernel.Colors.Color _columnFontColour = new DeviceRgb(33,33,33);
 
         protected bool _legendIsHorizontal = true;
         protected float _legendMargin = 15.0f;
@@ -76,7 +83,8 @@ namespace Graph
         protected float _legendVerticalSize = 25.0f;
         protected float _legendKeySize = 5.0f;
         protected float _legendFontSize = 10.0f;
-        protected iText.Kernel.Colors.Color _legendFontColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.875f);
+        //protected iText.Kernel.Colors.Color _legendFontColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.875f);
+        protected iText.Kernel.Colors.Color _legendFontColour = new DeviceRgb(33,33,33);
 
         protected List<Button> mLegendButtons;
         protected List<Label> mLegendLabels;
@@ -201,6 +209,8 @@ namespace Graph
             udLegendKeySize.Value = new decimal(_legendKeySize);
             udLegendFontSize.Value = new decimal(_legendFontSize);
             btnLegendFontColour.BackColor = GetColorFromiTextColour(_legendFontColour);
+
+            udYAxisScale.Value = new decimal(_userYScale);
 
         }
 
@@ -335,10 +345,17 @@ namespace Graph
             _axisHeight = _valueAxisMax;
 
             _yScale = 1.0f;
-            if( _axisHeight < _axisWidth * 0.25f)
+            if (_userYScale != 1.0f)
             {
-                float newHeight = _axisWidth * 0.25f;
-                _yScale = newHeight/_axisHeight;
+                _yScale = _userYScale;
+            }
+            else
+            {
+                if (_axisHeight < _axisWidth * 0.25f)
+                {
+                    float newHeight = _axisWidth * 0.25f;
+                    _yScale = newHeight / _axisHeight;
+                }
             }
 
             if(_legendIsHorizontal)
@@ -770,6 +787,7 @@ namespace Graph
                 }
 
                 ShowLegend();
+                Preview();
             }
         }
 
@@ -855,12 +873,13 @@ namespace Graph
                 currentColor = System.Drawing.Color.FromArgb(Convert.ToInt32(rgb[0] * 255), Convert.ToInt32(rgb[1] * 255), Convert.ToInt32(rgb[2] * 255));
             }
 
-            OpenPainter.ColorPicker.frmColorPicker colorDialog = new OpenPainter.ColorPicker.frmColorPicker(currentColor);
+            //OpenPainter.ColorPicker.frmColorPicker colorDialog = new OpenPainter.ColorPicker.frmColorPicker(currentColor);
 
+            colorDialog.CustomColors = new int[] { ColorTranslator.ToOle(currentColor) };
             System.Windows.Forms.DialogResult result = colorDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                legend.Colour = RGBToCMYK(colorDialog.PrimaryColor);
+                legend.Colour = new DeviceRgb(colorDialog.Color);
                 ShowLegend();
             }
         }
@@ -879,7 +898,7 @@ namespace Graph
         {
             _tickFontSize = (float)udTickFontSize.Value;
         }
-
+/*
         public static DeviceCmyk RGBToCMYK(System.Drawing.Color rgb)
         {
             double dr = (double)rgb.R / 255;
@@ -892,7 +911,7 @@ namespace Graph
 
             return new DeviceCmyk(c, m, y, k);
         }
-
+        */
         protected void SetButtonColour(ref iText.Kernel.Colors.Color iTextColour, Button button)
         {
             System.Drawing.Color currentColor;
@@ -908,7 +927,7 @@ namespace Graph
                 currentColor = System.Drawing.Color.FromArgb(Convert.ToInt32(rgb[0] * 255), Convert.ToInt32(rgb[1] * 255), Convert.ToInt32(rgb[2] * 255));
             }
 
-            OpenPainter.ColorPicker.frmColorPicker colourDialog = new OpenPainter.ColorPicker.frmColorPicker(currentColor);
+            /*OpenPainter.ColorPicker.frmColorPicker colourDialog = new OpenPainter.ColorPicker.frmColorPicker(currentColor);
 
             if (colourDialog.ShowDialog() == DialogResult.OK)
             {
@@ -926,15 +945,15 @@ namespace Graph
 
                 button.BackColor = colourDialog.PrimaryColor;
             }
-
-            /*
+            */
+            
             colorDialog.CustomColors = new int[] { ColorTranslator.ToOle(currentColor) };
             DialogResult result = colorDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                iTextColour = RGBToCMYK(colorDialog.Color);
+                iTextColour = new DeviceRgb(colorDialog.Color);
                 button.BackColor = colorDialog.Color;
-            }*/
+            }
         }
 
         private void btnTickFontColour_Click(object sender, EventArgs e)
@@ -984,21 +1003,24 @@ namespace Graph
 
         protected void WriteColourSetting(XmlTextWriter xml, iText.Kernel.Colors.Color iTextColour, String name)
         {
-            //System.Drawing.Color currentColor;
-
             if (iTextColour.GetColorSpace().ToString() == "iText.Kernel.Pdf.Colorspace.PdfDeviceCs+Cmyk")
             {
-                float[] cmyk = iTextColour.GetColorValue();
+                /*float[] cmyk = iTextColour.GetColorValue();
                 String attribute = cmyk[0].ToString() + "," +  cmyk[1].ToString() + "," + cmyk[2].ToString() + "," + cmyk[3].ToString();
-                //currentColor = ConvertCmykToRgb(cmyk[0], cmyk[1], cmyk[2], cmyk[3]);
 
-                xml.WriteAttributeString(name, attribute);
+                xml.WriteAttributeString(name, attribute);*/
+                MessageBox.Show("Wrong Colour Space", "Not SUpported", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                //float[] rgb = iTextColour.GetColorValue();
+                float[] float_rgb = iTextColour.GetColorValue();
+                int r = Convert.ToInt32(Math.Round(255 * float_rgb[0]));
+                int g = Convert.ToInt32(Math.Round(255 * float_rgb[1]));
+                int b = Convert.ToInt32(Math.Round(255 * float_rgb[2]));
+                String attribute = r.ToString() + "," + g.ToString() + "," + b.ToString();
+                xml.WriteAttributeString(name, attribute);
                 //currentColor = System.Drawing.Color.FromArgb(Convert.ToInt32(rgb[0] * 255), Convert.ToInt32(rgb[1] * 255), Convert.ToInt32(rgb[2] * 255));
-                MessageBox.Show("Wrong Colour Space", "Not SUpported", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Wrong Colour Space", "Not SUpported", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 
@@ -1024,6 +1046,7 @@ namespace Graph
             xml.WriteAttributeString("canvasHeight", _canvasHeight.ToString("0.0"));
 
             xml.WriteAttributeString("yScale", _yScale.ToString("0.0"));
+            xml.WriteAttributeString("userYScale", _userYScale.ToString("0.0"));
 
             xml.WriteAttributeString("originX", _originX.ToString("0.0"));
             xml.WriteAttributeString("originY", _originY.ToString("0.0"));
@@ -1099,9 +1122,19 @@ namespace Graph
 
         protected virtual void ReadSettings(XmlTextReader xml)
         {
+            String value;
             _canvasWidth = float.Parse(xml.GetAttribute("canvasWidth") );
             _canvasHeight = float.Parse(xml.GetAttribute("canvasHeight") );
             _yScale = float.Parse(xml.GetAttribute("yScale") );
+            value = xml.GetAttribute("userYScale");
+            if( value != null )
+            {
+                _userYScale = float.Parse(value);
+            }
+            else
+            {
+                _userYScale = 1.0f;
+            }
             _originX = float.Parse(xml.GetAttribute("originX") );
             _originY = float.Parse(xml.GetAttribute("originY") );
             _axisLineWidth = float.Parse(xml.GetAttribute("axisLineWidth") );
@@ -1155,7 +1188,17 @@ namespace Graph
                 float m = float.Parse(values[1]);
                 float y = float.Parse(values[2]);
                 float k = float.Parse(values[3]);
-                iTextColour = new DeviceCmyk(c, m, y, k);
+                //iTextColour = new DeviceCmyk(c, m, y, k);
+
+                System.Drawing.Color temp = ConvertCmykToRgb(c, m, y, k);
+                iTextColour = new DeviceRgb(temp);
+            }
+            else if (values.Length == 3)
+            {
+                int r = Convert.ToInt32(values[0]);
+                int g = Convert.ToInt32(values[1]);
+                int b = Convert.ToInt32(values[2]);
+                iTextColour = new DeviceRgb(r,g,b);
             }
         }
 
@@ -1171,7 +1214,7 @@ namespace Graph
                 Debug.WriteLine(channel.ToString("0.0000"));
             }
             */
-            iText.Kernel.Colors.Color iTextColour = new DeviceCmyk();
+            iText.Kernel.Colors.Color iTextColour = new DeviceRgb();
             ReadColour(xml, ref iTextColour, "colour");
             _data.Legends[index].Colour = iTextColour;
             /*
@@ -1186,6 +1229,7 @@ namespace Graph
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            saveFileDialog.Filter = "Graph files (*.gph)|*.gph|All files (*.*)|*.*";
             saveFileDialog.FileName = GetGraphType() + ".gph";
             DialogResult result = saveFileDialog.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK)
@@ -1248,6 +1292,7 @@ namespace Graph
                     SetDimensions();
                     UpdateOnScreenSettings();
                     ShowLegend();
+                    Preview();
                 }
                 catch
                 {
@@ -1363,9 +1408,10 @@ namespace Graph
             Preview();
         }
 
-        private void labelBorderWidth_Click(object sender, EventArgs e)
+        private void udYAxisScale_ValueChanged(object sender, EventArgs e)
         {
-
+            _userYScale = (float)udYAxisScale.Value;
+            SetDimensions();
         }
 
     }

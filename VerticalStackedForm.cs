@@ -59,10 +59,17 @@ namespace Graph
             _axisWidth = _barWidth * _data.Columns.Count + _barMargin * (_data.Columns.Count + 1);
             _axisHeight = _valueAxisMax;
             _yScale = 1.0f;
-            if (_axisHeight < _axisWidth * 0.25f)
+            if (_userYScale != 1.0f)
             {
-                float newHeight = _axisWidth * 0.25f;
-                _yScale = newHeight / _axisHeight;
+                _yScale = _userYScale;
+            }
+            else
+            {
+                if (_axisHeight < _axisWidth * 0.25f)
+                {
+                    float newHeight = _axisWidth * 0.25f;
+                    _yScale = newHeight / _axisHeight;
+                }
             }
 
             if (_legendIsHorizontal)
@@ -126,6 +133,14 @@ namespace Graph
                     foreach (Value value in column.Values)
                     {
                         iText.Kernel.Geom.Rectangle rectangle = new iText.Kernel.Geom.Rectangle(x, y, _barWidth, value.Data * _yScale);
+
+                        float[] rgb = value.Legend.Colour.GetColorValue();
+
+                        Debug.WriteLine("Legend: " + value.Legend.Label +
+                                        " r:" + rgb[0].ToString("0.00") +
+                                         " g:" + rgb[1].ToString("0.00") +
+                                          " b:" + rgb[2].ToString("0.00"));
+
                         canvas.SetFillColor(value.Legend.Colour);
                         canvas.Rectangle(rectangle);
                         canvas.Fill();

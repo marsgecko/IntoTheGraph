@@ -57,10 +57,17 @@ namespace Graph
             _axisHeight = _valueAxisMax;
 
             _yScale = 1.0f;
-            if( _axisHeight < _axisWidth * 0.25f)
+            if (_userYScale != 1.0f)
             {
-                float newHeight = _axisWidth * 0.25f;
-                _yScale = newHeight/_axisHeight;
+                _yScale = _userYScale;
+            }
+            else
+            {
+                if (_axisHeight < _axisWidth * 0.25f)
+                {
+                    float newHeight = _axisWidth * 0.25f;
+                    _yScale = newHeight / _axisHeight;
+                }
             }
 
             if (_legendIsHorizontal)

@@ -43,6 +43,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.udOriginX = new System.Windows.Forms.NumericUpDown();
             this.gbAxes = new System.Windows.Forms.GroupBox();
+            this.labelYScale = new System.Windows.Forms.Label();
+            this.udYAxisScale = new System.Windows.Forms.NumericUpDown();
             this.btnColumnLableFontColour = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
@@ -110,10 +112,12 @@
             this.button2 = new System.Windows.Forms.Button();
             this.preview = new AxAcroPDFLib.AxAcroPDF();
             this.button3 = new System.Windows.Forms.Button();
+            this.colorDialog = new System.Windows.Forms.ColorDialog();
             this.gbOrigin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginX)).BeginInit();
             this.gbAxes.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udYAxisScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelMargin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelFontSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udInterval)).BeginInit();
@@ -266,6 +270,8 @@
             // 
             // gbAxes
             // 
+            this.gbAxes.Controls.Add(this.labelYScale);
+            this.gbAxes.Controls.Add(this.udYAxisScale);
             this.gbAxes.Controls.Add(this.btnColumnLableFontColour);
             this.gbAxes.Controls.Add(this.label18);
             this.gbAxes.Controls.Add(this.label19);
@@ -293,10 +299,38 @@
             this.gbAxes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbAxes.Location = new System.Drawing.Point(193, 132);
             this.gbAxes.Name = "gbAxes";
-            this.gbAxes.Size = new System.Drawing.Size(464, 236);
+            this.gbAxes.Size = new System.Drawing.Size(464, 270);
             this.gbAxes.TabIndex = 10;
             this.gbAxes.TabStop = false;
             this.gbAxes.Text = "Axes";
+            // 
+            // labelYScale
+            // 
+            this.labelYScale.AutoSize = true;
+            this.labelYScale.Location = new System.Drawing.Point(309, 232);
+            this.labelYScale.Name = "labelYScale";
+            this.labelYScale.Size = new System.Drawing.Size(68, 20);
+            this.labelYScale.TabIndex = 36;
+            this.labelYScale.Text = "Y Scale:";
+            // 
+            // udYAxisScale
+            // 
+            this.udYAxisScale.DecimalPlaces = 2;
+            this.udYAxisScale.Location = new System.Drawing.Point(383, 230);
+            this.udYAxisScale.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.udYAxisScale.Name = "udYAxisScale";
+            this.udYAxisScale.Size = new System.Drawing.Size(70, 26);
+            this.udYAxisScale.TabIndex = 35;
+            this.udYAxisScale.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udYAxisScale.ValueChanged += new System.EventHandler(this.udYAxisScale_ValueChanged);
             // 
             // btnColumnLableFontColour
             // 
@@ -671,7 +705,6 @@
             this.labelBorderWidth.Size = new System.Drawing.Size(106, 20);
             this.labelBorderWidth.TabIndex = 27;
             this.labelBorderWidth.Text = "Border Width:";
-            this.labelBorderWidth.Click += new System.EventHandler(this.labelBorderWidth_Click);
             // 
             // btnBorderColour
             // 
@@ -1192,6 +1225,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.udOriginX)).EndInit();
             this.gbAxes.ResumeLayout(false);
             this.gbAxes.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udYAxisScale)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelMargin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelFontSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udInterval)).EndInit();
@@ -1309,6 +1343,9 @@
         protected System.Windows.Forms.Button button2;
         protected AxAcroPDFLib.AxAcroPDF preview;
         protected System.Windows.Forms.Button button3;
+        protected System.Windows.Forms.Label labelYScale;
+        protected System.Windows.Forms.NumericUpDown udYAxisScale;
+        private System.Windows.Forms.ColorDialog colorDialog;
     }
 }
 

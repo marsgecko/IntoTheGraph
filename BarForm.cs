@@ -34,7 +34,7 @@ namespace Graph
         bool _barDrawValueCenter = false;
         float _barValueMargin = 2.0f;
         float _barValueFontSize = 8.0f;
-        protected iText.Kernel.Colors.Color _barValueFontColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.0f);
+        protected iText.Kernel.Colors.Color _barValueFontColour = new DeviceRgb(255,255,255);
 
 
         public BarForm()
@@ -51,6 +51,21 @@ namespace Graph
 
             SetDimensions();
 
+        }
+
+        protected override void SetLayout()
+        {
+            base.SetLayout();
+            Int32 y = gbLegend.Location.Y + gbLegend.Size.Height + 10;
+            Int32 x = 260;
+
+            gbBarValue.Location = new System.Drawing.Point(x, y);
+            y += gbBarValue.Size.Height;
+
+            //preview.Size = new System.Drawing.Size(640, y - gbOrigin.Location.Y);
+
+            this.Size = new System.Drawing.Size(this.Size.Width, this.Size.Height + gbBarValue.Size.Height);
+            this.MinimumSize = this.Size;
         }
 
         protected override void UpdateOnScreenSettings()
@@ -83,10 +98,17 @@ namespace Graph
             _axisHeight = _valueAxisMax;
 
             _yScale = 1.0f;
-            if (_axisHeight < _axisWidth * 0.25f)
+            if (_userYScale != 1.0f)
             {
-                float newHeight = _axisWidth * 0.25f;
-                _yScale = newHeight / _axisHeight;
+                _yScale = _userYScale;
+            }
+            else
+            {
+                if (_axisHeight < _axisWidth * 0.25f)
+                {
+                    float newHeight = _axisWidth * 0.25f;
+                    _yScale = newHeight / _axisHeight;
+                }
             }
 
             if (_legendIsHorizontal)

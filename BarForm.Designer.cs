@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.gbBarValue = new System.Windows.Forms.GroupBox();
             this.btnBarValueFontColour = new System.Windows.Forms.Button();
             this.label27 = new System.Windows.Forms.Label();
             this.label128 = new System.Windows.Forms.Label();
@@ -65,35 +65,38 @@
             ((System.ComponentModel.ISupportInitialize)(this.udLegendKeySize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udLegendVerticalSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBorderWidth)).BeginInit();
-            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.preview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udYAxisScale)).BeginInit();
+            this.gbBarValue.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udValueFontSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udValueMargin)).BeginInit();
             this.SuspendLayout();
             // 
-            // groupBox6
+            // gbBarValue
             // 
-            this.groupBox6.Controls.Add(this.btnBarValueFontColour);
-            this.groupBox6.Controls.Add(this.label27);
-            this.groupBox6.Controls.Add(this.label128);
-            this.groupBox6.Controls.Add(this.udValueFontSize);
-            this.groupBox6.Controls.Add(this.label127);
-            this.groupBox6.Controls.Add(this.udValueMargin);
-            this.groupBox6.Controls.Add(this.cbValueCentered);
-            this.groupBox6.Controls.Add(this.cbValueBelowTop);
-            this.groupBox6.Controls.Add(this.cbValueAboveTop);
-            this.groupBox6.Location = new System.Drawing.Point(261, 346);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(396, 67);
-            this.groupBox6.TabIndex = 26;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Bar Value";
+            this.gbBarValue.Controls.Add(this.btnBarValueFontColour);
+            this.gbBarValue.Controls.Add(this.label27);
+            this.gbBarValue.Controls.Add(this.label128);
+            this.gbBarValue.Controls.Add(this.udValueFontSize);
+            this.gbBarValue.Controls.Add(this.label127);
+            this.gbBarValue.Controls.Add(this.udValueMargin);
+            this.gbBarValue.Controls.Add(this.cbValueCentered);
+            this.gbBarValue.Controls.Add(this.cbValueBelowTop);
+            this.gbBarValue.Controls.Add(this.cbValueAboveTop);
+            this.gbBarValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbBarValue.Location = new System.Drawing.Point(193, 418);
+            this.gbBarValue.Name = "gbBarValue";
+            this.gbBarValue.Size = new System.Drawing.Size(464, 98);
+            this.gbBarValue.TabIndex = 26;
+            this.gbBarValue.TabStop = false;
+            this.gbBarValue.Text = "Bar Value";
             // 
             // btnBarValueFontColour
             // 
             this.btnBarValueFontColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnBarValueFontColour.Location = new System.Drawing.Point(180, 39);
+            this.btnBarValueFontColour.Location = new System.Drawing.Point(265, 44);
             this.btnBarValueFontColour.Name = "btnBarValueFontColour";
-            this.btnBarValueFontColour.Size = new System.Drawing.Size(20, 20);
+            this.btnBarValueFontColour.Size = new System.Drawing.Size(40, 40);
             this.btnBarValueFontColour.TabIndex = 40;
             this.btnBarValueFontColour.UseVisualStyleBackColor = false;
             this.btnBarValueFontColour.Click += new System.EventHandler(this.btnBarValueFontColour_Click);
@@ -101,32 +104,32 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(110, 43);
+            this.label27.Location = new System.Drawing.Point(163, 54);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(64, 13);
+            this.label27.Size = new System.Drawing.Size(96, 20);
             this.label27.TabIndex = 39;
             this.label27.Text = "Font Colour:";
             // 
             // label128
             // 
             this.label128.AutoSize = true;
-            this.label128.Location = new System.Drawing.Point(263, 43);
+            this.label128.Location = new System.Drawing.Point(311, 54);
             this.label128.Name = "label128";
-            this.label128.Size = new System.Drawing.Size(54, 13);
+            this.label128.Size = new System.Drawing.Size(81, 20);
             this.label128.TabIndex = 38;
             this.label128.Text = "Font Size:";
             // 
             // udValueFontSize
             // 
             this.udValueFontSize.DecimalPlaces = 1;
-            this.udValueFontSize.Location = new System.Drawing.Point(323, 41);
+            this.udValueFontSize.Location = new System.Drawing.Point(398, 52);
             this.udValueFontSize.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.udValueFontSize.Name = "udValueFontSize";
-            this.udValueFontSize.Size = new System.Drawing.Size(53, 20);
+            this.udValueFontSize.Size = new System.Drawing.Size(53, 26);
             this.udValueFontSize.TabIndex = 37;
             this.udValueFontSize.Value = new decimal(new int[] {
             1,
@@ -138,23 +141,23 @@
             // label127
             // 
             this.label127.AutoSize = true;
-            this.label127.Location = new System.Drawing.Point(274, 20);
+            this.label127.Location = new System.Drawing.Point(330, 22);
             this.label127.Name = "label127";
-            this.label127.Size = new System.Drawing.Size(42, 13);
+            this.label127.Size = new System.Drawing.Size(61, 20);
             this.label127.TabIndex = 36;
             this.label127.Text = "Margin:";
             // 
             // udValueMargin
             // 
             this.udValueMargin.DecimalPlaces = 1;
-            this.udValueMargin.Location = new System.Drawing.Point(323, 18);
+            this.udValueMargin.Location = new System.Drawing.Point(398, 20);
             this.udValueMargin.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.udValueMargin.Name = "udValueMargin";
-            this.udValueMargin.Size = new System.Drawing.Size(53, 20);
+            this.udValueMargin.Size = new System.Drawing.Size(53, 26);
             this.udValueMargin.TabIndex = 35;
             this.udValueMargin.Value = new decimal(new int[] {
             1,
@@ -167,10 +170,10 @@
             // 
             this.cbValueCentered.AutoSize = true;
             this.cbValueCentered.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbValueCentered.Location = new System.Drawing.Point(124, 19);
+            this.cbValueCentered.Location = new System.Drawing.Point(151, 22);
             this.cbValueCentered.Name = "cbValueCentered";
             this.cbValueCentered.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cbValueCentered.Size = new System.Drawing.Size(72, 17);
+            this.cbValueCentered.Size = new System.Drawing.Size(98, 24);
             this.cbValueCentered.TabIndex = 3;
             this.cbValueCentered.Text = "Centered:";
             this.cbValueCentered.UseVisualStyleBackColor = true;
@@ -180,10 +183,10 @@
             // 
             this.cbValueBelowTop.AutoSize = true;
             this.cbValueBelowTop.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbValueBelowTop.Location = new System.Drawing.Point(8, 39);
+            this.cbValueBelowTop.Location = new System.Drawing.Point(13, 53);
             this.cbValueBelowTop.Name = "cbValueBelowTop";
             this.cbValueBelowTop.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cbValueBelowTop.Size = new System.Drawing.Size(80, 17);
+            this.cbValueBelowTop.Size = new System.Drawing.Size(106, 24);
             this.cbValueBelowTop.TabIndex = 2;
             this.cbValueBelowTop.Text = "Below Top:";
             this.cbValueBelowTop.UseVisualStyleBackColor = true;
@@ -193,10 +196,10 @@
             // 
             this.cbValueAboveTop.AutoSize = true;
             this.cbValueAboveTop.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbValueAboveTop.Location = new System.Drawing.Point(6, 19);
+            this.cbValueAboveTop.Location = new System.Drawing.Point(11, 21);
             this.cbValueAboveTop.Name = "cbValueAboveTop";
             this.cbValueAboveTop.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cbValueAboveTop.Size = new System.Drawing.Size(82, 17);
+            this.cbValueAboveTop.Size = new System.Drawing.Size(108, 24);
             this.cbValueAboveTop.TabIndex = 1;
             this.cbValueAboveTop.Text = "Above Top:";
             this.cbValueAboveTop.UseVisualStyleBackColor = true;
@@ -206,11 +209,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1483, 426);
-            this.Controls.Add(this.groupBox6);
+            this.ClientSize = new System.Drawing.Size(1477, 522);
+            this.Controls.Add(this.gbBarValue);
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "BarForm";
             this.Text = "Bar Graph";
+            this.Controls.SetChildIndex(this.button2, 0);
+            this.Controls.SetChildIndex(this.preview, 0);
+            this.Controls.SetChildIndex(this.button3, 0);
             this.Controls.SetChildIndex(this.button1, 0);
             this.Controls.SetChildIndex(this.btnFont, 0);
             this.Controls.SetChildIndex(this.lblFont, 0);
@@ -222,7 +228,7 @@
             this.Controls.SetChildIndex(this.gbBars, 0);
             this.Controls.SetChildIndex(this.gbTicks, 0);
             this.Controls.SetChildIndex(this.gbLegend, 0);
-            this.Controls.SetChildIndex(this.groupBox6, 0);
+            this.Controls.SetChildIndex(this.gbBarValue, 0);
             this.gbOrigin.ResumeLayout(false);
             this.gbOrigin.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginY)).EndInit();
@@ -255,8 +261,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.udLegendKeySize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udLegendVerticalSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBorderWidth)).EndInit();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.preview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udYAxisScale)).EndInit();
+            this.gbBarValue.ResumeLayout(false);
+            this.gbBarValue.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udValueFontSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udValueMargin)).EndInit();
             this.ResumeLayout(false);
@@ -266,7 +274,7 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.GroupBox gbBarValue;
         private System.Windows.Forms.CheckBox cbValueCentered;
         private System.Windows.Forms.CheckBox cbValueBelowTop;
         private System.Windows.Forms.CheckBox cbValueAboveTop;
