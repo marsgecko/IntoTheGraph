@@ -30,6 +30,12 @@ namespace Graph
     public partial class AdjacentStackedForm : Graph.GraphForm
     {
 
+        bool _barDrawValueAboveTop = false;
+        bool _barDrawValueBelowTop = false;
+        bool _barDrawValueCenter = false;
+        float _barValueMargin = 2.0f;
+        float _barValueFontSize = 8.0f;
+        protected iText.Kernel.Colors.Color _barValueFontColour = new DeviceRgb(255, 255, 255);
 
         public AdjacentStackedForm()
         {
@@ -42,6 +48,37 @@ namespace Graph
 
             SetDimensions();
 
+        }
+
+        protected override void SetLayout()
+        {
+            base.SetLayout();
+            Int32 y = gbLegend.Location.Y + gbLegend.Size.Height + 10;
+            Int32 x = 260;
+
+            gbBarValue.Location = new System.Drawing.Point(x, y);
+            y += gbBarValue.Size.Height;
+
+            //preview.Size = new System.Drawing.Size(640, y - gbOrigin.Location.Y);
+
+            this.Size = new System.Drawing.Size(this.Size.Width, this.Size.Height + gbBarValue.Size.Height);
+            this.MinimumSize = this.Size;
+        }
+
+        protected override void UpdateOnScreenSettings()
+        {
+            base.UpdateOnScreenSettings();
+
+            if (cbValueAboveTop != null)
+            {
+                cbValueAboveTop.Checked = _barDrawValueAboveTop;
+                cbValueBelowTop.Checked = _barDrawValueBelowTop;
+                cbValueCentered.Checked = _barDrawValueCenter;
+
+                udValueMargin.Value = new decimal(_barValueMargin);
+                udValueFontSize.Value = new decimal(_barValueFontSize);
+                btnBarValueFontColour.BackColor = GetColorFromiTextColour(_barValueFontColour);
+            }
         }
 
         protected override void SetDimensions()
@@ -117,6 +154,55 @@ namespace Graph
                             _svgWriter.Rectangle(x, y, _barWidth, value.Data * _yScale, GetColorFromiTextColour(value.Legend.Colour), temp, 0.0f);
                         }
 
+                        String text = value.Data.ToString("0.0");
+                        if (_data.FormatPercent)
+                        {
+                            text = text + "%";
+                        }
+                        float textWidth = _font.GetWidth(text, _barValueFontSize);
+                        float textHeight = _font.GetAscent(text, _barValueFontSize) + _font.GetDescent(text, _barValueFontSize);
+
+                        float textX = x + (_barWidth / 2);
+
+                        if (_barDrawValueAboveTop)
+                        {
+                            float textY = _originY + value.Data * _yScale + _barValueMargin;
+
+                            _svgWriter.Text(textX,
+                                    textY,
+                                    text,
+                                    GetColorFromiTextColour(_barValueFontColour),
+                                    "middle",
+                                    -0.0f,
+                                    _barValueFontSize);
+
+                        }
+                        if (_barDrawValueBelowTop)
+                        {
+                            float textY = _originY + value.Data * _yScale - _barValueMargin - textHeight;
+
+                            _svgWriter.Text(textX,
+                                    textY,
+                                    text,
+                                    GetColorFromiTextColour(_barValueFontColour),
+                                    "middle",
+                                    -0.0f,
+                                    _barValueFontSize);
+
+                        }
+                        if (_barDrawValueCenter)
+                        {
+                            float textY = _originY + (value.Data * _yScale) / 2 - textHeight / 2;
+
+                            _svgWriter.Text(textX,
+                                    textY,
+                                    text,
+                                    GetColorFromiTextColour(_barValueFontColour),
+                                    "middle",
+                                    -0.0f,
+                                    _barValueFontSize);
+                        }
+
                         x += _barWidth;
                     }
                     x += _barMargin;
@@ -143,6 +229,52 @@ namespace Graph
                             canvas.Stroke();
                         }
 
+                        String text = value.Data.ToString("0.0");
+                        if (_data.FormatPercent)
+                        {
+                            text = text + "%";
+                        }
+                        float textWidth = _font.GetWidth(text, _barValueFontSize);
+                        float textHeight = _font.GetAscent(text, _barValueFontSize) + _font.GetDescent(text, _barValueFontSize);
+
+                        float textX = x + (_barWidth / 2) - (textWidth / 2);
+
+                        if (_barDrawValueAboveTop)
+                        {
+                            float textY = _originY + value.Data * _yScale + _barValueMargin;
+
+                            canvas.BeginText()
+                                .SetFontAndSize(_font, _barValueFontSize)
+                                .MoveText(textX, textY)
+                                .SetColor(_barValueFontColour, true)
+                                .ShowText(text)
+                                .EndText();
+
+                        }
+                        if (_barDrawValueBelowTop)
+                        {
+                            float textY = _originY + value.Data * _yScale - _barValueMargin - textHeight;
+
+                            canvas.BeginText()
+                                .SetFontAndSize(_font, _barValueFontSize)
+                                .MoveText(textX, textY)
+                                .SetColor(_barValueFontColour, true)
+                                .ShowText(text)
+                                .EndText();
+
+                        }
+                        if (_barDrawValueCenter)
+                        {
+                            float textY = _originY + (value.Data * _yScale) / 2 - textHeight / 2;
+
+                            canvas.BeginText()
+                                .SetFontAndSize(_font, _barValueFontSize)
+                                .MoveText(textX, textY)
+                                .SetColor(_barValueFontColour, true)
+                                .ShowText(text)
+                                .EndText();
+                        }
+
                         x += _barWidth;
                     }
                     x += _barMargin;
@@ -157,12 +289,53 @@ namespace Graph
 
         protected override void WriteSubTypeSettings(XmlTextWriter xml)
         {
+            xml.WriteAttributeString("barValueAboveTop", _barDrawValueAboveTop.ToString());
+            xml.WriteAttributeString("barValueBelowTop", _barDrawValueBelowTop.ToString());
+            xml.WriteAttributeString("barValueCenter", _barDrawValueCenter.ToString());
 
+            xml.WriteAttributeString("barValueMargin", _barValueMargin.ToString("0.0"));
+            xml.WriteAttributeString("barValueFontSize", _barValueFontSize.ToString("0.0"));
+            WriteColourSetting(xml, _barValueFontColour, "barValueFontColour");
         }
 
         protected override void ReadSubTypeSettings(XmlTextReader xml)
         {
+            _barDrawValueAboveTop = Convert.ToBoolean(xml.GetAttribute("barValueAboveTop"));
+            _barDrawValueBelowTop = Convert.ToBoolean(xml.GetAttribute("barValueBelowTop"));
+            _barDrawValueCenter = Convert.ToBoolean(xml.GetAttribute("barValueCenter"));
+            _barValueMargin = float.Parse(xml.GetAttribute("barValueMargin"));
+            _barValueFontSize = float.Parse(xml.GetAttribute("barValueFontSize"));
+            ReadColour(xml, ref _barValueFontColour, "barValueFontColour");
+        }
 
+        private void cbValueAboveTop_CheckedChanged(object sender, EventArgs e)
+        {
+            _barDrawValueAboveTop = cbValueAboveTop.Checked;
+        }
+
+        private void cbValueCentered_CheckedChanged(object sender, EventArgs e)
+        {
+            _barDrawValueCenter = cbValueCentered.Checked;
+        }
+
+        private void cbValueBelowTop_CheckedChanged(object sender, EventArgs e)
+        {
+            _barDrawValueBelowTop = cbValueBelowTop.Checked;
+        }
+
+        private void udValueMargin_ValueChanged(object sender, EventArgs e)
+        {
+            _barValueMargin = (float)udValueMargin.Value;
+        }
+
+        private void udValueFontSize_ValueChanged(object sender, EventArgs e)
+        {
+            _barValueFontSize = (float)udValueFontSize.Value;
+        }
+
+        private void btnBarValueFontColour_Click(object sender, EventArgs e)
+        {
+            SetButtonColour(ref _barValueFontColour, btnBarValueFontColour);
         }
     }
 }

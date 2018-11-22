@@ -1,6 +1,6 @@
 ﻿namespace Graph
 {
-    partial class AdjacentStackedForm
+    partial class LineForm
     {
         /// <summary>
         /// Required designer variable.
@@ -67,6 +67,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.udBorderWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.preview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udYAxisScale)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelAngle)).BeginInit();
             this.gbBarValue.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udValueFontSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udValueMargin)).BeginInit();
@@ -84,10 +85,10 @@
             this.gbBarValue.Controls.Add(this.cbValueBelowTop);
             this.gbBarValue.Controls.Add(this.cbValueAboveTop);
             this.gbBarValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbBarValue.Location = new System.Drawing.Point(193, 416);
+            this.gbBarValue.Location = new System.Drawing.Point(193, 418);
             this.gbBarValue.Name = "gbBarValue";
             this.gbBarValue.Size = new System.Drawing.Size(464, 98);
-            this.gbBarValue.TabIndex = 29;
+            this.gbBarValue.TabIndex = 26;
             this.gbBarValue.TabStop = false;
             this.gbBarValue.Text = "Bar Value";
             // 
@@ -205,15 +206,15 @@
             this.cbValueAboveTop.UseVisualStyleBackColor = true;
             this.cbValueAboveTop.CheckedChanged += new System.EventHandler(this.cbValueAboveTop_CheckedChanged);
             // 
-            // AdjacentStackedForm
+            // LineForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1483, 548);
+            this.ClientSize = new System.Drawing.Size(1477, 532);
             this.Controls.Add(this.gbBarValue);
             this.Location = new System.Drawing.Point(0, 0);
-            this.Name = "AdjacentStackedForm";
-            this.Text = "Adjacent Stacked Graph";
+            this.Name = "LineForm";
+            this.Text = "Bar Graph";
             this.Controls.SetChildIndex(this.button2, 0);
             this.Controls.SetChildIndex(this.preview, 0);
             this.Controls.SetChildIndex(this.button3, 0);
@@ -263,6 +264,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.udBorderWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.preview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udYAxisScale)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelAngle)).EndInit();
             this.gbBarValue.ResumeLayout(false);
             this.gbBarValue.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udValueFontSize)).EndInit();
@@ -275,15 +277,15 @@
         #endregion
 
         private System.Windows.Forms.GroupBox gbBarValue;
-        protected System.Windows.Forms.Button btnBarValueFontColour;
-        protected System.Windows.Forms.Label label27;
+        private System.Windows.Forms.CheckBox cbValueCentered;
+        private System.Windows.Forms.CheckBox cbValueBelowTop;
+        private System.Windows.Forms.CheckBox cbValueAboveTop;
         private System.Windows.Forms.Label label128;
         private System.Windows.Forms.NumericUpDown udValueFontSize;
         private System.Windows.Forms.Label label127;
         private System.Windows.Forms.NumericUpDown udValueMargin;
-        private System.Windows.Forms.CheckBox cbValueCentered;
-        private System.Windows.Forms.CheckBox cbValueBelowTop;
-        private System.Windows.Forms.CheckBox cbValueAboveTop;
+        protected System.Windows.Forms.Button btnBarValueFontColour;
+        protected System.Windows.Forms.Label label27;
 
     }
 }

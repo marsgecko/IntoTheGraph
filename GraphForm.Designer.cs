@@ -113,6 +113,9 @@
             this.preview = new AxAcroPDFLib.AxAcroPDF();
             this.button3 = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.labelAngle = new System.Windows.Forms.Label();
+            this.udColumnLabelAngle = new System.Windows.Forms.NumericUpDown();
+            this.cbLegendReverse = new System.Windows.Forms.CheckBox();
             this.gbOrigin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginX)).BeginInit();
@@ -143,6 +146,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.udLegendTextMargin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udLegendMargin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.preview)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelAngle)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -270,6 +274,8 @@
             // 
             // gbAxes
             // 
+            this.gbAxes.Controls.Add(this.labelAngle);
+            this.gbAxes.Controls.Add(this.udColumnLabelAngle);
             this.gbAxes.Controls.Add(this.labelYScale);
             this.gbAxes.Controls.Add(this.udYAxisScale);
             this.gbAxes.Controls.Add(this.btnColumnLableFontColour);
@@ -972,6 +978,7 @@
             // 
             // gbLegend
             // 
+            this.gbLegend.Controls.Add(this.cbLegendReverse);
             this.gbLegend.Controls.Add(this.btnLegendFontColour);
             this.gbLegend.Controls.Add(this.label26);
             this.gbLegend.Controls.Add(this.label25);
@@ -1196,6 +1203,52 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // labelAngle
+            // 
+            this.labelAngle.AutoSize = true;
+            this.labelAngle.Location = new System.Drawing.Point(44, 210);
+            this.labelAngle.Name = "labelAngle";
+            this.labelAngle.Size = new System.Drawing.Size(97, 20);
+            this.labelAngle.TabIndex = 38;
+            this.labelAngle.Text = "Lable Angle:";
+            // 
+            // udColumnLabelAngle
+            // 
+            this.udColumnLabelAngle.DecimalPlaces = 1;
+            this.udColumnLabelAngle.Location = new System.Drawing.Point(151, 208);
+            this.udColumnLabelAngle.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.udColumnLabelAngle.Minimum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            -2147483648});
+            this.udColumnLabelAngle.Name = "udColumnLabelAngle";
+            this.udColumnLabelAngle.Size = new System.Drawing.Size(74, 26);
+            this.udColumnLabelAngle.TabIndex = 37;
+            this.udColumnLabelAngle.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udColumnLabelAngle.ValueChanged += new System.EventHandler(this.udColumnLabelAngle_ValueChanged);
+            // 
+            // cbLegendReverse
+            // 
+            this.cbLegendReverse.AutoSize = true;
+            this.cbLegendReverse.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbLegendReverse.Location = new System.Drawing.Point(191, 52);
+            this.cbLegendReverse.Name = "cbLegendReverse";
+            this.cbLegendReverse.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.cbLegendReverse.Size = new System.Drawing.Size(91, 24);
+            this.cbLegendReverse.TabIndex = 45;
+            this.cbLegendReverse.Text = "Reverse:";
+            this.cbLegendReverse.UseVisualStyleBackColor = true;
+            this.cbLegendReverse.CheckedChanged += new System.EventHandler(this.cbLegendReverse_CheckedChanged);
+            // 
             // GraphForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1255,6 +1308,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.udLegendTextMargin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udLegendMargin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.preview)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelAngle)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1346,6 +1400,9 @@
         protected System.Windows.Forms.Label labelYScale;
         protected System.Windows.Forms.NumericUpDown udYAxisScale;
         private System.Windows.Forms.ColorDialog colorDialog;
+        protected System.Windows.Forms.Label labelAngle;
+        protected System.Windows.Forms.NumericUpDown udColumnLabelAngle;
+        protected System.Windows.Forms.CheckBox cbLegendReverse;
     }
 }
 

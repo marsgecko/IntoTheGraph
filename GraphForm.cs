@@ -76,8 +76,10 @@ namespace Graph
         protected float _columnFontSize = 10.0f;
         //protected iText.Kernel.Colors.Color _columnFontColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.875f);
         protected iText.Kernel.Colors.Color _columnFontColour = new DeviceRgb(33,33,33);
+        protected float _columnLabelAngle = 45.0f;
 
         protected bool _legendIsHorizontal = true;
+        protected bool _legendReverse = false;
         protected float _legendMargin = 15.0f;
         protected float _legendTextMargin = 10.0f;
         protected float _legendVerticalSize = 25.0f;
@@ -201,8 +203,10 @@ namespace Graph
             udColumnLabelMargin.Value = new decimal(_columnLabelMargin);
             udColumnLabelFontSize.Value = new decimal(_columnFontSize);
             btnColumnLableFontColour.BackColor = GetColorFromiTextColour(_columnFontColour);
+            udColumnLabelAngle.Value = new decimal(_columnLabelAngle);
 
             cbLegendHorizontal.Checked = _legendIsHorizontal;
+            cbLegendReverse.Checked = _legendReverse;
             udLegendMargin.Value = new decimal(_legendMargin);
             udLegendTextMargin.Value = new decimal(_legendTextMargin);
             udLegendVerticalSize.Value = new decimal(_legendVerticalSize);
@@ -387,6 +391,11 @@ namespace Graph
             float textWidth;
             float textHeight;
 
+            if (_tickLineWidth == 0.0f )
+            {
+                return;
+            }
+
             if (_svgRender)
             {
                 for (i = _valueAxisInterval; i <= _valueAxisMax; i += _valueAxisInterval)
@@ -513,7 +522,7 @@ namespace Graph
                                 column.Label,
                                 GetColorFromiTextColour(_columnFontColour),
                                 "end",
-                                -45.0f,
+                                _columnLabelAngle * -1.0f,
                                 _columnFontSize);
                     x += totalColumnWidth;
                 }
@@ -524,10 +533,13 @@ namespace Graph
                 layoutCanvas.SetFont(_font);
                 layoutCanvas.SetFontSize(_valueFontSize);
                 layoutCanvas.SetFontColor(_valueFontColour);
+                float x;
 
-                float x = _originX - _valueLabelMargin;
-                layoutCanvas.ShowTextAligned(_data.ValueLabel, x, _originY + _axisHeight * _yScale / 2, TextAlignment.CENTER, VerticalAlignment.MIDDLE, 0.5f * (float)Math.PI);
-
+                if (_data.ValueLabel != null)
+                {
+                    x = _originX - _valueLabelMargin;
+                    layoutCanvas.ShowTextAligned(_data.ValueLabel, x, _originY + _axisHeight * _yScale / 2, TextAlignment.CENTER, VerticalAlignment.MIDDLE, 0.5f * (float)Math.PI);
+                }
 
                 int columnCount = _data.Columns.Count;
                 float totalColumnWidth = (_axisWidth / columnCount);
@@ -542,7 +554,18 @@ namespace Graph
 
                 foreach (Column column in _data.Columns)
                 {
-                    layoutCanvas.ShowTextAligned(column.Label, x, y, TextAlignment.RIGHT, VerticalAlignment.TOP, 0.25f * (float)Math.PI);
+                    if (_columnLabelAngle == 0.0f)
+                    {
+                        layoutCanvas.ShowTextAligned(column.Label, x, y, TextAlignment.CENTER, VerticalAlignment.TOP, (float)Math.PI / 180.0f * _columnLabelAngle);
+                    }
+                    else if (_columnLabelAngle == 90.0f)
+                    {
+                        layoutCanvas.ShowTextAligned(column.Label, x, y, TextAlignment.RIGHT, VerticalAlignment.MIDDLE, (float)Math.PI / 180.0f * _columnLabelAngle);
+                    }
+                    else
+                    {
+                        layoutCanvas.ShowTextAligned(column.Label, x, y, TextAlignment.RIGHT, VerticalAlignment.TOP, (float)Math.PI / 180.0f * _columnLabelAngle);
+                    }
                     x += totalColumnWidth;
                 }
 
@@ -609,21 +632,45 @@ namespace Graph
 
                     x = _originX + _axisWidth / 2 - legendWidth / 2;
 
-                    foreach (Legend legend in _data.Legends)
+                    if (_legendReverse)
                     {
-                        _svgWriter.Circle(x, y, _legendKeySize, GetColorFromiTextColour(legend.Colour), GetColorFromiTextColour(legend.Colour), 0.0f);
+                        int i;
+                        for (i = _data.Legends.Count - 1; i >= 0; i-- )
+                        {
+                            Legend legend = _data.Legends[i];
+                            _svgWriter.Circle(x, y, _legendKeySize, GetColorFromiTextColour(legend.Colour), GetColorFromiTextColour(legend.Colour), 0.0f);
 
-                        float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
+                            float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
 
-                        _svgWriter.Text(x + _legendTextMargin,
-                                y - textHeight / 2,
-                                legend.Label,
-                                GetColorFromiTextColour(_legendFontColour),
-                                "start",
-                                -0.0f,
-                                _legendFontSize);
+                            _svgWriter.Text(x + _legendTextMargin,
+                                    y - textHeight / 2,
+                                    legend.Label,
+                                    GetColorFromiTextColour(_legendFontColour),
+                                    "start",
+                                    -0.0f,
+                                    _legendFontSize);
 
-                        x += _font.GetWidth(legend.Label, _legendFontSize) + _legendTextMargin + _legendKeySize * 2 + _legendMargin;
+                            x += _font.GetWidth(legend.Label, _legendFontSize) + _legendTextMargin + _legendKeySize * 2 + _legendMargin;
+                        }
+                    }
+                    else
+                    {
+                        foreach (Legend legend in _data.Legends)
+                        {
+                            _svgWriter.Circle(x, y, _legendKeySize, GetColorFromiTextColour(legend.Colour), GetColorFromiTextColour(legend.Colour), 0.0f);
+
+                            float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
+
+                            _svgWriter.Text(x + _legendTextMargin,
+                                    y - textHeight / 2,
+                                    legend.Label,
+                                    GetColorFromiTextColour(_legendFontColour),
+                                    "start",
+                                    -0.0f,
+                                    _legendFontSize);
+
+                            x += _font.GetWidth(legend.Label, _legendFontSize) + _legendTextMargin + _legendKeySize * 2 + _legendMargin;
+                        }
                     }
                 }
                 else
@@ -634,21 +681,45 @@ namespace Graph
 
                     Debug.WriteLine("originY:" + _originY.ToString() + " axisHeight:" + _axisHeight.ToString() + " legendHeight:" + legendHeight.ToString() + " y:" + y.ToString());
 
-                    foreach (Legend legend in _data.Legends)
+                    if (_legendReverse)
                     {
-                        _svgWriter.Circle(x, y, _legendKeySize, GetColorFromiTextColour(legend.Colour), GetColorFromiTextColour(legend.Colour), 0.0f);
+                        int i;
+                        for (i = _data.Legends.Count - 1; i >= 0; i--)
+                        {
+                            Legend legend = _data.Legends[i];
+                            _svgWriter.Circle(x, y, _legendKeySize, GetColorFromiTextColour(legend.Colour), GetColorFromiTextColour(legend.Colour), 0.0f);
 
-                        float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
+                            float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
 
-                        _svgWriter.Text(x + _legendTextMargin,
-                                y - textHeight / 2,
-                                legend.Label,
-                                GetColorFromiTextColour(_legendFontColour),
-                                "start",
-                                -0.0f,
-                                _legendFontSize);
+                            _svgWriter.Text(x + _legendTextMargin,
+                                    y - textHeight / 2,
+                                    legend.Label,
+                                    GetColorFromiTextColour(_legendFontColour),
+                                    "start",
+                                    -0.0f,
+                                    _legendFontSize);
 
-                        y -= _legendVerticalSize;
+                            y -= _legendVerticalSize;
+                        }
+                    }
+                    else
+                    {
+                        foreach (Legend legend in _data.Legends)
+                        {
+                            _svgWriter.Circle(x, y, _legendKeySize, GetColorFromiTextColour(legend.Colour), GetColorFromiTextColour(legend.Colour), 0.0f);
+
+                            float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
+
+                            _svgWriter.Text(x + _legendTextMargin,
+                                    y - textHeight / 2,
+                                    legend.Label,
+                                    GetColorFromiTextColour(_legendFontColour),
+                                    "start",
+                                    -0.0f,
+                                    _legendFontSize);
+
+                            y -= _legendVerticalSize;
+                        }
                     }
                 }
             }
@@ -669,22 +740,47 @@ namespace Graph
 
                     x = _originX + _axisWidth / 2 - legendWidth / 2;
 
-                    foreach (Legend legend in _data.Legends)
+                    if (_legendReverse)
                     {
-                        canvas.SetFillColor(legend.Colour);
-                        canvas.Circle(x, y, _legendKeySize);
-                        canvas.Fill();
+                        int i;
+                        for (i = _data.Legends.Count - 1; i >= 0; i--)
+                        {
+                            Legend legend = _data.Legends[i];
+                            canvas.SetFillColor(legend.Colour);
+                            canvas.Circle(x, y, _legendKeySize);
+                            canvas.Fill();
 
-                        float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
+                            float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
 
-                        canvas.BeginText()
-                              .SetFontAndSize(_font, _legendFontSize)
-                              .MoveText(x + _legendTextMargin, y - textHeight / 2)
-                              .SetColor(_legendFontColour, true)
-                              .ShowText(legend.Label)
-                              .EndText();
+                            canvas.BeginText()
+                                  .SetFontAndSize(_font, _legendFontSize)
+                                  .MoveText(x + _legendTextMargin, y - textHeight / 2)
+                                  .SetColor(_legendFontColour, true)
+                                  .ShowText(legend.Label)
+                                  .EndText();
 
-                        x += _font.GetWidth(legend.Label, _legendFontSize) + _legendTextMargin + _legendKeySize * 2 + _legendMargin;
+                            x += _font.GetWidth(legend.Label, _legendFontSize) + _legendTextMargin + _legendKeySize * 2 + _legendMargin;
+                        }
+                    }
+                    else
+                    {
+                        foreach (Legend legend in _data.Legends)
+                        {
+                            canvas.SetFillColor(legend.Colour);
+                            canvas.Circle(x, y, _legendKeySize);
+                            canvas.Fill();
+
+                            float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
+
+                            canvas.BeginText()
+                                  .SetFontAndSize(_font, _legendFontSize)
+                                  .MoveText(x + _legendTextMargin, y - textHeight / 2)
+                                  .SetColor(_legendFontColour, true)
+                                  .ShowText(legend.Label)
+                                  .EndText();
+
+                            x += _font.GetWidth(legend.Label, _legendFontSize) + _legendTextMargin + _legendKeySize * 2 + _legendMargin;
+                        }
                     }
                 }
                 else
@@ -695,29 +791,54 @@ namespace Graph
 
                     Debug.WriteLine("originY:" + _originY.ToString() + " axisHeight:" + _axisHeight.ToString() + " legendHeight:" + legendHeight.ToString() + " y:" + y.ToString());
 
-                    foreach (Legend legend in _data.Legends)
+                    if (_legendReverse)
                     {
+                        int i;
+                        for (i = _data.Legends.Count - 1; i >= 0; i--)
+                        {
+                            Legend legend = _data.Legends[i];
+                            canvas.SetFillColor(legend.Colour);
+                            canvas.Circle(x, y, _legendKeySize);
+                            canvas.Fill();
+                            //float textHeight = _font.GetAscent(legend.Label, _legendFontSize) - _font.GetDescent(legend.Label, _legendFontSize);
+                            float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
 
-                        canvas.SetFillColor(legend.Colour);
-                        canvas.Circle(x, y, _legendKeySize);
-                        canvas.Fill();
-                        //float textHeight = _font.GetAscent(legend.Label, _legendFontSize) - _font.GetDescent(legend.Label, _legendFontSize);
-                        float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
+                            canvas.BeginText()
+                                  .SetFontAndSize(_font, _legendFontSize)
+                                  .MoveText(x + _legendTextMargin, y - textHeight / 2)
+                                  .SetColor(_legendFontColour, true)
+                                  .ShowText(legend.Label)
+                                  .EndText();
 
-                        canvas.BeginText()
-                              .SetFontAndSize(_font, _legendFontSize)
-                              .MoveText(x + _legendTextMargin, y - textHeight / 2)
-                              .SetColor(_legendFontColour, true)
-                              .ShowText(legend.Label)
-                              .EndText();
+                            y -= _legendVerticalSize;
+                        }
+                    }
+                    else
+                    {
+                        foreach (Legend legend in _data.Legends)
+                        {
 
-                        y -= _legendVerticalSize;
+                            canvas.SetFillColor(legend.Colour);
+                            canvas.Circle(x, y, _legendKeySize);
+                            canvas.Fill();
+                            //float textHeight = _font.GetAscent(legend.Label, _legendFontSize) - _font.GetDescent(legend.Label, _legendFontSize);
+                            float textHeight = _font.GetAscent(legend.Label, _legendFontSize);
+
+                            canvas.BeginText()
+                                  .SetFontAndSize(_font, _legendFontSize)
+                                  .MoveText(x + _legendTextMargin, y - textHeight / 2)
+                                  .SetColor(_legendFontColour, true)
+                                  .ShowText(legend.Label)
+                                  .EndText();
+
+                            y -= _legendVerticalSize;
+                        }
                     }
                 }
             } // render svg
         }
 
-        protected void CreatePdfStream(Stream stream)
+        public void CreatePdfStream(Stream stream)
         {
             PdfWriter writer = new PdfWriter(stream);
 
@@ -773,21 +894,27 @@ namespace Graph
             }
         }
 
+        public void LoadExcelFile(String filename)
+        {
+            _data.LoadExcelFile(filename, true);
+
+            if (!cbNoAuto.Checked)
+            {
+                SetDimensions();
+            }
+
+            ShowLegend();
+            Preview();
+        }
+
         private void btnImport_Click(object sender, EventArgs e)
         {
             openFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
             DialogResult result = openFileDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
-                _data.LoadExcelFile(openFileDialog.FileName, true);
-
-                if (!cbNoAuto.Checked)
-                {
-                    SetDimensions();
-                }
-
-                ShowLegend();
-                Preview();
+                LoadExcelFile(openFileDialog.FileName);
+                Text = "File Open: " + System.IO.Path.GetFileName(openFileDialog.FileName);
             }
         }
 
@@ -1079,8 +1206,10 @@ namespace Graph
             xml.WriteAttributeString("columnLabelMargin", _columnLabelMargin.ToString("0.0"));
             xml.WriteAttributeString("columnFontSize", _columnFontSize.ToString("0.0"));
             WriteColourSetting(xml, _columnFontColour, "columnFontColour");
+            xml.WriteAttributeString("columnLabelAngle", _columnLabelAngle.ToString("0.0"));
 
             xml.WriteAttributeString("legendIsHorizontal", _legendIsHorizontal.ToString());
+            xml.WriteAttributeString("legendReverse", _legendReverse.ToString());
             xml.WriteAttributeString("legendMargin", _legendMargin.ToString("0.0"));
             xml.WriteAttributeString("legendTextMargin", _legendTextMargin.ToString("0.0"));
             xml.WriteAttributeString("legendVerticalSize", _legendVerticalSize.ToString("0.0"));
@@ -1166,8 +1295,10 @@ namespace Graph
             _columnLabelMargin = float.Parse(xml.GetAttribute("columnLabelMargin"));
             _columnFontSize = float.Parse(xml.GetAttribute("columnFontSize"));
             ReadColour(xml, ref _columnFontColour, "columnFontColour");
+            _columnLabelAngle = float.Parse(xml.GetAttribute("columnLabelAngle"));
 
             _legendIsHorizontal = Convert.ToBoolean(xml.GetAttribute("legendIsHorizontal"));
+            _legendReverse = Convert.ToBoolean(xml.GetAttribute("legendReverse"));
             _legendMargin = float.Parse(xml.GetAttribute("legendMargin"));
             _legendTextMargin = float.Parse(xml.GetAttribute("legendTextMargin"));
             _legendVerticalSize = float.Parse(xml.GetAttribute("legendVerticalSize"));
@@ -1253,15 +1384,11 @@ namespace Graph
             }
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        public void LoadGphFile(String filename)
         {
-            openFileDialog.Filter = "Graph files (*.gph)|*.gph|All files (*.*)|*.*";
-            DialogResult result = openFileDialog.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                try
+            try
                 {
-                    using (XmlTextReader reader = new XmlTextReader(openFileDialog.FileName))
+                    using (XmlTextReader reader = new XmlTextReader(filename))
                     {
                         while (reader.Read())
                         {
@@ -1298,6 +1425,15 @@ namespace Graph
                 {
                     MessageBox.Show("Invalid Graph File", "Cannot Open", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Filter = "Graph files (*.gph)|*.gph|All files (*.*)|*.*";
+            DialogResult result = openFileDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                LoadGphFile(openFileDialog.FileName);
             }
         }
 
@@ -1412,6 +1548,16 @@ namespace Graph
         {
             _userYScale = (float)udYAxisScale.Value;
             SetDimensions();
+        }
+
+        private void udColumnLabelAngle_ValueChanged(object sender, EventArgs e)
+        {
+            _columnLabelAngle = (float)udColumnLabelAngle.Value;   
+        }
+
+        private void cbLegendReverse_CheckedChanged(object sender, EventArgs e)
+        {
+            _legendReverse = cbLegendReverse.Checked;
         }
 
     }

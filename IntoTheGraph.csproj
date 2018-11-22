@@ -114,6 +114,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdobeColors.cs" />
+    <Compile Include="LineForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LineForm.Designer.cs">
+      <DependentUpon>LineForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ColorComponent.cs" />
     <Compile Include="ctrl2DColorBox.cs">
       <SubType>UserControl</SubType>
@@ -168,6 +174,9 @@
       <DependentUpon>StartForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Value.cs" />
+    <EmbeddedResource Include="LineForm.resx">
+      <DependentUpon>LineForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ctrl2DColorBox.resx" />
     <EmbeddedResource Include="ctrlVerticalColorSlider.resx" />
     <EmbeddedResource Include="frmColorPicker.resx" />
