@@ -43,6 +43,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.udOriginX = new System.Windows.Forms.NumericUpDown();
             this.gbAxes = new System.Windows.Forms.GroupBox();
+            this.labelAngle = new System.Windows.Forms.Label();
+            this.udColumnLabelAngle = new System.Windows.Forms.NumericUpDown();
             this.labelYScale = new System.Windows.Forms.Label();
             this.udYAxisScale = new System.Windows.Forms.NumericUpDown();
             this.btnColumnLableFontColour = new System.Windows.Forms.Button();
@@ -96,6 +98,7 @@
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbLegend = new System.Windows.Forms.GroupBox();
+            this.cbLegendReverse = new System.Windows.Forms.CheckBox();
             this.btnLegendFontColour = new System.Windows.Forms.Button();
             this.label26 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
@@ -113,13 +116,11 @@
             this.preview = new AxAcroPDFLib.AxAcroPDF();
             this.button3 = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
-            this.labelAngle = new System.Windows.Forms.Label();
-            this.udColumnLabelAngle = new System.Windows.Forms.NumericUpDown();
-            this.cbLegendReverse = new System.Windows.Forms.CheckBox();
             this.gbOrigin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginX)).BeginInit();
             this.gbAxes.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelAngle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udYAxisScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelMargin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelFontSize)).BeginInit();
@@ -146,7 +147,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.udLegendTextMargin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udLegendMargin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.preview)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelAngle)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -309,6 +309,39 @@
             this.gbAxes.TabIndex = 10;
             this.gbAxes.TabStop = false;
             this.gbAxes.Text = "Axes";
+            // 
+            // labelAngle
+            // 
+            this.labelAngle.AutoSize = true;
+            this.labelAngle.Location = new System.Drawing.Point(44, 210);
+            this.labelAngle.Name = "labelAngle";
+            this.labelAngle.Size = new System.Drawing.Size(97, 20);
+            this.labelAngle.TabIndex = 38;
+            this.labelAngle.Text = "Lable Angle:";
+            // 
+            // udColumnLabelAngle
+            // 
+            this.udColumnLabelAngle.DecimalPlaces = 1;
+            this.udColumnLabelAngle.Location = new System.Drawing.Point(151, 208);
+            this.udColumnLabelAngle.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.udColumnLabelAngle.Minimum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            -2147483648});
+            this.udColumnLabelAngle.Name = "udColumnLabelAngle";
+            this.udColumnLabelAngle.Size = new System.Drawing.Size(74, 26);
+            this.udColumnLabelAngle.TabIndex = 37;
+            this.udColumnLabelAngle.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udColumnLabelAngle.ValueChanged += new System.EventHandler(this.udColumnLabelAngle_ValueChanged);
             // 
             // labelYScale
             // 
@@ -1000,6 +1033,19 @@
             this.gbLegend.TabStop = false;
             this.gbLegend.Text = "Legend";
             // 
+            // cbLegendReverse
+            // 
+            this.cbLegendReverse.AutoSize = true;
+            this.cbLegendReverse.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbLegendReverse.Location = new System.Drawing.Point(191, 52);
+            this.cbLegendReverse.Name = "cbLegendReverse";
+            this.cbLegendReverse.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.cbLegendReverse.Size = new System.Drawing.Size(91, 24);
+            this.cbLegendReverse.TabIndex = 45;
+            this.cbLegendReverse.Text = "Reverse:";
+            this.cbLegendReverse.UseVisualStyleBackColor = true;
+            this.cbLegendReverse.CheckedChanged += new System.EventHandler(this.cbLegendReverse_CheckedChanged);
+            // 
             // btnLegendFontColour
             // 
             this.btnLegendFontColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
@@ -1186,10 +1232,10 @@
             // preview
             // 
             this.preview.Enabled = true;
-            this.preview.Location = new System.Drawing.Point(14, 121);
+            this.preview.Location = new System.Drawing.Point(16, 236);
             this.preview.Name = "preview";
             this.preview.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("preview.OcxState")));
-            this.preview.Size = new System.Drawing.Size(192, 192);
+            this.preview.Size = new System.Drawing.Size(162, 152);
             this.preview.TabIndex = 17;
             // 
             // button3
@@ -1203,57 +1249,11 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // labelAngle
-            // 
-            this.labelAngle.AutoSize = true;
-            this.labelAngle.Location = new System.Drawing.Point(44, 210);
-            this.labelAngle.Name = "labelAngle";
-            this.labelAngle.Size = new System.Drawing.Size(97, 20);
-            this.labelAngle.TabIndex = 38;
-            this.labelAngle.Text = "Lable Angle:";
-            // 
-            // udColumnLabelAngle
-            // 
-            this.udColumnLabelAngle.DecimalPlaces = 1;
-            this.udColumnLabelAngle.Location = new System.Drawing.Point(151, 208);
-            this.udColumnLabelAngle.Maximum = new decimal(new int[] {
-            360,
-            0,
-            0,
-            0});
-            this.udColumnLabelAngle.Minimum = new decimal(new int[] {
-            360,
-            0,
-            0,
-            -2147483648});
-            this.udColumnLabelAngle.Name = "udColumnLabelAngle";
-            this.udColumnLabelAngle.Size = new System.Drawing.Size(74, 26);
-            this.udColumnLabelAngle.TabIndex = 37;
-            this.udColumnLabelAngle.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.udColumnLabelAngle.ValueChanged += new System.EventHandler(this.udColumnLabelAngle_ValueChanged);
-            // 
-            // cbLegendReverse
-            // 
-            this.cbLegendReverse.AutoSize = true;
-            this.cbLegendReverse.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbLegendReverse.Location = new System.Drawing.Point(191, 52);
-            this.cbLegendReverse.Name = "cbLegendReverse";
-            this.cbLegendReverse.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cbLegendReverse.Size = new System.Drawing.Size(91, 24);
-            this.cbLegendReverse.TabIndex = 45;
-            this.cbLegendReverse.Text = "Reverse:";
-            this.cbLegendReverse.UseVisualStyleBackColor = true;
-            this.cbLegendReverse.CheckedChanged += new System.EventHandler(this.cbLegendReverse_CheckedChanged);
-            // 
             // GraphForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1283, 505);
+            this.ClientSize = new System.Drawing.Size(1283, 517);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.preview);
             this.Controls.Add(this.button2);
@@ -1278,6 +1278,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.udOriginX)).EndInit();
             this.gbAxes.ResumeLayout(false);
             this.gbAxes.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelAngle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udYAxisScale)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelMargin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelFontSize)).EndInit();
@@ -1308,7 +1309,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.udLegendTextMargin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udLegendMargin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.preview)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelAngle)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -28,16 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.gbBarValue = new System.Windows.Forms.GroupBox();
-            this.btnBarValueFontColour = new System.Windows.Forms.Button();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label128 = new System.Windows.Forms.Label();
-            this.udValueFontSize = new System.Windows.Forms.NumericUpDown();
-            this.label127 = new System.Windows.Forms.Label();
-            this.udValueMargin = new System.Windows.Forms.NumericUpDown();
-            this.cbValueCentered = new System.Windows.Forms.CheckBox();
-            this.cbValueBelowTop = new System.Windows.Forms.CheckBox();
-            this.cbValueAboveTop = new System.Windows.Forms.CheckBox();
+            this.gbLine = new System.Windows.Forms.GroupBox();
+            this.lblLineWidth = new System.Windows.Forms.Label();
+            this.udLineWidth = new System.Windows.Forms.NumericUpDown();
+            this.btnLineColour = new System.Windows.Forms.Button();
+            this.lblLineColour = new System.Windows.Forms.Label();
+            this.cbLineCurve = new System.Windows.Forms.CheckBox();
+            this.lblXAxisSpace = new System.Windows.Forms.Label();
+            this.udLinePointSpacing = new System.Windows.Forms.NumericUpDown();
+            this.cbLineXTicks = new System.Windows.Forms.CheckBox();
+            this.lblTicksInterval = new System.Windows.Forms.Label();
+            this.udXTicksInterval = new System.Windows.Forms.NumericUpDown();
             this.gbOrigin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginX)).BeginInit();
@@ -68,150 +69,180 @@
             ((System.ComponentModel.ISupportInitialize)(this.preview)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udYAxisScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelAngle)).BeginInit();
-            this.gbBarValue.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udValueFontSize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udValueMargin)).BeginInit();
+            this.gbLine.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udLineWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udLinePointSpacing)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udXTicksInterval)).BeginInit();
             this.SuspendLayout();
             // 
-            // gbBarValue
+            // preview
             // 
-            this.gbBarValue.Controls.Add(this.btnBarValueFontColour);
-            this.gbBarValue.Controls.Add(this.label27);
-            this.gbBarValue.Controls.Add(this.label128);
-            this.gbBarValue.Controls.Add(this.udValueFontSize);
-            this.gbBarValue.Controls.Add(this.label127);
-            this.gbBarValue.Controls.Add(this.udValueMargin);
-            this.gbBarValue.Controls.Add(this.cbValueCentered);
-            this.gbBarValue.Controls.Add(this.cbValueBelowTop);
-            this.gbBarValue.Controls.Add(this.cbValueAboveTop);
-            this.gbBarValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbBarValue.Location = new System.Drawing.Point(193, 418);
-            this.gbBarValue.Name = "gbBarValue";
-            this.gbBarValue.Size = new System.Drawing.Size(464, 98);
-            this.gbBarValue.TabIndex = 26;
-            this.gbBarValue.TabStop = false;
-            this.gbBarValue.Text = "Bar Value";
+            this.preview.Location = new System.Drawing.Point(12, 298);
+            this.preview.Size = new System.Drawing.Size(144, 135);
             // 
-            // btnBarValueFontColour
+            // gbLine
             // 
-            this.btnBarValueFontColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.btnBarValueFontColour.Location = new System.Drawing.Point(265, 44);
-            this.btnBarValueFontColour.Name = "btnBarValueFontColour";
-            this.btnBarValueFontColour.Size = new System.Drawing.Size(40, 40);
-            this.btnBarValueFontColour.TabIndex = 40;
-            this.btnBarValueFontColour.UseVisualStyleBackColor = false;
-            this.btnBarValueFontColour.Click += new System.EventHandler(this.btnBarValueFontColour_Click);
+            this.gbLine.Controls.Add(this.lblTicksInterval);
+            this.gbLine.Controls.Add(this.udXTicksInterval);
+            this.gbLine.Controls.Add(this.cbLineXTicks);
+            this.gbLine.Controls.Add(this.lblXAxisSpace);
+            this.gbLine.Controls.Add(this.udLinePointSpacing);
+            this.gbLine.Controls.Add(this.cbLineCurve);
+            this.gbLine.Controls.Add(this.btnLineColour);
+            this.gbLine.Controls.Add(this.lblLineColour);
+            this.gbLine.Controls.Add(this.lblLineWidth);
+            this.gbLine.Controls.Add(this.udLineWidth);
+            this.gbLine.Location = new System.Drawing.Point(193, 408);
+            this.gbLine.Name = "gbLine";
+            this.gbLine.Size = new System.Drawing.Size(464, 102);
+            this.gbLine.TabIndex = 29;
+            this.gbLine.TabStop = false;
+            this.gbLine.Text = "Line";
             // 
-            // label27
+            // lblLineWidth
             // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(163, 54);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(96, 20);
-            this.label27.TabIndex = 39;
-            this.label27.Text = "Font Colour:";
+            this.lblLineWidth.AutoSize = true;
+            this.lblLineWidth.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLineWidth.Location = new System.Drawing.Point(9, 21);
+            this.lblLineWidth.Name = "lblLineWidth";
+            this.lblLineWidth.Size = new System.Drawing.Size(54, 20);
+            this.lblLineWidth.TabIndex = 38;
+            this.lblLineWidth.Text = "Width:";
             // 
-            // label128
+            // udLineWidth
             // 
-            this.label128.AutoSize = true;
-            this.label128.Location = new System.Drawing.Point(311, 54);
-            this.label128.Name = "label128";
-            this.label128.Size = new System.Drawing.Size(81, 20);
-            this.label128.TabIndex = 38;
-            this.label128.Text = "Font Size:";
-            // 
-            // udValueFontSize
-            // 
-            this.udValueFontSize.DecimalPlaces = 1;
-            this.udValueFontSize.Location = new System.Drawing.Point(398, 52);
-            this.udValueFontSize.Maximum = new decimal(new int[] {
+            this.udLineWidth.DecimalPlaces = 2;
+            this.udLineWidth.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.udLineWidth.Location = new System.Drawing.Point(69, 19);
+            this.udLineWidth.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.udValueFontSize.Name = "udValueFontSize";
-            this.udValueFontSize.Size = new System.Drawing.Size(53, 26);
-            this.udValueFontSize.TabIndex = 37;
-            this.udValueFontSize.Value = new decimal(new int[] {
+            this.udLineWidth.Name = "udLineWidth";
+            this.udLineWidth.Size = new System.Drawing.Size(70, 26);
+            this.udLineWidth.TabIndex = 37;
+            this.udLineWidth.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.udValueFontSize.ValueChanged += new System.EventHandler(this.udValueFontSize_ValueChanged);
+            this.udLineWidth.ValueChanged += new System.EventHandler(this.udLineWidth_ValueChanged);
             // 
-            // label127
+            // btnLineColour
             // 
-            this.label127.AutoSize = true;
-            this.label127.Location = new System.Drawing.Point(330, 22);
-            this.label127.Name = "label127";
-            this.label127.Size = new System.Drawing.Size(61, 20);
-            this.label127.TabIndex = 36;
-            this.label127.Text = "Margin:";
+            this.btnLineColour.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.btnLineColour.Location = new System.Drawing.Point(101, 51);
+            this.btnLineColour.Name = "btnLineColour";
+            this.btnLineColour.Size = new System.Drawing.Size(40, 40);
+            this.btnLineColour.TabIndex = 40;
+            this.btnLineColour.UseVisualStyleBackColor = false;
+            this.btnLineColour.Click += new System.EventHandler(this.btnLineColour_Click);
             // 
-            // udValueMargin
+            // lblLineColour
             // 
-            this.udValueMargin.DecimalPlaces = 1;
-            this.udValueMargin.Location = new System.Drawing.Point(398, 20);
-            this.udValueMargin.Maximum = new decimal(new int[] {
+            this.lblLineColour.AutoSize = true;
+            this.lblLineColour.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblLineColour.Location = new System.Drawing.Point(9, 60);
+            this.lblLineColour.Name = "lblLineColour";
+            this.lblLineColour.Size = new System.Drawing.Size(59, 20);
+            this.lblLineColour.TabIndex = 39;
+            this.lblLineColour.Text = "Colour:";
+            // 
+            // cbLineCurve
+            // 
+            this.cbLineCurve.AutoSize = true;
+            this.cbLineCurve.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbLineCurve.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbLineCurve.Location = new System.Drawing.Point(378, 20);
+            this.cbLineCurve.Name = "cbLineCurve";
+            this.cbLineCurve.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.cbLineCurve.Size = new System.Drawing.Size(73, 24);
+            this.cbLineCurve.TabIndex = 41;
+            this.cbLineCurve.Text = "Curve:";
+            this.cbLineCurve.UseVisualStyleBackColor = true;
+            this.cbLineCurve.CheckedChanged += new System.EventHandler(this.cbLineCurve_CheckedChanged);
+            // 
+            // lblXAxisSpace
+            // 
+            this.lblXAxisSpace.AutoSize = true;
+            this.lblXAxisSpace.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblXAxisSpace.Location = new System.Drawing.Point(158, 21);
+            this.lblXAxisSpace.Name = "lblXAxisSpace";
+            this.lblXAxisSpace.Size = new System.Drawing.Size(119, 20);
+            this.lblXAxisSpace.TabIndex = 43;
+            this.lblXAxisSpace.Text = "X Axis Spacing:";
+            // 
+            // udLinePointSpacing
+            // 
+            this.udLinePointSpacing.DecimalPlaces = 2;
+            this.udLinePointSpacing.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.udLinePointSpacing.Location = new System.Drawing.Point(279, 19);
+            this.udLinePointSpacing.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.udValueMargin.Name = "udValueMargin";
-            this.udValueMargin.Size = new System.Drawing.Size(53, 26);
-            this.udValueMargin.TabIndex = 35;
-            this.udValueMargin.Value = new decimal(new int[] {
+            this.udLinePointSpacing.Name = "udLinePointSpacing";
+            this.udLinePointSpacing.Size = new System.Drawing.Size(70, 26);
+            this.udLinePointSpacing.TabIndex = 42;
+            this.udLinePointSpacing.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.udValueMargin.ValueChanged += new System.EventHandler(this.udValueMargin_ValueChanged);
+            this.udLinePointSpacing.ValueChanged += new System.EventHandler(this.udLinePointSpacing_ValueChanged);
             // 
-            // cbValueCentered
+            // cbLineXTicks
             // 
-            this.cbValueCentered.AutoSize = true;
-            this.cbValueCentered.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbValueCentered.Location = new System.Drawing.Point(151, 22);
-            this.cbValueCentered.Name = "cbValueCentered";
-            this.cbValueCentered.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cbValueCentered.Size = new System.Drawing.Size(98, 24);
-            this.cbValueCentered.TabIndex = 3;
-            this.cbValueCentered.Text = "Centered:";
-            this.cbValueCentered.UseVisualStyleBackColor = true;
-            this.cbValueCentered.CheckedChanged += new System.EventHandler(this.cbValueCentered_CheckedChanged);
+            this.cbLineXTicks.AutoSize = true;
+            this.cbLineXTicks.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbLineXTicks.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbLineXTicks.Location = new System.Drawing.Point(335, 60);
+            this.cbLineXTicks.Name = "cbLineXTicks";
+            this.cbLineXTicks.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.cbLineXTicks.Size = new System.Drawing.Size(116, 24);
+            this.cbLineXTicks.TabIndex = 44;
+            this.cbLineXTicks.Text = "X Axis Ticks:";
+            this.cbLineXTicks.UseVisualStyleBackColor = true;
+            this.cbLineXTicks.CheckedChanged += new System.EventHandler(this.cbLineXTicks_CheckedChanged);
             // 
-            // cbValueBelowTop
+            // lblTicksInterval
             // 
-            this.cbValueBelowTop.AutoSize = true;
-            this.cbValueBelowTop.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbValueBelowTop.Location = new System.Drawing.Point(13, 53);
-            this.cbValueBelowTop.Name = "cbValueBelowTop";
-            this.cbValueBelowTop.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cbValueBelowTop.Size = new System.Drawing.Size(106, 24);
-            this.cbValueBelowTop.TabIndex = 2;
-            this.cbValueBelowTop.Text = "Below Top:";
-            this.cbValueBelowTop.UseVisualStyleBackColor = true;
-            this.cbValueBelowTop.CheckedChanged += new System.EventHandler(this.cbValueBelowTop_CheckedChanged);
+            this.lblTicksInterval.AutoSize = true;
+            this.lblTicksInterval.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTicksInterval.Location = new System.Drawing.Point(169, 62);
+            this.lblTicksInterval.Name = "lblTicksInterval";
+            this.lblTicksInterval.Size = new System.Drawing.Size(65, 20);
+            this.lblTicksInterval.TabIndex = 46;
+            this.lblTicksInterval.Text = "Interval:";
             // 
-            // cbValueAboveTop
+            // udXTicksInterval
             // 
-            this.cbValueAboveTop.AutoSize = true;
-            this.cbValueAboveTop.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbValueAboveTop.Location = new System.Drawing.Point(11, 21);
-            this.cbValueAboveTop.Name = "cbValueAboveTop";
-            this.cbValueAboveTop.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cbValueAboveTop.Size = new System.Drawing.Size(108, 24);
-            this.cbValueAboveTop.TabIndex = 1;
-            this.cbValueAboveTop.Text = "Above Top:";
-            this.cbValueAboveTop.UseVisualStyleBackColor = true;
-            this.cbValueAboveTop.CheckedChanged += new System.EventHandler(this.cbValueAboveTop_CheckedChanged);
+            this.udXTicksInterval.DecimalPlaces = 2;
+            this.udXTicksInterval.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.udXTicksInterval.Location = new System.Drawing.Point(240, 60);
+            this.udXTicksInterval.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.udXTicksInterval.Name = "udXTicksInterval";
+            this.udXTicksInterval.Size = new System.Drawing.Size(70, 26);
+            this.udXTicksInterval.TabIndex = 45;
+            this.udXTicksInterval.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udXTicksInterval.ValueChanged += new System.EventHandler(this.udXTicksInterval_ValueChanged);
             // 
             // LineForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1477, 532);
-            this.Controls.Add(this.gbBarValue);
+            this.Controls.Add(this.gbLine);
             this.Location = new System.Drawing.Point(0, 0);
             this.Name = "LineForm";
             this.Text = "Bar Graph";
@@ -229,7 +260,7 @@
             this.Controls.SetChildIndex(this.gbBars, 0);
             this.Controls.SetChildIndex(this.gbTicks, 0);
             this.Controls.SetChildIndex(this.gbLegend, 0);
-            this.Controls.SetChildIndex(this.gbBarValue, 0);
+            this.Controls.SetChildIndex(this.gbLine, 0);
             this.gbOrigin.ResumeLayout(false);
             this.gbOrigin.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginY)).EndInit();
@@ -265,10 +296,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.preview)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udYAxisScale)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udColumnLabelAngle)).EndInit();
-            this.gbBarValue.ResumeLayout(false);
-            this.gbBarValue.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udValueFontSize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udValueMargin)).EndInit();
+            this.gbLine.ResumeLayout(false);
+            this.gbLine.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udLineWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udLinePointSpacing)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udXTicksInterval)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -276,16 +308,18 @@
 
         #endregion
 
-        private System.Windows.Forms.GroupBox gbBarValue;
-        private System.Windows.Forms.CheckBox cbValueCentered;
-        private System.Windows.Forms.CheckBox cbValueBelowTop;
-        private System.Windows.Forms.CheckBox cbValueAboveTop;
-        private System.Windows.Forms.Label label128;
-        private System.Windows.Forms.NumericUpDown udValueFontSize;
-        private System.Windows.Forms.Label label127;
-        private System.Windows.Forms.NumericUpDown udValueMargin;
-        protected System.Windows.Forms.Button btnBarValueFontColour;
-        protected System.Windows.Forms.Label label27;
+        private System.Windows.Forms.GroupBox gbLine;
+        protected System.Windows.Forms.Label lblLineWidth;
+        protected System.Windows.Forms.NumericUpDown udLineWidth;
+        protected System.Windows.Forms.Button btnLineColour;
+        protected System.Windows.Forms.Label lblLineColour;
+        protected System.Windows.Forms.CheckBox cbLineCurve;
+        protected System.Windows.Forms.Label lblXAxisSpace;
+        protected System.Windows.Forms.NumericUpDown udLinePointSpacing;
+        protected System.Windows.Forms.Label lblTicksInterval;
+        protected System.Windows.Forms.NumericUpDown udXTicksInterval;
+        protected System.Windows.Forms.CheckBox cbLineXTicks;
+
 
     }
 }

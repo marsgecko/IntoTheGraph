@@ -47,6 +47,9 @@ namespace Graph
             mColours.Add(new DeviceRgb(188,147,46));
             mColours.Add(new DeviceRgb(191,191,191));
             mColours.Add(new DeviceRgb(106, 196, 206));
+            mColours.Add(new DeviceRgb(33, 33, 33));
+            mColours.Add(new DeviceRgb(128, 128, 128));
+            mColours.Add(new DeviceRgb(220, 220, 220));
         }
 
         public Legend AddLegend(String label, iText.Kernel.Colors.Color colour)
@@ -181,7 +184,17 @@ namespace Graph
 
                 for (i = 2; i <= iTotalRows; i++)
                 {
-                    AddLegend(sheet.Cells[i, 1].Value, mColours[i - 2]);
+                    String value;
+                    try
+                    {
+                        value = sheet.Cells[i, 1].Value;
+                    }
+                    catch
+                    {
+                        Double number = sheet.Cells[i, 1].Value;
+                        value = number.ToString("0");
+                    }
+                    AddLegend(value, mColours[i - 2]);
                 }
 
                 for (i = 2; i <= iTotalColumns; i++)

@@ -53,14 +53,14 @@ namespace Graph
         protected float _valueAxisMax = 250;
         protected float _valueAxisInterval = 10;
         protected float _valueLabelMargin = 30;
-        protected float _valueFontSize = 8.0f;
+        protected float _valueFontSize = 10.0f;
         //protected iText.Kernel.Colors.Color _valueFontColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.875f);
         protected iText.Kernel.Colors.Color _valueFontColour = new DeviceRgb(33,33,33);
 
         protected float _tickLineWidth = 0.5f;
         //protected iText.Kernel.Colors.Color _tickColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.275f);
         protected iText.Kernel.Colors.Color _tickColour = new DeviceRgb(192,192,192);
-        protected float _tickFontSize = 8.0f;
+        protected float _tickFontSize = 9.0f;
         //protected iText.Kernel.Colors.Color _tickFontColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.575f);
         protected iText.Kernel.Colors.Color _tickFontColour = new DeviceRgb(110,110,110);
         protected float _tickLabelMargin = 8.0f;
