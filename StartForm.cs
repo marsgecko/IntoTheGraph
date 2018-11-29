@@ -63,6 +63,14 @@ namespace Graph
             {
                 result = new PieForm();
             }
+            else if (graphType.Equals("LineGraph"))
+            {
+                result = new LineForm();
+            }
+            else if (graphType.Equals("CompositeLineGraph"))
+            {
+                result = new CompositeLineForm();
+            }
 
             return result;
         }
@@ -83,6 +91,14 @@ namespace Graph
                 result = true;
             }
             else if (graphType.Equals("PieGraph"))
+            {
+                result = true;
+            }
+            else if (graphType.Equals("LineGraph"))
+            {
+                result = true;
+            }
+            else if (graphType.Equals("CompositeLineGraph"))
             {
                 result = true;
             }
@@ -184,6 +200,12 @@ namespace Graph
         private void btnLine_Click(object sender, EventArgs e)
         {
             LineForm form = new LineForm();
+            form.ShowDialog();
+        }
+
+        private void btnCompositeLineGraph_Click(object sender, EventArgs e)
+        {
+            CompositeLineForm form = new CompositeLineForm();
             form.ShowDialog();
         }
     }

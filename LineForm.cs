@@ -31,7 +31,7 @@ namespace Graph
     {
         bool _lineCurved = true;
         float _lineWidth = 2.0f;
-        protected iText.Kernel.Colors.Color _lineColour = new DeviceRgb(46, 121, 144);
+        protected iText.Kernel.Colors.DeviceRgb _lineColour = new DeviceRgb(46, 121, 144);
         float _linePointSpace = 4.0f;
         float _lineXTicksInterval = 6.0f;
         bool _lineXTicks = true;

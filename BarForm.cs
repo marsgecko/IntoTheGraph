@@ -34,7 +34,7 @@ namespace Graph
         bool _barDrawValueCenter = false;
         float _barValueMargin = 2.0f;
         float _barValueFontSize = 8.0f;
-        protected iText.Kernel.Colors.Color _barValueFontColour = new DeviceRgb(255,255,255);
+        protected iText.Kernel.Colors.DeviceRgb _barValueFontColour = new DeviceRgb(255, 255, 255);
 
 
         public BarForm()

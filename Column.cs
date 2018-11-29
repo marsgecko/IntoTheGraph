@@ -13,6 +13,12 @@ namespace Graph
         private List<Value> mValues;
         public List<Value> Values { get { return mValues; } }
 
+        public Column()
+        {
+            Label = "";
+            mValues = new List<Value>();
+        }
+
         public Column(String label)
         {
             Label = label;

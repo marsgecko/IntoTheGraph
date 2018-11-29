@@ -114,6 +114,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdobeColors.cs" />
+    <Compile Include="CompositeLineForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CompositeLineForm.Designer.cs">
+      <DependentUpon>CompositeLineForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="LineForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +180,9 @@
       <DependentUpon>StartForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Value.cs" />
+    <EmbeddedResource Include="CompositeLineForm.resx">
+      <DependentUpon>CompositeLineForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LineForm.resx">
       <DependentUpon>LineForm.cs</DependentUpon>
     </EmbeddedResource>

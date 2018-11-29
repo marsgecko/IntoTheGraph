@@ -35,11 +35,12 @@
             this.button5 = new System.Windows.Forms.Button();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.btnLine = new System.Windows.Forms.Button();
+            this.btnCompositeLineGraph = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(278, 63);
+            this.button1.Location = new System.Drawing.Point(12, 26);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(159, 62);
             this.button1.TabIndex = 0;
@@ -49,7 +50,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(278, 131);
+            this.button2.Location = new System.Drawing.Point(12, 94);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(159, 62);
             this.button2.TabIndex = 1;
@@ -59,7 +60,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(278, 199);
+            this.button3.Location = new System.Drawing.Point(12, 162);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(159, 62);
             this.button3.TabIndex = 2;
@@ -69,7 +70,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(278, 267);
+            this.button4.Location = new System.Drawing.Point(12, 230);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(159, 62);
             this.button4.TabIndex = 3;
@@ -94,7 +95,7 @@
             // 
             // btnLine
             // 
-            this.btnLine.Location = new System.Drawing.Point(278, 335);
+            this.btnLine.Location = new System.Drawing.Point(12, 298);
             this.btnLine.Name = "btnLine";
             this.btnLine.Size = new System.Drawing.Size(159, 62);
             this.btnLine.TabIndex = 5;
@@ -102,11 +103,22 @@
             this.btnLine.UseVisualStyleBackColor = true;
             this.btnLine.Click += new System.EventHandler(this.btnLine_Click);
             // 
+            // btnCompositeLineGraph
+            // 
+            this.btnCompositeLineGraph.Location = new System.Drawing.Point(187, 26);
+            this.btnCompositeLineGraph.Name = "btnCompositeLineGraph";
+            this.btnCompositeLineGraph.Size = new System.Drawing.Size(159, 62);
+            this.btnCompositeLineGraph.TabIndex = 6;
+            this.btnCompositeLineGraph.Text = "Composite Line Graph";
+            this.btnCompositeLineGraph.UseVisualStyleBackColor = true;
+            this.btnCompositeLineGraph.Click += new System.EventHandler(this.btnCompositeLineGraph_Click);
+            // 
             // StartForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(763, 475);
+            this.ClientSize = new System.Drawing.Size(763, 507);
+            this.Controls.Add(this.btnCompositeLineGraph);
             this.Controls.Add(this.btnLine);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
@@ -128,5 +140,6 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Button btnLine;
+        private System.Windows.Forms.Button btnCompositeLineGraph;
     }
 }

@@ -97,6 +97,7 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbLegend = new System.Windows.Forms.GroupBox();
             this.cbLegendReverse = new System.Windows.Forms.CheckBox();
             this.btnLegendFontColour = new System.Windows.Forms.Button();
@@ -116,6 +117,7 @@
             this.preview = new AxAcroPDFLib.AxAcroPDF();
             this.button3 = new System.Windows.Forms.Button();
             this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.openDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbOrigin.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udOriginX)).BeginInit();
@@ -989,7 +991,9 @@
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveToolStripMenuItem,
-            this.openToolStripMenuItem});
+            this.openToolStripMenuItem,
+            this.saveDataToolStripMenuItem,
+            this.openDataToolStripMenuItem});
             this.fileToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 14F);
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(53, 29);
@@ -998,16 +1002,23 @@
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(130, 30);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(174, 30);
             this.saveToolStripMenuItem.Text = "&Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(130, 30);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(174, 30);
             this.openToolStripMenuItem.Text = "&Open";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // saveDataToolStripMenuItem
+            // 
+            this.saveDataToolStripMenuItem.Name = "saveDataToolStripMenuItem";
+            this.saveDataToolStripMenuItem.Size = new System.Drawing.Size(174, 30);
+            this.saveDataToolStripMenuItem.Text = "Save &Data";
+            this.saveDataToolStripMenuItem.Click += new System.EventHandler(this.saveDataToolStripMenuItem_Click);
             // 
             // gbLegend
             // 
@@ -1235,7 +1246,7 @@
             this.preview.Location = new System.Drawing.Point(16, 236);
             this.preview.Name = "preview";
             this.preview.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("preview.OcxState")));
-            this.preview.Size = new System.Drawing.Size(162, 152);
+            this.preview.Size = new System.Drawing.Size(192, 192);
             this.preview.TabIndex = 17;
             // 
             // button3
@@ -1248,6 +1259,13 @@
             this.button3.Text = "Preview";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // openDataToolStripMenuItem
+            // 
+            this.openDataToolStripMenuItem.Name = "openDataToolStripMenuItem";
+            this.openDataToolStripMenuItem.Size = new System.Drawing.Size(174, 30);
+            this.openDataToolStripMenuItem.Text = "O&pen Data";
+            this.openDataToolStripMenuItem.Click += new System.EventHandler(this.openDataToolStripMenuItem_Click);
             // 
             // GraphForm
             // 
@@ -1403,6 +1421,8 @@
         protected System.Windows.Forms.Label labelAngle;
         protected System.Windows.Forms.NumericUpDown udColumnLabelAngle;
         protected System.Windows.Forms.CheckBox cbLegendReverse;
+        private System.Windows.Forms.ToolStripMenuItem saveDataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openDataToolStripMenuItem;
     }
 }
 

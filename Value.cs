@@ -11,6 +11,12 @@ namespace Graph
         public Legend Legend { get; set; }
         public float Data { get; set; }
 
+        public Value()
+        {
+            Legend = new Legend();
+            Data = 0.0f;
+        }
+
         public Value(Legend legend, float value)
         {
             Legend = legend;

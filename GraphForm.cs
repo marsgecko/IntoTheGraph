@@ -44,7 +44,7 @@ namespace Graph
 
         protected float _axisLineWidth = 0.5f;
        // protected iText.Kernel.Colors.Color _axisColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.575f);
-        protected iText.Kernel.Colors.Color _axisColour = new DeviceRgb(110,110,110);
+        protected iText.Kernel.Colors.DeviceRgb _axisColour = new DeviceRgb(110, 110, 110);
         protected float _axisWidth;
         protected float _axisHeight;
         protected bool _drawXAxis = true;
@@ -55,14 +55,14 @@ namespace Graph
         protected float _valueLabelMargin = 30;
         protected float _valueFontSize = 10.0f;
         //protected iText.Kernel.Colors.Color _valueFontColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.875f);
-        protected iText.Kernel.Colors.Color _valueFontColour = new DeviceRgb(33,33,33);
+        protected iText.Kernel.Colors.DeviceRgb _valueFontColour = new DeviceRgb(33, 33, 33);
 
         protected float _tickLineWidth = 0.5f;
         //protected iText.Kernel.Colors.Color _tickColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.275f);
-        protected iText.Kernel.Colors.Color _tickColour = new DeviceRgb(192,192,192);
+        protected iText.Kernel.Colors.DeviceRgb _tickColour = new DeviceRgb(192, 192, 192);
         protected float _tickFontSize = 9.0f;
         //protected iText.Kernel.Colors.Color _tickFontColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.575f);
-        protected iText.Kernel.Colors.Color _tickFontColour = new DeviceRgb(110,110,110);
+        protected iText.Kernel.Colors.DeviceRgb _tickFontColour = new DeviceRgb(110, 110, 110);
         protected float _tickLabelMargin = 8.0f;
 
         protected float _barWidth = 10;
@@ -70,12 +70,12 @@ namespace Graph
         protected bool _barDrawBorder = false;
         protected float _barBorderWidth = 1;
         //protected iText.Kernel.Colors.Color _barBorderColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.0f);
-        protected iText.Kernel.Colors.Color _barBorderColour = new DeviceRgb(255, 255, 255);
+        protected iText.Kernel.Colors.DeviceRgb _barBorderColour = new DeviceRgb(255, 255, 255);
 
         protected float _columnLabelMargin = 5.0f;
         protected float _columnFontSize = 10.0f;
         //protected iText.Kernel.Colors.Color _columnFontColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.875f);
-        protected iText.Kernel.Colors.Color _columnFontColour = new DeviceRgb(33,33,33);
+        protected iText.Kernel.Colors.DeviceRgb _columnFontColour = new DeviceRgb(33, 33, 33);
         protected float _columnLabelAngle = 45.0f;
 
         protected bool _legendIsHorizontal = true;
@@ -86,7 +86,7 @@ namespace Graph
         protected float _legendKeySize = 5.0f;
         protected float _legendFontSize = 10.0f;
         //protected iText.Kernel.Colors.Color _legendFontColour = new DeviceCmyk(0.0f, 0.0f, 0.0f, 0.875f);
-        protected iText.Kernel.Colors.Color _legendFontColour = new DeviceRgb(33,33,33);
+        protected iText.Kernel.Colors.DeviceRgb _legendFontColour = new DeviceRgb(33, 33, 33);
 
         protected List<Button> mLegendButtons;
         protected List<Label> mLegendLabels;
@@ -425,6 +425,10 @@ namespace Graph
                 for (i = _valueAxisInterval; i <= _valueAxisMax; i += _valueAxisInterval)
                 {
                     text = i.ToString();
+                    if (_data.FormatPercent)
+                    {
+                        text = text + "%";
+                    }
                     textWidth = _font.GetWidth(text, _tickFontSize) + _tickLabelMargin;
                     textHeight = _font.GetAscent(text, _tickFontSize) + _font.GetDescent(text, _tickFontSize);
 
@@ -569,6 +573,11 @@ namespace Graph
                     x += totalColumnWidth;
                 }
 
+                if (_data.Legends.Count == 1 && _data.Legends[0].Label != null)
+                {
+                    layoutCanvas.ShowTextAligned(_data.Legends[0].Label, _originX + _axisWidth / 2, _originY * 0.25f, TextAlignment.CENTER, VerticalAlignment.MIDDLE, 0);
+                }
+
                 layoutCanvas.Close();
             }
         }
@@ -586,8 +595,11 @@ namespace Graph
 
                 foreach (Legend legend in _data.Legends)
                 {
-                    float width = _font.GetWidth(legend.Label, _legendFontSize) + _legendTextMargin + _legendKeySize * 2 + _legendMargin;
-                    legendWidth += width;
+                    if (legend.Label != null)
+                    {
+                        float width = _font.GetWidth(legend.Label, _legendFontSize) + _legendTextMargin + _legendKeySize * 2 + _legendMargin;
+                        legendWidth += width;
+                    }
                 }
                 legendWidth -= _legendMargin;
 
@@ -1039,7 +1051,7 @@ namespace Graph
             return new DeviceCmyk(c, m, y, k);
         }
         */
-        protected void SetButtonColour(ref iText.Kernel.Colors.Color iTextColour, Button button)
+        protected void SetButtonColour(ref iText.Kernel.Colors.DeviceRgb iTextColour, Button button)
         {
             System.Drawing.Color currentColor;
 
@@ -1309,7 +1321,7 @@ namespace Graph
             ReadSubTypeSettings(xml);
         }
 
-        protected virtual void ReadColour(XmlTextReader xml, ref iText.Kernel.Colors.Color iTextColour, String attributeName)
+        protected virtual void ReadColour(XmlTextReader xml, ref iText.Kernel.Colors.DeviceRgb iTextColour, String attributeName)
         {
             String colourString = xml.GetAttribute(attributeName);
             String[] values = colourString.Split(',');
@@ -1345,7 +1357,7 @@ namespace Graph
                 Debug.WriteLine(channel.ToString("0.0000"));
             }
             */
-            iText.Kernel.Colors.Color iTextColour = new DeviceRgb();
+            iText.Kernel.Colors.DeviceRgb iTextColour = new DeviceRgb();
             ReadColour(xml, ref iTextColour, "colour");
             _data.Legends[index].Colour = iTextColour;
             /*
@@ -1559,6 +1571,37 @@ namespace Graph
         {
             _legendReverse = cbLegendReverse.Checked;
         }
+
+        private void saveDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog.Filter = "Graph data files (*.gdf)|*.gdf|All files (*.*)|*.*";
+            saveFileDialog.FileName = GetGraphType() + ".gdf";
+            DialogResult result = saveFileDialog.ShowDialog(); // Show the dialog.
+            if (result == DialogResult.OK)
+            {
+                _data.SaveDataFile(saveFileDialog.FileName);
+            }
+        }
+
+        private void openDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Filter = "Graph files (*.gdf)|*.gdf|All files (*.*)|*.*";
+            DialogResult result = openFileDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                _data.LoadDataFile(openFileDialog.FileName);
+
+                if (!cbNoAuto.Checked)
+                {
+                    SetDimensions();
+                }
+
+                ShowLegend();
+                Preview();
+            }
+        }
+
+
 
     }
 }

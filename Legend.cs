@@ -9,9 +9,15 @@ namespace Graph
     public class Legend
     {
         public String Label { get; set; }
-        public iText.Kernel.Colors.Color Colour { get; set; }
+        public iText.Kernel.Colors.DeviceRgb Colour { get; set; }
 
-        public Legend(String label, iText.Kernel.Colors.Color colour)
+        public Legend()
+        {
+            Label = "";
+            Colour = new iText.Kernel.Colors.DeviceRgb();
+        }
+
+        public Legend(String label, iText.Kernel.Colors.DeviceRgb colour)
         {
             Label = label;
             Colour = colour;

@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Graph
@@ -21,8 +23,8 @@ namespace Graph
         private List<Column> mColumns;
         public List<Column> Columns { get { return mColumns; } }
 
-        private List<iText.Kernel.Colors.Color> mColours;
-        public List<iText.Kernel.Colors.Color> LegendColours { get { return mColours; } }
+        private List<iText.Kernel.Colors.DeviceRgb> mColours;
+        public List<iText.Kernel.Colors.DeviceRgb> LegendColours { get { return mColours; } }
 
         private Boolean mFormatPercent;
         public Boolean FormatPercent { get { return mFormatPercent; } }
@@ -34,7 +36,7 @@ namespace Graph
             mLegends = new List<Legend>();
             mColumns = new List<Column>();
 
-            mColours = new List<iText.Kernel.Colors.Color>();
+            mColours = new List<iText.Kernel.Colors.DeviceRgb>();
 
 
             // Option 3
@@ -52,7 +54,7 @@ namespace Graph
             mColours.Add(new DeviceRgb(220, 220, 220));
         }
 
-        public Legend AddLegend(String label, iText.Kernel.Colors.Color colour)
+        public Legend AddLegend(String label, iText.Kernel.Colors.DeviceRgb colour)
         {
             Legend result = new Legend(label, colour);
             mLegends.Add(result);
@@ -135,6 +137,216 @@ namespace Graph
             }
         }
 
+        protected void WriteColourSetting(XmlTextWriter xml, iText.Kernel.Colors.Color iTextColour, String name)
+        {
+            if (iTextColour.GetColorSpace().ToString() == "iText.Kernel.Pdf.Colorspace.PdfDeviceCs+Cmyk")
+            {
+                MessageBox.Show("Wrong Colour Space", "Not SUpported", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                float[] float_rgb = iTextColour.GetColorValue();
+                int r = Convert.ToInt32(Math.Round(255 * float_rgb[0]));
+                int g = Convert.ToInt32(Math.Round(255 * float_rgb[1]));
+                int b = Convert.ToInt32(Math.Round(255 * float_rgb[2]));
+                String attribute = r.ToString() + "," + g.ToString() + "," + b.ToString();
+                xml.WriteAttributeString(name, attribute);
+            }
+
+
+        }
+
+        protected virtual void WriteLegends(XmlTextWriter xml)
+        {
+            int i = 0;
+            foreach (Legend legend in Legends)
+            {
+                xml.WriteStartElement("legend");
+
+                xml.WriteAttributeString("index", i.ToString());
+
+                xml.WriteAttributeString("label", legend.Label);
+
+                WriteColourSetting(xml, legend.Colour, "colour");
+
+                xml.WriteEndElement();
+                i++;
+            }
+        }
+
+        protected virtual void WriteColumns(XmlTextWriter xml)
+        {
+            int i = 0;
+            foreach (Column column in Columns)
+            {
+                xml.WriteStartElement("column");
+
+                xml.WriteAttributeString("index", i.ToString());
+
+                xml.WriteAttributeString("label", column.Label);
+
+                int j = 0;
+                foreach(Value value in column.Values)
+                {
+                    xml.WriteStartElement("value");
+
+                    xml.WriteAttributeString("legend", value.Legend.Label);
+                    xml.WriteAttributeString("data", value.Data.ToString());
+                    
+                    xml.WriteEndElement();
+                    j++;
+                }
+
+                xml.WriteEndElement();
+                i++;
+            }
+        }
+
+        public void SaveDataFile(String filename)
+        {
+            using (XmlTextWriter xml = new XmlTextWriter(filename, null))
+            {
+                // Root.
+                xml.WriteStartDocument();
+
+                xml.Formatting = Formatting.Indented;
+
+                xml.WriteStartElement("graph");
+
+                xml.WriteAttributeString("y_label", ValueLabel);
+                xml.WriteAttributeString("format_percent", FormatPercent.ToString());
+
+                WriteLegends(xml);
+                WriteColumns(xml);
+
+                xml.WriteEndElement();
+
+                xml.WriteEndDocument();
+            }
+        }
+
+        protected virtual void ReadColour(XmlTextReader xml, ref iText.Kernel.Colors.DeviceRgb iTextColour, String attributeName)
+        {
+            String colourString = xml.GetAttribute(attributeName);
+            String[] values = colourString.Split(',');
+            if (values.Length == 3)
+            {
+                int r = Convert.ToInt32(values[0]);
+                int g = Convert.ToInt32(values[1]);
+                int b = Convert.ToInt32(values[2]);
+                iTextColour = new DeviceRgb(r, g, b);
+            }
+        }
+
+        protected virtual void ReadLegend(XmlTextReader xml)
+        {
+            //Int32 index = Convert.ToInt32(xml.GetAttribute("index"));
+
+            iText.Kernel.Colors.DeviceRgb iTextColour = new DeviceRgb();
+            ReadColour(xml, ref iTextColour, "colour");
+
+            String label = xml.GetAttribute("label");
+            Legends.Add(new Legend(label, iTextColour));
+            mColours.Add(iTextColour);
+        }
+
+        protected virtual Legend GetLegendFromName(String name)
+        {
+            Legend result = null;
+
+            foreach(Legend legend in Legends)
+            {
+                if(legend.Label == name)
+                {
+                    result = legend;
+                    break;
+                }
+            }
+
+            return result;
+        }
+
+        protected virtual void ReadColumn(XmlTextReader xml)
+        {
+
+            String label = xml.GetAttribute("label");
+            Column column = new Column(label);
+            Columns.Add(column);
+
+            while (xml.Read())
+            {
+                switch (xml.NodeType)
+                {
+                    case XmlNodeType.Element:
+                        if (xml.Name == "value")
+                        {
+                            String legendName = xml.GetAttribute("legend");
+                            float data = float.Parse(xml.GetAttribute("data"));
+                            Legend legend = GetLegendFromName(legendName);
+                            if (legend != null)
+                            {
+                                column.AddValue(legend, data);
+                            }
+                        }
+                        else
+                        {
+                            Debug.WriteLine("Invalid Column Element:" + xml.Name);
+                            return;
+                        }
+                        break;
+                    case XmlNodeType.EndElement:
+                        if (xml.Name == "column")
+                        {
+                            return;
+                        }
+                        break;
+                }
+            }
+        }
+
+        public void LoadDataFile(String filename)
+        {
+            try
+            {
+                Legends.Clear();
+                Columns.Clear();
+                mColours.Clear();
+                using (XmlTextReader reader = new XmlTextReader(filename))
+                {
+                    while (reader.Read())
+                    {
+                        switch (reader.NodeType)
+                        {
+                            case XmlNodeType.Element:
+                                if (reader.Name == "column")
+                                {
+                                    ReadColumn(reader);
+                                }
+                                else if (reader.Name == "legend")
+                                {
+                                    ReadLegend(reader);
+                                }
+                                else if (reader.Name == "graph")
+                                {
+                                    mFormatPercent = Convert.ToBoolean(reader.GetAttribute("format_percent"));
+                                    ValueLabel = reader.GetAttribute("y_label");
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Wrong Graph Type", "Cannot Open", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Invalid Graph File", "Cannot Open", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         public void LoadExcelFile(String filename, bool saveColours)
         {
             int i = 0;
@@ -172,11 +384,11 @@ namespace Graph
                     String value;
                     try
                     {
-                        value = sheet.Cells[1, i].Value;
+                        value = sheet.Cells[1, i].Value2;
                     }
                     catch
                     {
-                        Double number = sheet.Cells[1, i].Value;
+                        Double number = sheet.Cells[1, i].Value2;
                         value = number.ToString("0");
                     }
                     AddColumn(value);
@@ -187,11 +399,11 @@ namespace Graph
                     String value;
                     try
                     {
-                        value = sheet.Cells[i, 1].Value;
+                        value = sheet.Cells[i, 1].Value2;
                     }
                     catch
                     {
-                        Double number = sheet.Cells[i, 1].Value;
+                        Double number = sheet.Cells[i, 1].Value2;
                         value = number.ToString("0");
                     }
                     AddLegend(value, mColours[i - 2]);
@@ -207,28 +419,35 @@ namespace Graph
                         Legend legend = mLegends[j - 2];
                         Double value;
 
-                        String temp = sheet.Cells[j, i].NumberFormat;
-
-                        Debug.WriteLine(temp);
-
-                        if (temp.Contains("%"))
+                        if (sheet.Cells[j, i] != null && sheet.Cells[j, i].Value2 != null)
                         {
-                            // Round to truncate small data scraps
-                            value = Math.Round(sheet.Cells[j, i].Value - .0005, 3) * 100.0f;
-                            mFormatPercent = true;
-                        }
-                        else
-                        {
-                            value = Math.Round(sheet.Cells[j, i].Value - .0005, 3);
-                        }
 
-                        column.AddValue(legend, Convert.ToSingle(value));
+                            String temp = sheet.Cells[j, i].NumberFormat;
+
+                        
+                            //Debug.WriteLine(temp);
+
+                            if (temp.Contains("%"))
+                            {
+                                // Round to truncate small data scraps
+                                value = Math.Round(sheet.Cells[j, i].Value2 - .0005, 3) * 100.0f;
+                                mFormatPercent = true;
+                            }
+                            else
+                            {
+                                value = Math.Round(sheet.Cells[j, i].Value2 - .0005, 3);
+                            }
+
+                            column.AddValue(legend, Convert.ToSingle(value));
+                        }
                     }
                 }
             }
             catch
             {
-                MessageBox.Show("Error Row:" + i.ToString() + " Column:" + j.ToString(), "Cannot Open", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                String text = "Error Column:" + i.ToString() + " Row:" + j.ToString();
+                MessageBox.Show(text, "Cannot Open", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Debug.WriteLine(text);
             }
             excelWorkbook.Close(0);
             excelApp.Quit();
