@@ -137,11 +137,11 @@ namespace Graph
             return result;
         }
 
-        private void ProcessFile(String excelFilename, String gphFilename, String pdfFilename)
+        private void ProcessFile(String inFilename, String gphFilename, String pdfFilename)
         {
             Debug.WriteLine("------------------------------------------------------");
             Debug.WriteLine("Processing:");
-            Debug.WriteLine(excelFilename);
+            Debug.WriteLine(inFilename);
             Debug.WriteLine(gphFilename);
             Debug.WriteLine(pdfFilename);
 
@@ -156,7 +156,14 @@ namespace Graph
 
                     graph.Show();
 
-                    graph.LoadExcelFile(excelFilename);
+                    if (System.IO.Path.GetExtension(inFilename) == "xlsx")
+                    {
+                        graph.LoadExcelFile(inFilename);
+                    }
+                    else
+                    {
+                        graph.LoadDataFile(inFilename);
+                    }
                     graph.LoadGphFile(gphFilename);
 
                     FileStream fos = new FileStream(pdfFilename, FileMode.Create, FileAccess.ReadWrite, FileShare.None);
@@ -183,7 +190,7 @@ namespace Graph
 
         private void button5_Click(object sender, EventArgs e)
         {
-            openFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
+            openFileDialog.Filter = "Graph Data files (*.gdf)|*.gdf|Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
             DialogResult result = openFileDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
@@ -207,6 +214,33 @@ namespace Graph
         {
             CompositeLineForm form = new CompositeLineForm();
             form.ShowDialog();
+        }
+
+        private void ExcelToDataFile(String path, String filename)
+        {
+            String Excelfile = path + filename + ".xlsx";
+            String Datafile = path + filename + ".gdf";
+
+            GraphData data = new GraphData();
+
+            data.LoadExcelFile(Excelfile, false);
+            data.SaveDataFile(Datafile);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
+            DialogResult result = openFileDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                foreach (String filename in openFileDialog.FileNames)
+                {
+                    String outPath = System.IO.Path.GetDirectoryName(filename) + "\\";
+                    String fileBaseName = System.IO.Path.GetFileNameWithoutExtension(filename);
+
+                    ExcelToDataFile(outPath, fileBaseName);
+                }
+            }
         }
     }
 }

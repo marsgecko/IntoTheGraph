@@ -81,22 +81,23 @@ namespace Graph
 
         public float GetMaxStackValue()
         {
-            float result = 0;
+            double result = 0;
 
             foreach (Column column in mColumns)
             {
-                float stack = 0;
+                double stack = 0;
                 foreach (Value value in column.Values)
                 {
                     stack += value.Data;
                 }
                 if (stack > result)
                 {
-                    result = stack;
+                    result = (float)stack;
                 }
+                Debug.WriteLine("column:" + column.Label + " total:" + stack.ToString());
             }
 
-            return result;
+            return (float)result;
         }
 
         public Column AddColumn(String label)

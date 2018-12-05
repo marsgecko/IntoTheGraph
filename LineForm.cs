@@ -36,6 +36,10 @@ namespace Graph
         float _lineXTicksInterval = 6.0f;
         bool _lineXTicks = true;
 
+        float _yAxisMax;
+        float _yAxisMin;
+        int _pointCount;
+        bool _skipDuplicates = false;
 
         public LineForm()
         {
@@ -78,7 +82,6 @@ namespace Graph
             if (udLineWidth != null)
             {
                 udLineWidth.Value = new decimal(_lineWidth);
-                btnLineColour.BackColor = GetColorFromiTextColour(_lineColour);
                 udLinePointSpacing.Value = new decimal(_linePointSpace);
                 cbLineCurve.Checked = _lineCurved;
                 udXTicksInterval.Value = new decimal(_lineXTicksInterval);
@@ -88,16 +91,14 @@ namespace Graph
 
         protected override void SetDimensions()
         {
-            float maxValue = _data.GetMaxValue();
+            SetAxisDimensions();
 
-            for (_valueAxisMax = 0; _valueAxisMax < maxValue; _valueAxisMax += _valueAxisInterval)
+            for (_valueAxisMax = _yAxisMin; _valueAxisMax < _yAxisMax; _valueAxisMax += _valueAxisInterval)
             {
 
             }
 
-
-            _axisWidth = _linePointSpace * (_data.Columns.Count - 1);
-            _axisHeight = _valueAxisMax;
+            _axisHeight = Math.Abs(_valueAxisMax) + Math.Abs(_yAxisMin);
 
             _yScale = 1.0f;
             if (_userYScale != 1.0f)
@@ -117,6 +118,52 @@ namespace Graph
             _canvasWidth = _originX + _axisWidth + _originX;
 
             UpdateOnScreenSettings();
+        }
+
+        protected void SetAxisDimensions()
+        {
+            float x = 0;
+            int i = 0;
+
+            _pointCount = 0;
+            _yAxisMax = float.MinValue;
+            _yAxisMin = float.MaxValue;
+
+            if (_lineCurved)
+            {
+                int j = 0;
+
+                for (j = 0; j < _data.Legends.Count; j++)
+                {
+                    x = 0;
+
+                    for (i = 0; i < _data.Columns.Count; i++)
+                    {
+                        Column column = _data.Columns[i];
+
+                        Value value = column.Values[j];
+
+                        double y = value.Data;
+                        x += _linePointSpace;
+                        _pointCount++;
+                        if (y > _yAxisMax)
+                        {
+                            _yAxisMax = (float)y;
+                        }
+                        if (y < _yAxisMin)
+                        {
+                            _yAxisMin = (float)y;
+                        }
+                    }
+                }
+                _axisWidth = x;
+            }
+           
+
+            Debug.WriteLine("Axis Width:" + _axisWidth.ToString("0.00"));
+            Debug.WriteLine("Y Axis Max:" + _yAxisMax.ToString("0.00"));
+            Debug.WriteLine("Y Axis Min:" + _yAxisMin.ToString("0.00"));
+
         }
 
         protected override void DrawBars(PdfCanvas canvas, PdfPage page)
@@ -142,237 +189,190 @@ namespace Graph
                 float x = _originX;
                 int i = 0;
                 int k = 0;
-
+                double yOffset = 0;
+                if (_yAxisMin < 0)
+                {
+                    yOffset = _yAxisMin * -1.0 * _yScale;
+                }
                 
                 
-
                 if (_lineCurved)
                 {
-                    for (k = 0; k < _data.Columns[0].Values.Count; k++)
+                    int j = 0;
+                    double lastX = 0.0;
+                    double lastY = 0.0;
+                    bool lastValueDuplicate = false;
+
+                    for (j = 0; j < _data.Legends.Count; j++)
                     {
+                        Legend legend = _data.Legends[j];
                         // Make a list of control points
                         List<iText.Kernel.Geom.Point> control1 = new List<iText.Kernel.Geom.Point>();
                         List<iText.Kernel.Geom.Point> control2 = new List<iText.Kernel.Geom.Point>();
                         List<iText.Kernel.Geom.Point> points = new List<iText.Kernel.Geom.Point>();
 
-                        control1.Add(new iText.Kernel.Geom.Point(0, 0));
-                        control2.Add(new iText.Kernel.Geom.Point(0, 0));
-
                         x = _originX;
-
-                        canvas.SetLineWidth(_lineWidth);
-                        canvas.SetStrokeColor(_data.Legends[k].Colour);
-                        for (i = 0; i < _data.Columns.Count; i++)
-                        {
-                            double y = _originY + _data.Columns[i].Values[k].Data * _yScale;
-                            if ((i > 0) && (i < (_data.Columns.Count - 1)))
-                            {
-                                double x0 = (double)(x - _linePointSpace);
-                                double x2 = (double)(x + _linePointSpace);
-                                double y0 = (double)(_originY + _data.Columns[i - 1].Values[k].Data * _yScale);
-                                double y2 = (double)(_originY + _data.Columns[i + 1].Values[k].Data * _yScale);
-                                double dirx = x2 - x0;
-                                double diry = y2 - y0;
-
-                                double distance = Math.Sqrt(Math.Pow(dirx, 2) + Math.Pow(diry, 2));
-
-                                double unitx = dirx / distance;
-                                double unity = diry / distance;
-
-                                double angle1 = Math.Atan2(unitx, -unity) + Math.PI / 2;
-                                double angle2 = Math.Atan2(-unitx, unity) + Math.PI / 2;
-
-                                double control1x = x + Math.Cos(angle1) * (distance / 5);
-                                double control1y = y + Math.Sin(angle1) * (distance / 5);
-                                double control2x = x + Math.Cos(angle2) * (distance / 5);
-                                double control2y = y + Math.Sin(angle2) * (distance / 5);
-                                /*
-                                // filter out the small bumps created by control points
-                                // when changing direction
-                                if(y0 >= y && control1y > y0)
-                                {
-                                    //control1y = y0;
-                                    //control1x = x0;
-
-                                    control1y = y;
-                                    control1x = x;
-                                    control2x = x + Math.Cos(angle2) * (distance / 2.5);
-
-                                    //control1x = control2[i-1].x;
-                                    //control1y = control2[i-1].y;
-                                }
-
-                                if (y0 <= y && control1y < y0)
-                                {
-                                    //control1y = y0;
-                                    //control1x = x0;
-
-                                    control1y = y;
-                                    control1x = x;
-                                    control2x = x + Math.Cos(angle2) * (distance / 2.5);
-
-                                    //control1x = control2[i-1].x;
-                                    //control1y = control2[i-1].y;
-                                }
-                                */
-                                control1.Add(new iText.Kernel.Geom.Point(control1x, control1y));
-                                control2.Add(new iText.Kernel.Geom.Point(control2x, control2y));
-                            }
-                            points.Add(new iText.Kernel.Geom.Point(x, y));
-                            x += _linePointSpace;
-                        }
-
-                        // replace the first control point
-                        control1[0].x = control1[1].x;
-                        control1[0].y = control1[1].y;
-                        control2[0].x = control2[1].x;
-                        control2[0].y = control2[1].y;
-                        // add the last control point
-                        control1.Add(new iText.Kernel.Geom.Point(control2[control2.Count - 1].x, control2[control2.Count - 1].y));
-                        control2.Add(new iText.Kernel.Geom.Point(0, 0));
-
-                        /*
-                        // Draw Control point and normals
-                        x = _originX;
-                        canvas.SetLineWidth(0.25f);
-                        canvas.SetStrokeColor(iText.Kernel.Colors.ColorConstants.BLACK);
+                        // -----------------------
 
                         for (i = 0; i < _data.Columns.Count; i++)
                         {
                             Column column = _data.Columns[i];
-                            Value value = column.Values[k];
-                            float y = _originY + value.Data * _yScale;
 
-                            if (i == 0)
-                            {
-                                //canvas.MoveTo(x, y);
-                                canvas.SetFillColor(iText.Kernel.Colors.ColorConstants.BLUE);
-                                canvas.Circle(x, y, 2.0f);
-                                canvas.Fill();
-                            }
-                            else if (i == (_data.Columns.Count - 1))
-                            {
+                            Value value = column.Values[j];
 
+                            double y = _originY + value.Data * _yScale + yOffset;
+                            lastX = x;
+                            if (_skipDuplicates)
+                            {
+                                if (lastY != y)
+                                {
+                                    lastY = y;
+                                    points.Add(new iText.Kernel.Geom.Point(x, y));
+                                    lastValueDuplicate = false;
+                                }
+                                else
+                                {
+                                    lastValueDuplicate = true;
+                                }
                             }
                             else
                             {
-                                //canvas.CurveTo(control1[i].x, control1[i].y, control2[i].x, control2[i].y, (double)x, (double)y);
-
-                                canvas.SetFillColor(iText.Kernel.Colors.ColorConstants.BLUE);
-                                canvas.Circle(x, y, 2.0f);
-                                canvas.Fill();
-
-                                //canvas.SetFillColor(iText.Kernel.Colors.ColorConstants.RED);
-                                //canvas.Circle(control1[i].x, control1[i].y, 2.0f);
-                                //canvas.Fill();
-                                //canvas.SetFillColor(iText.Kernel.Colors.ColorConstants.YELLOW);
-                                //canvas.Circle(control2[i].x, control2[i].y, 2.0f);
-                                //canvas.Fill();
-
-                                canvas.MoveTo(control1[i].x, control1[i].y);
-                                canvas.LineTo(control2[i].x, control2[i].y);
-                                canvas.Stroke();
+                                lastY = y;
+                                points.Add(new iText.Kernel.Geom.Point(x, y));
                             }
+                            //Debug.WriteLine("X:" + x.ToString() + " Y:" + y.ToString());
                             x += _linePointSpace;
+                           
                         }
-                        */
+
+                        if (lastValueDuplicate)
+                        {
+                            if (j < _data.Legends.Count - 1)
+                            {
+                                double nextY = _originY + _data.Columns[0].Values[j + 1].Data * _yScale + yOffset;
+                                // Make sure the last value is added as a point if it was a duplicate
+                                points.Add(new iText.Kernel.Geom.Point(lastX, nextY));
+                                lastY = nextY;
+                            }
+                            lastValueDuplicate = false;
+                            Debug.WriteLine("Add last Duplicate X:" + lastX.ToString() + " Y:" + lastY.ToString());
+                        }
+
+                        // Add a fake first control point so that the indexes are the same
+                        control1.Add(new iText.Kernel.Geom.Point(0, 0));
+                        control2.Add(new iText.Kernel.Geom.Point(0, 0));
+                        for (i = 1; i < points.Count - 1; i++) // from the second point to the second to last point
+                        {
+                            iText.Kernel.Geom.Point point = points[i];
+
+                            double x0 = points[i - 1].x;
+                            double x2 = points[i + 1].x;
+                            double y0 = points[i - 1].y;
+                            double y2 = points[i + 1].y;
+                            double dirx = x2 - x0;
+                            double diry = y2 - y0;
+
+                            double distance = Math.Sqrt(Math.Pow(dirx, 2) + Math.Pow(diry, 2));
+
+                            double unitx = dirx / distance;
+                            double unity = diry / distance;
+
+                            double angle1 = Math.Atan2(unitx, -unity) + Math.PI / 2;
+                            double angle2 = Math.Atan2(-unitx, unity) + Math.PI / 2;
+
+                            double control1x = points[i].x + Math.Cos(angle1) * (distance / 5);
+                            double control1y = points[i].y + Math.Sin(angle1) * (distance / 5);
+                            double control2x = points[i].x + Math.Cos(angle2) * (distance / 5);
+                            double control2y = points[i].y + Math.Sin(angle2) * (distance / 5);
+
+                            control1.Add(new iText.Kernel.Geom.Point(control1x, control1y));
+                            control2.Add(new iText.Kernel.Geom.Point(control2x, control2y));
+                        }
+                        // Add the last control point so that the indexes are the same
+                        control1.Add(new iText.Kernel.Geom.Point(control2[control2.Count - 1].x, control2[control2.Count - 1].y));
+                        control2.Add(new iText.Kernel.Geom.Point(0, 0));
+
 
                         canvas.SetLineWidth(_lineWidth);
-                        canvas.SetStrokeColor(_data.Legends[k].Colour);
-                        x = _originX;
-                        for (i = 0; i < _data.Columns.Count; i++)
-                        {
-                            Column column = _data.Columns[i];
-                            Value value = column.Values[k];
-                            float y = _originY + value.Data * _yScale;
+                        canvas.SetStrokeColor(legend.Colour);
 
+                        double startX = points[0].x;
+                        double startY = _originY + yOffset; ;
+
+                        for (i = 0; i < points.Count; i++)
+                        {
                             if (i == 0)
                             {
-                                canvas.MoveTo(x, y);
+                                canvas.MoveTo(points[i].x, points[i].y);
                                 canvas.CurveTo(control1[i + 1].x, control1[i + 1].y, points[i + 1].x, points[i + 1].y);
                             }
-                            else if (i == (_data.Columns.Count - 1))
+                            else if (i == (points.Count - 1))
                             {
-                                //canvas.CurveTo(control1[i].x, control1[i].y, (double)x, (double)y);
+
                             }
                             else
                             {
                                 canvas.CurveTo(control2[i].x, control2[i].y, control1[i + 1].x, control1[i + 1].y, points[i + 1].x, points[i + 1].y);
                             }
-                            x += _linePointSpace;
                         }
                         canvas.Stroke();
                     }
-                }
-                else
-                {
-
-                    for (i = 0; i < _data.Columns.Count; i++)
-                    {
-                        Column column = _data.Columns[i];
-                        Value value = column.Values[0];
-                        float y = _originY + value.Data * _yScale;
-
-
-                        if (i == 0)
-                        {
-                            canvas.MoveTo(x, y);
-                        }
-                        else
-                        {
-                            canvas.LineTo(x, y);
-                        }
-
-                        x += _linePointSpace;
-                    }
-                    canvas.Stroke();
                 }
             } // SVG Render
         }
 
         protected override void DrawTicks(PdfCanvas canvas, PdfPage page)
         {
-            float lastTickValue = float.Parse(_data.Columns[0].Label);
             base.DrawTicks(canvas, page);
 
-            iText.Layout.Canvas layoutCanvas = new iText.Layout.Canvas(canvas, _pdf, new iText.Kernel.Geom.Rectangle(_canvasWidth, _canvasHeight));
-            layoutCanvas.SetFont(_font);
-            layoutCanvas.SetFontSize(_valueFontSize);
-            layoutCanvas.SetFontColor(_valueFontColour);
-
-            canvas.SetLineWidth(_tickLineWidth).SetStrokeColor(_tickColour);
-
-            float x = _originX;
-            foreach (Column column in _data.Columns)
+            try
             {
-                float y = _originY;
-                float columnValue = float.Parse(column.Label);
+                float lastTickValue = float.Parse(_data.Columns[0].Label);
 
-                if (columnValue >= (lastTickValue + _lineXTicksInterval))
+                iText.Layout.Canvas layoutCanvas = new iText.Layout.Canvas(canvas, _pdf, new iText.Kernel.Geom.Rectangle(_canvasWidth, _canvasHeight));
+                layoutCanvas.SetFont(_font);
+                layoutCanvas.SetFontSize(_valueFontSize);
+                layoutCanvas.SetFontColor(_valueFontColour);
+
+                canvas.SetLineWidth(_tickLineWidth).SetStrokeColor(_tickColour);
+
+                float x = _originX;
+                foreach (Column column in _data.Columns)
                 {
-                    lastTickValue = columnValue;
+                    float y = _originY;
+                    float columnValue = float.Parse(column.Label);
 
-                    canvas.MoveTo(x, _originY);
-                    canvas.LineTo(x, _originY + _axisHeight * _yScale);
+                    if (columnValue >= (lastTickValue + _lineXTicksInterval))
+                    {
+                        lastTickValue = columnValue;
 
-                    if (_columnLabelAngle == 0.0f)
-                    {
-                        layoutCanvas.ShowTextAligned(column.Label, x, _originY - _columnLabelMargin, TextAlignment.CENTER, VerticalAlignment.TOP, (float)Math.PI / 180.0f * _columnLabelAngle);
+                        canvas.MoveTo(x, _originY);
+                        canvas.LineTo(x, _originY + _axisHeight * _yScale);
+
+                        if (_columnLabelAngle == 0.0f)
+                        {
+                            layoutCanvas.ShowTextAligned(column.Label, x, _originY - _columnLabelMargin, TextAlignment.CENTER, VerticalAlignment.TOP, (float)Math.PI / 180.0f * _columnLabelAngle);
+                        }
+                        else if (_columnLabelAngle == 90.0f)
+                        {
+                            layoutCanvas.ShowTextAligned(column.Label, x, _originY - _columnLabelMargin, TextAlignment.RIGHT, VerticalAlignment.MIDDLE, (float)Math.PI / 180.0f * _columnLabelAngle);
+                        }
+                        else
+                        {
+                            layoutCanvas.ShowTextAligned(column.Label, x, _originY - _columnLabelMargin, TextAlignment.RIGHT, VerticalAlignment.TOP, (float)Math.PI / 180.0f * _columnLabelAngle);
+                        }
                     }
-                    else if (_columnLabelAngle == 90.0f)
-                    {
-                        layoutCanvas.ShowTextAligned(column.Label, x, _originY - _columnLabelMargin, TextAlignment.RIGHT, VerticalAlignment.MIDDLE, (float)Math.PI / 180.0f * _columnLabelAngle);
-                    }
-                    else
-                    {
-                        layoutCanvas.ShowTextAligned(column.Label, x, _originY - _columnLabelMargin, TextAlignment.RIGHT, VerticalAlignment.TOP, (float)Math.PI / 180.0f * _columnLabelAngle);
-                    }
+
+
+                    x += _linePointSpace;
                 }
-
-
-                x += _linePointSpace;
+                canvas.Stroke();
             }
-            canvas.Stroke();
+            catch
+            {
+                // not numeric column values, bail
+                return;
+            }
         }
 
         protected override void DrawLegend(PdfCanvas canvas, PdfPage page)

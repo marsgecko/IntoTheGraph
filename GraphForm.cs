@@ -919,6 +919,19 @@ namespace Graph
             Preview();
         }
 
+        public void LoadDataFile(String filename)
+        {
+            _data.LoadDataFile(filename);
+
+            if (!cbNoAuto.Checked)
+            {
+                SetDimensions();
+            }
+
+            ShowLegend();
+            Preview();
+        }
+
         private void btnImport_Click(object sender, EventArgs e)
         {
             openFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
